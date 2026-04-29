@@ -12,10 +12,27 @@ body {
   font-family: "Inclusive Sans", sans-serif;
 }
 
+.instrument-sans {
+  font-family: "Instrument Sans", sans-serif;
+}
+
 .primary-color {
   color: #3277cf;
 }
 
+.bg-primary-color {
+  background-color: #3277cf;
+}
+
+.secondary-color {
+  color: #4285f4;
+}
+
 .dark-blue {
   color: #00459c;
+}
+
+:root {
+  --bg-primary-color: #3277cf;
+  --bg-secondary-color: #4285f4;
 }

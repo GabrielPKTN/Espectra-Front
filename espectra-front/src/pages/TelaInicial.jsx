@@ -31,6 +31,13 @@ function TelaInicial() {
             Acompanhe, registre e celebre cada passo do desenvolvimento.
           </span>
         </div>
+
+        <button
+          // onClick={/*vai para a tela de cadastro*/}
+          className="bg-(--bg-primary-color) instrument-sans text-xl text-white w-48 h-12 rounded-lg font-bold shadow-[5px_10px_20px_rgba(0,0,0,0.25)] hover:bg-(--bg-secondary-color) transition-colors duration-200"
+        >
+          Comece a usar!
+        </button>
       </div>
     </div>
   );
