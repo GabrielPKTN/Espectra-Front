@@ -17,9 +17,11 @@ function Button({
     <button
       type={type}
       onClick={onClick}
-      className={`${estiloBase}``${variants}`}
+      className={`${estiloBase} ${variants}`}
     >
       {children}
     </button>
   );
 }
+
+export default Button;

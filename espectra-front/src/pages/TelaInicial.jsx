@@ -1,7 +1,11 @@
 import logo_v1 from "../assets/logotipos/logo_v1.png";
 import NavItem from "../components/NavItem";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import Button from "../components/Button";
 
 function TelaInicial() {
+  const navigate = useNavigate();
+
   return (
     // div que gurdar tudo na tela.
     <div className="w-screen h-screen">
@@ -32,12 +36,9 @@ function TelaInicial() {
           </span>
         </div>
 
-        <button
-          // onClick={/*vai para a tela de cadastro*/}
-          className="bg-(--bg-primary-color) instrument-sans text-xl text-white w-48 h-12 rounded-lg font-bold shadow-[5px_10px_20px_rgba(0,0,0,0.25)] hover:bg-(--bg-secondary-color) transition-colors duration-200"
-        >
-          Comece a usar!
-        </button>
+        <Button variantClick="basicClick" onClick={() => navigate("/cadastro")}>
+          Comece a usar
+        </Button>
       </div>
     </div>
   );
