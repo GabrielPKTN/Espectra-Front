@@ -1,4 +1,5 @@
 import logo_v1 from "../assets/logotipos/logo_v1.png";
+import NavItem from "../components/NavItem";
 
 function TelaInicial() {
   return (
@@ -10,22 +11,27 @@ function TelaInicial() {
 
         {/* NECESSÁRIO COLOCAR OS LINKS DEPOIS */}
         <nav>
-          <ul className="flex gap-8 p-5 font-sans font-semibold text-lg text-black">
-            <li>
-              <a href="/contato">Contato</a>
-            </li>
-            <li>
-              <a href="/sobre">Sobre</a>
-            </li>
-            <li className="hover:bg-[#3277CF] hover:text-white px-2 rounded-2xl transition-colors duration-200">
-              <a href="/login">Login</a>
-            </li>
+          <ul className="flex gap-2 p-3 inclusive-sans font-normal text-lg text-black">
+            <NavItem href="/contato">Contato</NavItem>
+            <NavItem href="/sobre">Sobre</NavItem>
+            <NavItem href="/Login">Login</NavItem>
           </ul>
         </nav>
       </div>
 
       {/* main */}
-      <div></div>
+      <div className="my-14 flex flex-col items-center">
+        {/* div do texto que existe no header */}
+        <div className="flex flex-col m-8">
+          <p className="imprima-regular text-2xl">BEM VINDO AO</p>
+          <h1 className="inclusive-sans font-bold text-6xl dark-blue">
+            ESPECTRA
+          </h1>
+          <span className="inclusive-sans text-xl font-light">
+            Acompanhe, registre e celebre cada passo do desenvolvimento.
+          </span>
+        </div>
+      </div>
     </div>
   );
 }
