@@ -17,7 +17,7 @@ function Button({
     <button
       type={type}
       onClick={onClick}
-      className={`${estiloBase} ${variants}`}
+      className={`${estiloBase} ${variants[variantClick]}`}
     >
       {children}
     </button>
