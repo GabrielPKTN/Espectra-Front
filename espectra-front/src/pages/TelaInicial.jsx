@@ -17,8 +17,12 @@ function TelaInicial() {
         {/* NECESSÁRIO COLOCAR OS LINKS DEPOIS */}
         <nav>
           <ul className="flex gap-2 p-3 inclusive-sans font-normal text-lg text-black">
-            <NavItem href="/contato">Contato</NavItem>
-            <NavItem href="/sobre">Sobre</NavItem>
+            <NavItem href="https://github.com/GabrielPKTN/Espectra-Front.git">
+              Contato
+            </NavItem>
+            <NavItem href="https://github.com/GabrielPKTN/Espectra-Front.git">
+              Sobre
+            </NavItem>
             <NavItem href="/Login">Login</NavItem>
           </ul>
         </nav>
