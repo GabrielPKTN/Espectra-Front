@@ -1,7 +1,9 @@
+import PerfilFoto from "../assets/general_photos/larissa-photo.png"
+
 function ContainerUserPhoto() {
 
-    return <div className="border border-[--bg-primary-color] rounded-[50%] w-16 h-16">
-        <img src="https://source.unsplash.com/random" alt="user photo" />
+    return <div className="border border-(--bg-primary-color) rounded-[50%] w-10 h-10 overflow-hidden">
+        <img src={PerfilFoto} alt="user photo" className="object-cover w-full h-full" />
     </div>
 
 }

@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@theme {
+  --font-inclusive-sans: "Inclusive Sans", sans-serif;
+  --font-instrument-sans: "Instrument Sans", sans-serif;
+}
+
 body {
   margin: 0;
 }
