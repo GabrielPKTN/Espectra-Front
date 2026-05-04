@@ -5,7 +5,7 @@ function ContainerHeader() {
 
     return <header className="flex justify-between w-full">
         <img src={IconApp} alt="icone da aplicação" className="w-auto h-10"/>
-        <ContainerUserPhoto />
+        <ContainerUserPhoto size="10" />
     </header>
     
 
