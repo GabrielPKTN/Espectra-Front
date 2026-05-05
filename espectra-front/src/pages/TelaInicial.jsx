@@ -9,17 +9,22 @@ function TelaInicial() {
 
   return (
     // div que gurdar tudo na tela.
-    <div className="w-screen h-full flex flex-col">
+    <div className="w-screen h-fit flex flex-col">
       {/* header */}
-      <div
-        className="flex justify-between items-center p-1
-      md:p-4"
-      >
-        <img src={logo} alt="logotipo espectra" className="p-4 w-32" />
+      <div className="flex justify-between items-center p-1 md:p-2">
+        <img
+          src={logo}
+          alt="logotipo espectra"
+          className="p-4 w-30 
+                  md:p-5 md:w-36"
+        />
 
         {/* NECESSÁRIO COLOCAR OS LINKS DEPOIS */}
         <nav>
-          <ul className="flex gap-2 p-3 inclusive-sans font-normal text-lg text-black md:gap-6">
+          <ul
+            className="flex gap-2 p-3 inclusive-sans font-normal text-lg text-black
+              md:gap-8 md:p-6"
+          >
             <NavItem href="https://github.com/GabrielPKTN/Espectra-Front.git">
               Contato
             </NavItem>
@@ -32,17 +37,30 @@ function TelaInicial() {
       </div>
 
       {/* main */}
-      <div className="flex flex-col items-center justify-between gap-8 md:gap-20">
-        <div className="my-10 flex flex-col items-center gap-4 md:my-8 px-40">
+      <div className="flex flex-col items-center justify-between gap-8">
+        <div
+          className="my-10 flex flex-col items-center gap-4 px-6 
+            md:my-16 md:gap-8 md:px-12"
+        >
           {/* div do texto que existe no header e o botao */}
           <div className="flex flex-col m-5">
-            <p className="imprima-regular text-2xl md:text-4xl w-full">
+            <p
+              className="imprima-regular text-2xl
+                md:text-3xl
+            "
+            >
               BEM VINDO AO
             </p>
-            <h1 className="inclusive-sans font-bold text-6xl dark-blue md:text-8xl">
+            <h1
+              className="inclusive-sans font-bold text-6xl dark-blue
+                md:text-7xl"
+            >
               ESPECTRA
             </h1>
-            <span className="inclusive-sans text-xl font-light w-full md:text-2xl">
+            <span
+              className="inclusive-sans text-xl font-light
+              md:text-2xl"
+            >
               Acompanhe, registre e celebre cada passo do desenvolvimento.
             </span>
           </div>
@@ -54,11 +72,12 @@ function TelaInicial() {
             Comece a usar
           </Button>
         </div>
-        <div className="grow">
+        <div className="grow md:my-6">
           <img
             src={photo_main}
             alt="imagem-prof"
-            className="object-contain w-auto h-fit"
+            className="object-contain w-auto h-fit
+              md:w-96 md:h-auto"
           />
         </div>
       </div>
