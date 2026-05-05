@@ -1,4 +1,4 @@
-import CardPaciente from "./CardPaciente"
+import CardPaciente from "./card-paciente/CardPaciente"
 
 function ContainerPacientes(props) {
 
@@ -13,6 +13,8 @@ function ContainerPacientes(props) {
             arrayComponentes.push(CardPaciente(paciente))
         
         })
+
+        console.log(arrayComponentes)
 
         for (let i = 0; i < arrayComponentes.length; i++) {
             return arrayComponentes[i]

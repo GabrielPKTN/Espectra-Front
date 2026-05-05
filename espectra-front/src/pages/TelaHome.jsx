@@ -19,28 +19,28 @@ function TelaHome() {
             "grau_suporte": "Grau 3",
             "numero_registro": 2026040001
         },
-        // {
-        //     "id": 2,
-        //     "foto": "http://azure.blob.img/paciente2.jpg",
-        //     "nome": "Ana Beatriz Oliveira",
-        //     "data_nascimento": "2015-05-22",
-        //     "idade": 8,
-        //     "diagnostico": "Transtorno do Espectro Autista",
-        //     "serie_escolar": "3º Ano",
-        //     "grau_suporte": "Grau 1",
-        //     "numero_registro": 2026040002
-        // },
-        // {
-        //     "id": 3,
-        //     "foto": "http://azure.blob.img/paciente3.jpg",
-        //     "nome": "Lucas Henrique Souza",
-        //     "data_nascimento": "2012-11-30",
-        //     "idade": 11,
-        //     "diagnostico": "TDAH e TOD",
-        //     "serie_escolar": "5º Ano",
-        //     "grau_suporte": "Grau 2",
-        //     "numero_registro": 2026040003
-        // }
+        {
+            "id": 2,
+            "foto": "http://azure.blob.img/paciente2.jpg",
+            "nome": "Ana Beatriz Oliveira",
+            "data_nascimento": "2015-05-22",
+            "idade": 8,
+            "diagnostico": "Transtorno do Espectro Autista",
+            "serie_escolar": "3º Ano",
+            "grau_suporte": "Grau 1",
+            "numero_registro": 2026040002
+        },
+        {
+            "id": 3,
+            "foto": "http://azure.blob.img/paciente3.jpg",
+            "nome": "Lucas Henrique Souza",
+            "data_nascimento": "2012-11-30",
+            "idade": 11,
+            "diagnostico": "TDAH e TOD",
+            "serie_escolar": "5º Ano",
+            "grau_suporte": "Grau 2",
+            "numero_registro": 2026040003
+        }
     ])
 
     return <div className="py-4 px-5 h-screen">
