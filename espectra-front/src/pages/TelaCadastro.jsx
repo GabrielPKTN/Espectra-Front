@@ -6,6 +6,7 @@ import { useState } from "react";
 function TelaCadastro() {
   const [nome, setNome] = useState("");
   const [erro, setErro] = useState("");
+  const [inputTocado, setInputTocado] = useState("");
 
   function validarNomeUsuario(e) {
     const valorInserido = e.target.value;
@@ -20,7 +21,6 @@ function TelaCadastro() {
       setErro("");
       console.log("nome valido!");
     }
-    return true;
   }
   return (
     // div que guarda tudo que estiver da tela
@@ -60,11 +60,14 @@ function TelaCadastro() {
             <InputDefault
               value={nome}
               onChange={validarNomeUsuario}
-              variantInput="basicInput"
+              onBlur={() => setInputTocado(true)}
+              variantInput={erro ? "errorInput" : "basicInput"}
               name="nome de usuário"
               limiteCaracteres={150}
             />
-            {erro && <p className="text-red-500 text-sm p-1">{erro}</p>}
+            {inputTocado && erro && (
+              <p className="text-red-500 text-sm p-1">{erro}</p>
+            )}
           </div>
         </div>
       </div>

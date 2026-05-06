@@ -2,6 +2,7 @@ function InputDefault({
   type = "text",
   value,
   onChange,
+  onBlur,
   variantInput = "basicInput",
   name,
   limiteCaracteres,
@@ -9,7 +10,7 @@ function InputDefault({
   const estiloInput = "border rounded-xl inclusive-sans h-12 w-75.5";
   const variants = {
     basicInput: "primary-color",
-    errorInput: "bg-red-500",
+    errorInput: "border-red-500",
   };
 
   return (
@@ -18,6 +19,7 @@ function InputDefault({
       required
       value={value}
       onChange={onChange}
+      onBlur={onBlur}
       id={name}
       maxLength={limiteCaracteres}
       className={`${estiloInput} ${variants[variantInput]}`}
