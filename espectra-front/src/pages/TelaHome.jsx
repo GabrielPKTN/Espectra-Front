@@ -117,7 +117,10 @@ function TelaHome() {
                 <InputHome/>
                 <Filter className="text-(--bg-primary-color) w-auto pl-2"/>
             </div>
-            <div className="max-h-[80%] pb-2 mask-b-to-transparent mask-b-from-98% mask-t-to-transparent mask-t-from-98% w-full items-center overflow-hidden overflow-y-auto flex flex-col gap-2">
+            <div className="max-h-[80%] pb-2 mask-b-to-transparent mask-b-from-99% mask-t-to-transparent mask-t-from-99% w-full items-center overflow-hidden overflow-y-auto flex flex-col gap-2
+            scrollbar-custom
+            
+            ">
                 <ContainerPacientes pacientes={pacientes}/>
             </div>
             <div>

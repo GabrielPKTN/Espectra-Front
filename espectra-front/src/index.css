@@ -42,3 +42,24 @@ body {
   --bg-primary-color: #3277cf;
   --bg-secondary-color: #4285f4;
 }
+
+
+@layer utilities {
+
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 0.3rem;
+    background-color: var(--bg-card);
+
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+
+  
+      background-color: var(--bg-primary-color);
+      border-radius: 0.2rem;
+
+  }
+
+}
+
+

@@ -8,7 +8,7 @@ function CardPaciente(props) {
         <ContainerPacientePhoto/>
         <div className="flex flex-col w-full justify-center">
             <span className="text-(--bg-primary-color) font-instrument-sans font-bold w-full text-xl p-1">{props.nome}</span>
-            <div className="p-1 flex justify-start flex-row h-16 gap-1 flex-wrap">
+            <div className="p-1 flex justify-start flex-row h-auto gap-1 flex-wrap">
                 <LabelInfoCard info={`${props.idade} ANOS`} ></LabelInfoCard>
                 <LabelInfoCard info={props.numero_registro} ></LabelInfoCard>
                 <LabelInfoCard info={props.serie_escolar} ></LabelInfoCard>
