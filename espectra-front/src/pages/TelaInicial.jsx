@@ -9,7 +9,7 @@ function TelaInicial() {
 
   return (
     // div que gurdar tudo na tela.
-    <div className="w-full min-h-screen flex flex-col">
+    <div className="w-full h-screen flex flex-col overflow-hidden">
       {/* header */}
       <div className="flex justify-between items-center p-1 md:p-2">
         <img
@@ -23,7 +23,8 @@ function TelaInicial() {
         <nav>
           <ul
             className="flex gap-2 p-3 inclusive-sans font-normal text-lg text-black
-              md:gap-8 md:p-6"
+              md:gap-8 md:p-6
+              lg:text-xl"
           >
             <NavItem href="https://github.com/GabrielPKTN/Espectra-Front.git">
               Contato
@@ -39,17 +40,17 @@ function TelaInicial() {
       {/* main */}
       <div
         className="flex flex-col items-center justify-between gap-8
-        lg:grid lg:grid-cols-2
-        xl:grid xl:grid-cols-2"
+        lg:flex
+        xl:flex xl:flex-row xl:h-full"
       >
         <div
-          className="my-10 flex flex-col items-center gap-4 px-6 
+          className="my-10 flex flex-col items-center justify-center gap-4 w-full
             md:my-16 md:gap-8 md:px-12
             lg:gap-16
-            xl:gap-16"
+            xl:gap-16 xl:w-1/2"
         >
           {/* div do texto que existe no header e o botao */}
-          <div className="flex flex-col m-5">
+          <div className="flex flex-col m-5 w-[80%]">
             <p
               className="imprima-regular text-2xl
                 md:text-3xl
@@ -85,15 +86,18 @@ function TelaInicial() {
           </Button>
         </div>
         <div
-          className="md:my-5
+          className="md:my-5 
+          xl:mr-4
           "
         >
           <img
             src={photo_main}
             alt="imagem-prof"
             className="object-contain w-80 h-fit
-              md:w-96 md:h-auto
-              lg:h-auto lg:w-150 lg:p-2"
+            md:w-96 md:h-auto
+            lg:h-auto lg:w-150
+            xl:object-cover xl:w-full xl:h-full xl:pt-9
+            "
           />
         </div>
       </div>
