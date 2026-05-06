@@ -14,10 +14,8 @@ function ContainerPacientes(props) {
         
         })
 
-        console.log(arrayComponentes)
-
         for (let i = 0; i < arrayComponentes.length; i++) {
-            return arrayComponentes[i]
+            return arrayComponentes
         }
 
     } else {

@@ -1,8 +1,6 @@
 function LabelInfoCard(props) {
 
-    return <div className="bg-primary-color px-1">
-        <p className="text-center whitespace-nowrap text-white font-instrument-sans font-medium">{props.info}</p>
-    </div>
+    return <p className="bg-primary-color py-0.5 px-1 whitespace-nowrap text-white font-instrument-sans font-medium text-sm">{props.info}</p>
     
     
 

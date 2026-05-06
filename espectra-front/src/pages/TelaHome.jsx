@@ -25,7 +25,7 @@ function TelaHome() {
             "nome": "Ana Beatriz Oliveira",
             "data_nascimento": "2015-05-22",
             "idade": 8,
-            "diagnostico": "Transtorno do Espectro Autista",
+            "diagnostico": "TEA",
             "serie_escolar": "3º Ano",
             "grau_suporte": "Grau 1",
             "numero_registro": 2026040002
@@ -40,21 +40,89 @@ function TelaHome() {
             "serie_escolar": "5º Ano",
             "grau_suporte": "Grau 2",
             "numero_registro": 2026040003
+        },
+        {
+            "id": 4,
+            "foto": "http://azure.blob.img/paciente4.jpg",
+            "nome": "Mariana Costa Silva",
+            "data_nascimento": "2014-03-15",
+            "idade": 12,
+            "diagnostico": "Autismo",
+            "serie_escolar": "6º Ano",
+            "grau_suporte": "Grau 2",
+            "numero_registro": 2026040004
+        },
+        {
+            "id": 5,
+            "foto": "http://azure.blob.img/paciente5.jpg",
+            "nome": "Pedro Alencar Gomes",
+            "data_nascimento": "2017-09-08",
+            "idade": 8,
+            "diagnostico": "TDAH",
+            "serie_escolar": "3º Ano",
+            "grau_suporte": "Grau 1",
+            "numero_registro": 2026040005
+        },
+        {
+            "id": 6,
+            "foto": "http://azure.blob.img/paciente6.jpg",
+            "nome": "Sofia Rocha Mendes",
+            "data_nascimento": "2011-07-21",
+            "idade": 14,
+            "diagnostico": "Dislexia",
+            "serie_escolar": "8º Ano",
+            "grau_suporte": "Grau 1",
+            "numero_registro": 2026040006
+        },
+        {
+            "id": 7,
+            "foto": "http://azure.blob.img/paciente7.jpg",
+            "nome": "Gabriel Neves Cruz",
+            "data_nascimento": "2016-01-30",
+            "idade": 10,
+            "diagnostico": "TEA e TDAH",
+            "serie_escolar": "4º Ano",
+            "grau_suporte": "Grau 2",
+            "numero_registro": 2026040007
+        },
+        {
+            "id": 8,
+            "foto": "http://azure.blob.img/paciente8.jpg",
+            "nome": "Beatriz Farias Lima",
+            "data_nascimento": "2013-11-12",
+            "idade": 12,
+            "diagnostico": "TOD",
+            "serie_escolar": "7º Ano",
+            "grau_suporte": "Grau 2",
+            "numero_registro": 2026040008
+        },
+        {
+            "id": 9,
+            "foto": "http://azure.blob.img/paciente9.jpg",
+            "nome": "Enzo Gabriel Santos",
+            "data_nascimento": "2019-05-04",
+            "idade": 7,
+            "diagnostico": "Autismo Grau 3",
+            "serie_escolar": "1º Ano",
+            "grau_suporte": "Grau 3",
+            "numero_registro": 2026040009
         }
     ])
 
     return <div className="py-4 px-5 h-screen">
 
         <ContainerHeader/>
-        <main className="flex flex-col h-[90%] justify-between items-center pt-12">
+        <main className="flex grow flex-col justify-between items-center h-[95%] pt-12">
             <div className="flex w-full items-center">
                 <InputHome/>
                 <Filter className="text-(--bg-primary-color) w-auto pl-2"/>
             </div>
-            <div className="w-[90%] items-center">
+            <div className="max-h-[80%] pb-2 mask-b-to-transparent mask-b-from-98% mask-t-to-transparent mask-t-from-98% w-full items-center overflow-hidden overflow-y-auto flex flex-col gap-2">
                 <ContainerPacientes pacientes={pacientes}/>
             </div>
-            <Button>Adicionar paciente</Button>
+            <div>
+                <Button>Adicionar paciente</Button>
+            </div>
         </main>
 
     </div>
