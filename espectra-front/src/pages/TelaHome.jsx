@@ -109,23 +109,33 @@ function TelaHome() {
         }
     ])
 
-    return <div className="py-4 px-5 h-screen">
+    const [selectedPaciente, setSelectedPaciente] = useState(null)
+
+    return <div className="py-4 px-5 gap-8 flex flex-col h-screen md:bg-(--bg-primary-color) md:py-0 md:px-0">
 
         <ContainerHeader/>
-        <main className="flex grow flex-col justify-between items-center h-[95%] pt-12">
-            <div className="flex w-[90%] items-center md:w-[70%]">
+        <main className="
+        gap-2 flex flex-col justify-center items-center grow
+        ">
+
+            <div className="w-full flex gap-2 items-center justify-center">
                 <InputHome/>
-                <Filter className="text-(--bg-primary-color) w-auto pl-2 md:size-10"/>
+                <Filter className="text-(--bg-primary-color) size-8" />
             </div>
-            <div className="
-            max-h-[80%] pb-2 mask-b-to-transparent mask-b-from-99% mask-t-to-transparent mask-t-from-99% w-full items-center overflow-hidden overflow-y-auto flex flex-col gap-2 scrollbar-custom py-2
-            ">
-                <ContainerPacientes pacientes={pacientes}/>
-            </div>
-            <div>
-                <Button>Adicionar paciente</Button>
-            </div>
+            <ContainerPacientes pacientes={pacientes}/>
+            
+            <Button>Adicionar paciente</Button>
+
         </main>
+
+        {/* <main className="hidden md:flex grow">
+            <div className="bg-white h-full w-[40%] rounded-r-2xl p-4">
+                <div className="flex w-full items-center">
+                    <InputHome/>
+                    <Filter className="text-(--bg-primary-color) w-auto pl-2 md:size-10"/>
+                </div>
+            </div>
+        </main> */}
 
     </div>
 
