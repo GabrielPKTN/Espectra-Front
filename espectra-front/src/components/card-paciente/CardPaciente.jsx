@@ -3,11 +3,15 @@ import LabelInfoCard from "./LabelInfoCard"
 
 function CardPaciente(props) {
 
-    return <div key={props.id} className="bg-card shadow-lg w-[90%] h-auto justify-between items-center rounded-3xl p-2 flex border-2 border-(--bg-primary-color)">
+    return <div key={props.id} className="
+    bg-card shadow-lg w-[90%] h-auto justify-between items-center rounded-3xl p-2 flex border-2 border-(--bg-primary-color) md:w-[70%]">
 
         <ContainerPacientePhoto/>
         <div className="flex flex-col w-full justify-center">
-            <span className="text-(--bg-primary-color) font-instrument-sans font-bold w-full text-xl p-1">{props.nome}</span>
+            <span className="
+            text-(--bg-primary-color) font-instrument-sans font-bold w-full text-xl p-1
+            md:text-2xl
+            ">{props.nome}</span>
             <div className="p-1 flex justify-start flex-row h-auto gap-1 flex-wrap">
                 <LabelInfoCard info={`${props.idade} ANOS`} ></LabelInfoCard>
                 <LabelInfoCard info={props.numero_registro} ></LabelInfoCard>

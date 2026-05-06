@@ -113,13 +113,12 @@ function TelaHome() {
 
         <ContainerHeader/>
         <main className="flex grow flex-col justify-between items-center h-[95%] pt-12">
-            <div className="flex w-full items-center">
+            <div className="flex w-[90%] items-center md:w-[70%]">
                 <InputHome/>
-                <Filter className="text-(--bg-primary-color) w-auto pl-2"/>
+                <Filter className="text-(--bg-primary-color) w-auto pl-2 md:size-10"/>
             </div>
-            <div className="max-h-[80%] pb-2 mask-b-to-transparent mask-b-from-99% mask-t-to-transparent mask-t-from-99% w-full items-center overflow-hidden overflow-y-auto flex flex-col gap-2
-            scrollbar-custom
-            
+            <div className="
+            max-h-[80%] pb-2 mask-b-to-transparent mask-b-from-99% mask-t-to-transparent mask-t-from-99% w-full items-center overflow-hidden overflow-y-auto flex flex-col gap-2 scrollbar-custom py-2
             ">
                 <ContainerPacientes pacientes={pacientes}/>
             </div>

@@ -53,7 +53,6 @@ body {
   }
 
   .scrollbar-custom::-webkit-scrollbar-thumb {
-
   
       background-color: var(--bg-primary-color);
       border-radius: 0.2rem;
