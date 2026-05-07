@@ -15,7 +15,7 @@ function ContainerPacientes(props) {
         })
 
         for (let i = 0; i < arrayComponentes.length; i++) {
-            return <div className="mask-b-to-transparent mask-b-from-95% mask-t-to-transparent mask-t-from-95% scrollbar-custom gap-1 py-4 h-[70dvh] relative items-center flex flex-col overflow-y-auto md:grid md:grid-cols-2 md:place-items-center md:mask-t-from-98% md:mask-b-from-98%">
+            return <div className="mask-b-to-transparent mask-b-from-95% mask-t-to-transparent mask-t-from-95% scrollbar-custom gap-1 py-4 h-[70dvh] relative items-center flex flex-col overflow-y-auto md:grid md:grid-cols-2 md:place-items-center md:mask-t-from-98% md:mask-b-from-98% lg:h-[60dvh] lg:grid-cols-3 lg:px-8 lg:gap-8 ">
                 {arrayComponentes}
             </div>            
         }
