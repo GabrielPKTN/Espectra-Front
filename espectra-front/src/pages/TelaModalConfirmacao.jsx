@@ -7,10 +7,14 @@ function TelaModalConfirmacao() {
   const navigate = useNavigate();
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center ">
+    <div className="fixed inset-0 bg-black/10 backdrop-blur-3xl flex items-center justify-center ">
       <Card
         titulo="Tem certeza que deseja confirmar essa ação ?"
         descricao=" Esse paciente já teve atendimento nessa plataforma antes."
+        fundo="bg-gray-100"
+        corTitulo="text-black-700"
+        corDescricao="text-red-500"
+        rowButtons={true}
       >
         <Button onClick={() => navigate("/cadastro")}>Cancelar</Button>
 
