@@ -1,12 +1,30 @@
 import logotipo from "../assets/logotipos/logotipo.svg";
 import button_unselected from "../assets/general_photos/button_unselected.svg";
+import cadeado from "../assets/general_photos/cadeado.svg";
 import InputDefault from "../components/InputDefault";
-import { useState } from "react";
+import { use, useState } from "react";
+import { LockKeyhole } from "lucide-react";
 
 function TelaCadastro() {
-  const [nome, setNome] = useState("");
-  const [erro, setErro] = useState("");
   const [inputTocado, setInputTocado] = useState("");
+
+  const [nome, setNome] = useState("");
+  const [erroNome, setErroNome] = useState("");
+
+  const [email, setEmail] = useState("");
+  const [erroEmail, setErroEmail] = useState("");
+
+  const [telefone, setTelefone] = useState("");
+  const [erroTelefone, setErroTelefone] = useState("");
+
+  const [dataNascimento, setDataNascimento] = useState("");
+  const [erroData, setErroData] = useState("");
+
+  const [senha, setSenha] = useState("");
+  const [erroSenha, setErroSenha] = useState("");
+
+  const [confirmarSenha, setConfirmarSenha] = useState("");
+  const [erroConfirmacao, setErroConfirmacao] = useState("");
 
   function validarNomeUsuario(e) {
     const valorInserido = e.target.value;
@@ -14,14 +32,140 @@ function TelaCadastro() {
     setNome(valorInserido);
 
     if (valorInserido.trim() === "") {
-      setErro("Seu nome não pode estar vazio!");
+      setErroNome("Seu nome não pode estar vazio");
     } else if (/\d/.test(valorInserido)) {
-      setErro("Seu nome não pode ter numeros!");
+      setErroNome("Preencha seu nome!");
+    } else if (
+      /[^a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]/.test(valorInserido)
+    ) {
+      setErroNome("Seu nome não pode ter caracteres especiais!");
     } else {
-      setErro("");
-      console.log("nome valido!");
+      setErroNome("");
     }
   }
+
+  function validarEmailUsuario(e) {
+    const emailInserido = e.target.value.toLowerCase();
+    const formatoEmail = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.(com|br)$/;
+
+    setEmail(emailInserido);
+
+    if (emailInserido.trim() === "") {
+      setErroEmail("Seu e-mail não pode estar vazio");
+    } else if (!formatoEmail.test(emailInserido)) {
+      setErroEmail("Seu e-mail deve conter @ e .com ou .br");
+    } else {
+      setErroEmail("");
+    }
+  }
+
+  function mascaraTelefone(e) {
+    let formato = e.target.value.replace(/\D/g, "");
+
+    if (formato.length <= 10) {
+      formato = formato.replace(/^(\d{2})(\d)/g, "($1) $2");
+      formato = formato.replace(/(\d{4})(\d)/, "$1-$2");
+    } else {
+      formato = formato.replace(/^(\d{2})(\d)/g, "($1) $2");
+      formato = formato.replace(/(\d{5})(\d)/, "$1-$2");
+    }
+
+    return formato;
+  }
+
+  function validarNumeroTelefone(e) {
+    const mascaraUI = mascaraTelefone(e);
+
+    const telefoneInserido = e.target.value.replace(/\D/g, "");
+    const formatoTelefone = /^[1-9]{2}(?:[1-8]|9)[0-9]{7,8}$/;
+
+    setTelefone(mascaraUI);
+
+    if (telefoneInserido.trim() === "") {
+      setErroTelefone("Informe seu número de telefone");
+    } else if (!formatoTelefone.test(telefoneInserido)) {
+      setErroTelefone("Digite um número válido!");
+    } else {
+      setErroTelefone("");
+    }
+  }
+
+  function mascaraData(formato) {
+    return formato
+      .replace(/\D/g, "")
+      .replace(/(\d{2})(\d)/, "$1/$2")
+      .replace(/(\d{2})(\d)/, "$1/$2")
+      .substring(0, 10);
+  }
+
+  function validarDataNascimento(e) {
+    const dataInserida = mascaraData(e.target.value);
+    setDataNascimento(dataInserida);
+
+    if (dataInserida.length === 10) {
+      const [dia, mes, ano] = dataInserida.split("/").map(Number);
+      const dataInformada = new Date(ano, mes - 1, dia);
+      const dataAtual = new Date();
+
+      const dataValida =
+        dataInformada.getFullYear() === ano &&
+        dataInformada.getMonth() === mes - 1 &&
+        dataInformada.getDate() === dia;
+
+      if (
+        !dataValida ||
+        dataInformada > dataAtual ||
+        ano < dataAtual.getFullYear() - 120
+      ) {
+        setErroData("Informe uma data válida!");
+      } else if (dataInserida.trim() === "") {
+        setErroData("Informe sua data de nascimento!");
+      } else {
+        setErroData("");
+      }
+    } else {
+      setErroData("Data incompleta");
+    }
+  }
+
+  function validarSenha(e) {
+    const senhaInserida = e.target.value;
+
+    setSenha(senhaInserida);
+
+    const quantidadeLetras =
+      (senhaInserida.match(/[a-zA-Z]/g) || []).length >= 3;
+    const quantidadeNumeros = (senhaInserida.match(/[0-9]/g) || []).length >= 3;
+    const caracterEspecial = /[!@#$%^&*(),.?":{}|<>]/.test(senhaInserida);
+
+    if (senhaInserida.trim() === "") {
+      setErroSenha("Informe uma senha!");
+    } else if (!quantidadeLetras) {
+      setErroSenha("A senha precisa de pelo menos 3 letras");
+    } else if (!quantidadeNumeros) {
+      setErroSenha("A senha precisa de pelo menos 3 números");
+    } else if (!caracterEspecial) {
+      setErroSenha(
+        "A senha precisa de pelo menos 1 caracter especial(Ex:@,#,$,%)",
+      );
+    } else {
+      setErroSenha("");
+    }
+  }
+
+  function confirmacaoDeSenha(e) {
+    const senhaConfirmada = e.target.value;
+    setConfirmarSenha(senhaConfirmada);
+
+    if (senhaConfirmada.trim() === "") {
+      setErroConfirmacao("Confirme a sua senha!");
+    } else if (senhaConfirmada !== senha) {
+      setErroConfirmacao("As senhas não coincidem!");
+    } else {
+      setErroConfirmacao("");
+    }
+  }
+
   return (
     // div que guarda tudo que estiver da tela
     <div className="flex flex-col bg-primary-color w-screen h-screen items-center">
@@ -53,6 +197,7 @@ function TelaCadastro() {
 
         {/*div que carrega as informacoes de cadastro*/}
         <div className="flex flex-col mt-8">
+          {/* NOME */}
           <div className="w-auto flex flex-col p-2">
             <p className="font-semibold text-lg inclusive-sans primary-color">
               Nome
@@ -61,12 +206,125 @@ function TelaCadastro() {
               value={nome}
               onChange={validarNomeUsuario}
               onBlur={() => setInputTocado(true)}
-              variantInput={erro ? "errorInput" : "basicInput"}
+              variantInput={erroNome ? "errorInput" : "basicInput"}
               name="nome de usuário"
               limiteCaracteres={150}
             />
-            {inputTocado && erro && (
-              <p className="text-red-500 text-sm p-1">{erro}</p>
+            {inputTocado && erroNome && (
+              <p className="text-red-500 text-sm p-1">{erroNome}</p>
+            )}
+          </div>
+
+          {/* EMAIL */}
+          <div className="w-auto flex flex-col p-2">
+            <p className="font-semibold text-lg inclusive-sans primary-color">
+              E-mail
+            </p>
+            <InputDefault
+              value={email}
+              onChange={validarEmailUsuario}
+              onBlur={() => setInputTocado(true)}
+              variantInput={erroEmail ? "errorInput" : "basicInput"}
+              name="email de usuário"
+              limiteCaracteres={255}
+            />
+            {inputTocado && erroEmail && (
+              <p className="text-red-500 text-sm p-1">{erroEmail}</p>
+            )}
+          </div>
+
+          {/* TELEFONE E DATA DE NASCIMENTO */}
+          <div className="flex flex-row">
+            {/* TELEFONE */}
+            <div className="w-auto flex flex-col p-2">
+              <p className="font-semibold text-lg inclusive-sans primary-color">
+                Telefone
+              </p>
+              <InputDefault
+                value={telefone}
+                onChange={validarNumeroTelefone}
+                onBlur={() => setInputTocado(true)}
+                variantInput={erroTelefone ? "errorInput" : "basicInput"}
+                name="telefone de usuário"
+                limiteCaracteres={20}
+              />
+              {inputTocado && erroTelefone && (
+                <p className="text-red-500 text-sm p-1">{erroTelefone}</p>
+              )}
+            </div>
+            {/* DATA DE NASCIMENTO */}
+            <div className="w-auto flex flex-col p-2">
+              <p className="font-semibold text-lg inclusive-sans primary-color">
+                Nascimento
+              </p>
+              <InputDefault
+                value={dataNascimento}
+                onChange={validarDataNascimento}
+                onBlur={() => setInputTocado(true)}
+                variantInput={erroData ? "errorInput" : "basicInput"}
+                name="nascimento do usuário"
+                limiteCaracteres={10}
+                placeholder="DD/MM/AAAA"
+              />
+              {inputTocado && erroData && (
+                <p className="text-red-500 text-sm p-1">{erroData}</p>
+              )}
+            </div>
+          </div>
+
+          {/* SENHA */}
+          <div className="w-full flex flex-col p-2">
+            <p className="font-semibold text-lg inclusive-sans primary-color">
+              Senha
+            </p>
+
+            <div className="relative flex items-center w-full">
+              <InputDefault
+                type="password"
+                value={senha}
+                onChange={validarSenha}
+                onBlur={() => setInputTocado(true)}
+                variantInput={erroSenha ? "errorInput" : "basicInput"}
+                name="senha de usuário"
+                limiteCaracteres={15}
+              />
+
+              {/* NECESSÁRIO FAZER O ONCLICK PRA MUDAR O BOTAO E MOSTRAR A SENHA */}
+              <button className="absolute right-3 top-1/2 -translate-y-1/2 primary-color">
+                <LockKeyhole size={27} />
+              </button>
+            </div>
+
+            {inputTocado && erroSenha && (
+              <p className="text-red-500 text-sm p-1">{erroSenha}</p>
+            )}
+          </div>
+
+          {/* REPETIR SENHA */}
+          <div className="w-full flex flex-col p-2">
+            <p className="font-semibold text-lg inclusive-sans primary-color">
+              Confirme a senha
+            </p>
+
+            <div className="relative flex items-center w-full">
+              <InputDefault
+                type="password"
+                value={confirmarSenha}
+                onChange={confirmacaoDeSenha}
+                onBlur={() => setInputTocado(true)}
+                variantInput={erroConfirmacao ? "errorInput" : "basicInput"}
+                name="senha de usuário repetida"
+                limiteCaracteres={15}
+              />
+
+              {/* NECESSÁRIO FAZER O ONCLICK PRA MUDAR O BOTAO E MOSTRAR A SENHA */}
+              <button className="absolute right-3 top-1/2 -translate-y-1/2 primary-color">
+                <LockKeyhole size={27} />
+              </button>
+            </div>
+
+            {inputTocado && erroConfirmacao && (
+              <p className="text-red-500 text-sm p-1">{erroConfirmacao}</p>
             )}
           </div>
         </div>
