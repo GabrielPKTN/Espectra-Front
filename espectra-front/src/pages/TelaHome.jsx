@@ -106,16 +106,49 @@ function TelaHome() {
             "serie_escolar": "1º Ano",
             "grau_suporte": "Grau 3",
             "numero_registro": 2026040009
+        },
+        {
+            "id": 10,
+            "foto": "http://azure.blob.img/paciente7.jpg",
+            "nome": "Gabriel Neves Cruz",
+            "data_nascimento": "2016-01-30",
+            "idade": 10,
+            "diagnostico": "TEA e TDAH",
+            "serie_escolar": "4º Ano",
+            "grau_suporte": "Grau 2",
+            "numero_registro": 2026040007
+        },
+        {
+            "id": 11,
+            "foto": "http://azure.blob.img/paciente8.jpg",
+            "nome": "Beatriz Farias Lima",
+            "data_nascimento": "2013-11-12",
+            "idade": 12,
+            "diagnostico": "TOD",
+            "serie_escolar": "7º Ano",
+            "grau_suporte": "Grau 2",
+            "numero_registro": 2026040008
+        },
+        {
+            "id": 12,
+            "foto": "http://azure.blob.img/paciente9.jpg",
+            "nome": "Enzo Gabriel Santos",
+            "data_nascimento": "2019-05-04",
+            "idade": 7,
+            "diagnostico": "Autismo Grau 3",
+            "serie_escolar": "1º Ano",
+            "grau_suporte": "Grau 3",
+            "numero_registro": 2026040009
         }
     ])
 
     const [selectedPaciente, setSelectedPaciente] = useState(null)
 
-    return <div className="py-4 px-5 gap-8 flex flex-col h-screen md:bg-(--bg-primary-color) md:py-0 md:px-0">
+    return <div className="py-4 px-5 gap-8 flex flex-col h-screen">
 
         <ContainerHeader/>
         <main className="
-        gap-2 flex flex-col justify-center items-center grow
+        gap-2 flex flex-col justify-center items-center grow md:gap-8
         ">
 
             <div className="w-full flex gap-2 items-center justify-center">
@@ -127,15 +160,6 @@ function TelaHome() {
             <Button>Adicionar paciente</Button>
 
         </main>
-
-        {/* <main className="hidden md:flex grow">
-            <div className="bg-white h-full w-[40%] rounded-r-2xl p-4">
-                <div className="flex w-full items-center">
-                    <InputHome/>
-                    <Filter className="text-(--bg-primary-color) w-auto pl-2 md:size-10"/>
-                </div>
-            </div>
-        </main> */}
 
     </div>
 
