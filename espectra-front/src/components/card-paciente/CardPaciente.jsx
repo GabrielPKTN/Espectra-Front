@@ -19,9 +19,7 @@ function CardPaciente(props) {
                 <LabelInfoCard info={props.grau_suporte} ></LabelInfoCard>
             </div>
         </div>
-
     </div>
-
 }
 
 export default CardPaciente

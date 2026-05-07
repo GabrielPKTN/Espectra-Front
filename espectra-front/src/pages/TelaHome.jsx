@@ -142,7 +142,14 @@ function TelaHome() {
         }
     ])
 
-    const [selectedPaciente, setSelectedPaciente] = useState(null)
+    const [busca, setBusca] = useState('')
+
+    const pacientesFiltrados = pacientes.filter((paciente) => 
+        paciente.nome.toLowerCase().includes(busca.toLowerCase())
+    )
+
+    console.log(busca)
+    console.log(pacientesFiltrados)
 
     return <div className="py-4 px-5 gap-8 flex flex-col h-screen">
 
@@ -152,10 +159,10 @@ function TelaHome() {
         ">
 
             <div className="w-full flex gap-2 items-center justify-center">
-                <InputHome/>
+                <InputHome busca={setBusca}/>
                 <Filter className="text-(--bg-primary-color) size-8" />
             </div>
-            <ContainerPacientes pacientes={pacientes}/>
+            <ContainerPacientes pacientes={pacientesFiltrados.length > 0 ? pacientesFiltrados : pacientes} />
             
             <Button>Adicionar paciente</Button>
 
