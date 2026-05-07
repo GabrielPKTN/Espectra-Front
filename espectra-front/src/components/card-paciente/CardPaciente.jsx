@@ -4,7 +4,7 @@ import LabelInfoCard from "./LabelInfoCard"
 function CardPaciente(props) {
 
     return <div key={props.id} className="
-    bg-white shadow-lg w-[90%] h-auto justify-between items-center rounded-3xl p-2 flex border-2 border-(--bg-primary-color) md:w-full">
+    bg-white shadow-lg w-[90%] h-full justify-between items-center rounded-3xl p-2 flex border-2 border-(--bg-primary-color) md:w-full">
 
         <ContainerPacientePhoto/>
         <div className="flex flex-col w-full justify-center">
