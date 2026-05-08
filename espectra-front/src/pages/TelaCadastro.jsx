@@ -1,9 +1,11 @@
 import logotipo from "../assets/logotipos/logotipo.svg";
 import button_unselected from "../assets/general_photos/button_unselected.svg";
+import button_selected from "../assets/general_photos/button_select.svg";
 import cadeado from "../assets/general_photos/cadeado.svg";
 import InputDefault from "../components/InputDefault";
 import { use, useState } from "react";
 import { LockKeyhole } from "lucide-react";
+import Button from "../components/Button";
 
 function TelaCadastro() {
   const [inputTocado, setInputTocado] = useState("");
@@ -25,6 +27,11 @@ function TelaCadastro() {
 
   const [confirmarSenha, setConfirmarSenha] = useState("");
   const [erroConfirmacao, setErroConfirmacao] = useState("");
+
+  const [isAtivo, setIsAtivo] = useState(false);
+  const trocarImagem = () => {
+    setIsAtivo(!isAtivo);
+  };
 
   function validarNomeUsuario(e) {
     const valorInserido = e.target.value;
@@ -179,15 +186,21 @@ function TelaCadastro() {
         <div className="flex gap-10 instrument-sans primary-color font-bold">
           {/*para o button dessas divs, quando o onClick for realizado, a foto devera mudar para o selected button. Alem disso, aqui devera ter a conexao com o banco para conseguir selecionar as modalidades de cadastro!*/}
           <div className="flex gap-2">
-            <button>
-              <img src={button_unselected} alt="botao nao selecionado" />
+            <button onClick={trocarImagem}>
+              <img
+                src={isAtivo ? button_selected : button_unselected}
+                alt="status do button"
+              />
             </button>
             <span>Psicopedagogo</span>
           </div>
 
           <div className="flex gap-2">
-            <button>
-              <img src={button_unselected} alt="botao nao selecionado" />
+            <button onClick={trocarImagem}>
+              <img
+                src={isAtivo ? button_unselected : button_selected}
+                alt="status do button"
+              />
             </button>
             <span>Familiar</span>
           </div>
@@ -324,6 +337,21 @@ function TelaCadastro() {
             {inputTocado && erroConfirmacao && (
               <p className="text-red-500 text-sm p-1">{erroConfirmacao}</p>
             )}
+          </div>
+        </div>
+
+        {/* NECESSÁRIO FAZER O ONCLICK PARA FAZER O POST NO BANCO */}
+        <div className="m-6 flex flex-col gap-4 items-center">
+          <Button
+            variantClick="basicClick"
+            /* // onClick={} */
+          >
+            Cadastrar
+          </Button>
+
+          <div className="text-center instrument-sans mt-3">
+            <p>Já possui uma conta?</p>
+            <span className="primary-color font-semibold text-lg">Login</span>
           </div>
         </div>
       </div>
