@@ -34,7 +34,7 @@ function TelaCadastro() {
     if (valorInserido.trim() === "") {
       setErroNome("Seu nome não pode estar vazio");
     } else if (/\d/.test(valorInserido)) {
-      setErroNome("Preencha seu nome!");
+      setErroNome("O nome não pode conter números!");
     } else if (
       /[^a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]/.test(valorInserido)
     ) {
@@ -145,9 +145,7 @@ function TelaCadastro() {
     } else if (!quantidadeNumeros) {
       setErroSenha("A senha precisa de pelo menos 3 números");
     } else if (!caracterEspecial) {
-      setErroSenha(
-        "A senha precisa de pelo menos 1 caracter especial(Ex:@,#,$,%)",
-      );
+      setErroSenha("Insira pelo menos 1 caracter especial (Ex:@,#,$,%)");
     } else {
       setErroSenha("");
     }
