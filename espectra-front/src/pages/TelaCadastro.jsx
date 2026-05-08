@@ -5,6 +5,7 @@ import cadeado from "../assets/general_photos/cadeado.svg";
 import InputDefault from "../components/InputDefault";
 import { use, useState } from "react";
 import { LockKeyhole } from "lucide-react";
+import { LockKeyholeOpen } from "lucide-react";
 import Button from "../components/Button";
 
 function TelaCadastro() {
@@ -31,6 +32,19 @@ function TelaCadastro() {
   const [isAtivo, setIsAtivo] = useState(false);
   const trocarImagem = () => {
     setIsAtivo(!isAtivo);
+  };
+
+  const [mostrarSenha, setMostraSenha] = useState(false);
+  const [mostrarConfirmacaoSenha, setMostrarConfirmacaoSenha] = useState(false);
+
+  const alternarVisualizacao = (e) => {
+    e.preventDefault();
+    setMostraSenha(!mostrarSenha);
+  };
+
+  const alternarVisualizacaoConfirmacao = (e) => {
+    e.preventDefault();
+    setMostrarConfirmacaoSenha(!mostrarConfirmacaoSenha);
   };
 
   function validarNomeUsuario(e) {
@@ -291,7 +305,7 @@ function TelaCadastro() {
 
             <div className="relative flex items-center w-full">
               <InputDefault
-                type="password"
+                type={mostrarSenha ? "text" : "password"}
                 value={senha}
                 onChange={validarSenha}
                 onBlur={() => setInputTocado(true)}
@@ -301,8 +315,16 @@ function TelaCadastro() {
               />
 
               {/* NECESSÁRIO FAZER O ONCLICK PRA MUDAR O BOTAO E MOSTRAR A SENHA */}
-              <button className="absolute right-3 top-1/2 -translate-y-1/2 primary-color">
-                <LockKeyhole size={27} />
+              <button
+                type="button"
+                onClick={alternarVisualizacao}
+                className="absolute right-3 top-1/2 -translate-y-1/2 primary-color"
+              >
+                {mostrarSenha ? (
+                  <LockKeyholeOpen size={27} />
+                ) : (
+                  <LockKeyhole size={27} />
+                )}
               </button>
             </div>
 
@@ -319,7 +341,7 @@ function TelaCadastro() {
 
             <div className="relative flex items-center w-full">
               <InputDefault
-                type="password"
+                type={mostrarConfirmacaoSenha ? "text" : "password"}
                 value={confirmarSenha}
                 onChange={confirmacaoDeSenha}
                 onBlur={() => setInputTocado(true)}
@@ -329,8 +351,16 @@ function TelaCadastro() {
               />
 
               {/* NECESSÁRIO FAZER O ONCLICK PRA MUDAR O BOTAO E MOSTRAR A SENHA */}
-              <button className="absolute right-3 top-1/2 -translate-y-1/2 primary-color">
-                <LockKeyhole size={27} />
+              <button
+                type="button"
+                onClick={alternarVisualizacaoConfirmacao}
+                className="absolute right-3 top-1/2 -translate-y-1/2 primary-color"
+              >
+                {mostrarConfirmacaoSenha ? (
+                  <LockKeyholeOpen size={27} />
+                ) : (
+                  <LockKeyhole size={27} />
+                )}
               </button>
             </div>
 
@@ -351,7 +381,11 @@ function TelaCadastro() {
 
           <div className="text-center instrument-sans mt-3">
             <p>Já possui uma conta?</p>
-            <span className="primary-color font-semibold text-lg">Login</span>
+            <a /*href= "ROTA DA OUTRA TELA"*/
+              className="primary-color font-semibold text-lg"
+            >
+              Login
+            </a>
           </div>
         </div>
       </div>

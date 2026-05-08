@@ -1,5 +1,5 @@
 function InputDefault({
-  type = "text",
+  type,
   value,
   onChange,
   onBlur,
