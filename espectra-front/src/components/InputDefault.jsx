@@ -9,7 +9,7 @@ function InputDefault({
   placeholder,
 }) {
   const estiloInput =
-    "border rounded-xl inclusive-sans h-12 w-full p-1 placeholder:text-center placeholder:p-0";
+    "border rounded-xl inclusive-sans h-12 w-full p-1 placeholder:text-center placeholder:p-0 lg:h-10 lg:bg-white";
   const variants = {
     basicInput: "border-(--bg-primary-color)",
     errorInput: "border-red-500",
