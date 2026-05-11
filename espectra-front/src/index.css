@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+@theme {
+  --font-inclusive-sans: "Inclusive Sans", sans-serif;
+  --font-instrument-sans: "Instrument Sans", sans-serif;
+  --bg-card: #F2F3F7;
+  --bg-primary-color: #3277cf;
+}
+
 body {
   margin: 0;
 }
@@ -37,6 +44,20 @@ body {
   --bg-secondary-color: #4285f4;
 }
 
-@theme {
-  --bg-primary-color: #3277cf;
+
+@layer utilities {
+
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 0.3rem;
+    background-color: var(--bg-card);
+
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+  
+      background-color: var(--bg-primary-color);
+      border-radius: 0.2rem;
+
+  }
+
 }
