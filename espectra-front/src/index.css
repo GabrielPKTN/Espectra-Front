@@ -36,3 +36,7 @@ body {
   --bg-primary-color: #3277cf;
   --bg-secondary-color: #4285f4;
 }
+
+@theme {
+  --bg-primary-color: #3277cf;
+}
