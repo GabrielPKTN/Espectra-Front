@@ -8,6 +8,7 @@ function TelaLogin() {
     //div que gurda tudo na tela.
     <div
       className="flex flex-col bg-primary-color w-full min-h-screen items-center
+        md:overflow-hidden
         lg:grid lg:grid-cols-2"
     >
       {/* div da imagem */}
@@ -29,6 +30,7 @@ function TelaLogin() {
       >
         <h1
           className="primary-color instrument-sans dark-blue font-bold text-2xl p-2 mt-4
+          md:mt-16
         lg:text-3xl lg:mt-10"
         >
           Login
@@ -38,6 +40,7 @@ function TelaLogin() {
         {/* A unica validação que haverá na tela de login será se o usuário foi encontrado ou nao. Para evitar invasoes. */}
         <div
           className="flex flex-col w-full p-3
+            md:px-48 md:mt-8
             lg:mt-2"
         >
           {/* EMAIL */}
@@ -74,12 +77,21 @@ function TelaLogin() {
           </a>
         </div>
 
-        <div className="flex flex-col">
-          <div className="mt-8">
+        <div
+          className="flex flex-col
+        md:gap-12"
+        >
+          <div
+            className="mt-8
+            md:mt-24"
+          >
             <Button variantClick="basicClick">Entrar</Button>
           </div>
 
-          <div className="text-center instrument-sans mt-9">
+          <div
+            className="text-center instrument-sans mt-9
+            md:mt-20"
+          >
             <p>Não possui uma conta?</p>
             <a
               href="/cadastro"
