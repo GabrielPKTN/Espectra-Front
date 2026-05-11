@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import CardExclusao from "../pages/CardExclusao";;
+import HistoricoTentativa from "../pages/TelaHistoricoTentativa";
 
 function Rotas() {
   return (
     <Routes>
-      <Route path="/" element={<CardExclusao />} />
+      <Route path="/" element={<HistoricoTentativa />} />
     </Routes>
   );
 }

@@ -16,7 +16,10 @@ function CardExclusao(){
     const [aberto, setAberto] = useState(true)
 
     return (
+        //Div que faz o background da tela
         <div className="w-screen h-screen backdrop-blur-sm bg-black/30 flex justify-center items-center"> 
+
+        {/* Div que guarda o card */}        
             <div className="relative">
                 {
                 aberto && (
