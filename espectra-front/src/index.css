@@ -4,6 +4,7 @@
   --font-inclusive-sans: "Inclusive Sans", sans-serif;
   --font-instrument-sans: "Instrument Sans", sans-serif;
   --bg-card: #F2F3F7;
+  --bg-primary-color: #3277cf;
 }
 
 body {
@@ -60,5 +61,3 @@ body {
   }
 
 }
-
-
