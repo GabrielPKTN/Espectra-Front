@@ -2,6 +2,7 @@ import logotipo from "../assets/logotipos/logotipo.svg";
 import InputDefault from "../components/InputDefault";
 import { use, useState } from "react";
 import Button from "../components/Button";
+import authentication from "../assets/general_photos/authentication.png";
 
 function TelaLogin() {
   return (
@@ -9,7 +10,7 @@ function TelaLogin() {
     <div
       className="flex flex-col bg-primary-color w-full min-h-screen items-center
         md:overflow-hidden
-        lg:grid lg:grid-cols-2"
+        lg:grid lg:grid-cols-2 lg:overflow-hidden"
     >
       {/* div da imagem */}
       <div
@@ -22,11 +23,18 @@ function TelaLogin() {
           className="w-auto h-32 lg:h-28
                 "
         />
+
+        <img
+          src={authentication}
+          alt="photo login"
+          className="hidden 
+                lg:block lg:w-auto lg:h-128"
+        />
       </div>
 
       <div
         className="bg-white w-screen grow rounded-ss-4xl flex flex-col items-center
-      lg:w-full lg:rounded-l-4xl lg:shadow-xl"
+      lg:w-full lg:rounded-l-4xl lg:shadow-xl lg:h-screen lg:justify-center"
       >
         <h1
           className="primary-color instrument-sans dark-blue font-bold text-2xl p-2 mt-4
@@ -41,7 +49,7 @@ function TelaLogin() {
         <div
           className="flex flex-col w-full p-3
             md:px-48 md:mt-8
-            lg:mt-2"
+            lg:mt-2 lg:w-187.5"
         >
           {/* EMAIL */}
           <div className="w-auto flex flex-col p-2">
@@ -83,7 +91,8 @@ function TelaLogin() {
         >
           <div
             className="mt-8
-            md:mt-24"
+            md:mt-24
+            lg:mt-10"
           >
             <Button variantClick="basicClick">Entrar</Button>
           </div>
