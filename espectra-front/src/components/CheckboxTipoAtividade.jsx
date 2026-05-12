@@ -1,18 +1,39 @@
-export default function CheckboxAtividade({children}){
-    return(
-        <div className="flex flex-col gap-1">
-            <p className="instrument-sans font-semibold text-lg ">A habilidade que vai ser desenvolvida é?...</p>
+export default function CheckboxAtividade({ opcaoSelecionada, setOpcaoSelecionada }) {
+  return (
+    <div className="flex flex-col gap-1">
+      <p className="instrument-sans font-semibold text-lg">
+        A habilidade que vai ser desenvolvida é?...
+      </p>
 
-            <div className="flex items-center gap-2">
-                <input type="checkbox" name="" id="" className="size-5 rounded-lg md:size-7"/>
-                <span className="instrument-sans text-lg ">Personalizada</span>
-            </div>
+      <div className="flex items-center gap-2">
+        <input
+          type="checkbox"
+          name="atividade"
+          value="personalizada"
+          checked={opcaoSelecionada === "personalizada"}
+          onChange={(e) => setOpcaoSelecionada(e.target.value)}
+          className="size-5 md:size-7"
+        />
 
-            <div className="flex  gap-2">
-                <input type="checkbox" name="" id="" className="size-10 rounded-lg md:size-7" />
-                <span className="instrument-sans text-lg ">Baseada em habilidades não desenvolvidas com respostas da avaliação feita.</span> 
-            </div>
-           
-        </div>
-    )
+        <span className="instrument-sans text-lg">
+          Personalizada
+        </span>
+      </div>
+
+      <div className="flex items-start gap-2">
+        <input
+          type="checkbox"
+          name="atividade"
+          value="portage"
+          checked={opcaoSelecionada === "portage"}
+          onChange={(e) => setOpcaoSelecionada(e.target.value)}
+          className="size-5 md:size-7 mt-1"
+        />
+
+        <span className="instrument-sans text-lg">
+          Baseada em habilidades não desenvolvidas com respostas da avaliação feita.
+        </span>
+      </div>
+    </div>
+  );
 }

@@ -1,11 +1,14 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import OutlinedTitle from "../components/OutlinedTitle";
 import interrogacao from "../assets/general_photos/interrogacao.svg";
 import logotipoAzul from "../assets/logotipos/logotipo-azul.svg";
 import CheckboxAtividade from "../components/CheckboxTipoAtividade";
 
-function telaCadastroAtividadePersonalizada() {
+function telaCadastroAtividade() {
     const navigate = useNavigate();
+
+    const [opcaoSelecionada, setOpcaoSelecionada] = useState("");
 
     return(
       <div className="w-full lg:min-h-screen lg:bg-[var(--light-blue)] lg:flex lg:flex-col lg:items-center lg:justify-center ">
@@ -27,9 +30,13 @@ function telaCadastroAtividadePersonalizada() {
       
                       <div className="flex flex-col gap-5 mt-5 lg:mt-0">
 
-                        <CheckboxAtividade></CheckboxAtividade>
-      
-                          <div className="flex flex-col w-full gap-3">
+                        <CheckboxAtividade
+                            opcaoSelecionada={opcaoSelecionada}
+                            setOpcaoSelecionada={setOpcaoSelecionada}
+                        />
+
+                        {opcaoSelecionada === 'personalizada' && (
+                              <div className="flex flex-col w-full gap-3">
                               <p className="instrument-sans font-semibold text-lg md:text-2xl">Escreva a proposta de habilidade a ser desenvolvida:</p>
                               <input 
                                   type="text" 
@@ -40,7 +47,15 @@ function telaCadastroAtividadePersonalizada() {
                                       
                                   />
                           </div>
-      
+                        )}
+
+                        {opcaoSelecionada === 'portage' && (
+                             <div>
+
+                             </div>
+                        )}
+
+                       
                           <div className="flex flex-col gap-3">
       
                               <p className="
@@ -95,4 +110,4 @@ function telaCadastroAtividadePersonalizada() {
     )
 }
 
-export default telaCadastroAtividadePersonalizada
+export default telaCadastroAtividade
