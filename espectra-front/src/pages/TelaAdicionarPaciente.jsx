@@ -4,6 +4,7 @@ import default_photo from "../assets/general_photos/default-photo.png";
 import InputHome from "../components/input/InputHome";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
+import { CircleUser } from 'lucide-react';
 
 
 function TelaAdicionarPaciente() {
@@ -16,13 +17,18 @@ function TelaAdicionarPaciente() {
 
       {/*div do header*/}
       <div className="flex justify-between items-center lg:mt-2">
-      <ChevronLeft 
-        className="primary-color size-10
-        lg:size-14"/>
+        <button onClick={()=> navigate("/home")}>
+          <ChevronLeft 
+          className="primary-color size-10
+          lg:size-11"/>
+        </button>
+
+      
       <img src={logotipo} alt="logotipo do app" 
       className="size-10 w-auto
       lg:size-14 lg:w-auto"/>
-      <img src={default_photo} alt="foto usuario" className="size-12 lg:size-16" />
+
+    <CircleUser className="size-12 lg:size-16 primary-color"></CircleUser>
       </div>
 
       {/*div do input*/}
@@ -41,11 +47,11 @@ function TelaAdicionarPaciente() {
       lg:w-175 lg:mx-auto lg:h-90 lg:mt-10">
         <div className="flex flex-col justify-center items-center gap-4 mb-4">
 
-        <img src={default_photo}
-        alt="foto usuario"
-        className="w-20 h-20 mt-5
-          md:w-28 md:h-28 md:mt-18
-          lg:mt-8 lg:w-25 lg:h-25"/>
+        <CircleUser className="size-16 primary-color mt-5
+        md:mt-18 md:size-22
+        lg:mt-8 lg:size-20">
+        </CircleUser>
+
 
         <h1 className="primary-color font-bold text-2xl instrument-sans
         md:text-3xl md:mt-4">
