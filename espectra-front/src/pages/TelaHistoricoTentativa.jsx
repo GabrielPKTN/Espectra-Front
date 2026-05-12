@@ -1,21 +1,23 @@
-import Card from "../components/Card";
 import Button from "../components/Button";
-import voltar from "../assets/general_photos/rectangle.png";
 import fotoPsicopedagogo from "../assets/general_photos/fotoPsicopedagogo.png";
+import CardTentativa from "../components/CardTentativa";
+import { useNavigate } from "react-router-dom";
+import { ChevronLeft } from "lucide-react";
 
 function HistoricoTentativa() {
+
+    const navigate = useNavigate()
 
     return (
         //Div da tela
         <div>
             {/* Div da seção do Header */}
             <div className="flex justify-between items-center">
-                <img
-                    src={voltar}
-                    alt="Voltar"
-                    //onClick para voltar a tela anterior -> Implementação futura
-                    className="mt-[18px] ml-[20px]"
-                />
+            <ChevronLeft
+                //onClick para ir a tela de perifl -> Implementação futura
+                className="mt-[18px] ml-[16px] w-8 h-8 text-black cursor-pointer"
+                color="#00459C"
+            />
                 
                 <img
                     src={fotoPsicopedagogo}
@@ -35,11 +37,59 @@ function HistoricoTentativa() {
                     Tentativas:
                 </h2>
 
-                <Card></Card>
+                {/* Div dos Cards */}
+                <div className="flex flex-col gap-4">
+                    <CardTentativa
+                        titulo="Atividade realizada com auxílio parcial"
+                        descricao="Resultado: Êxito"
+                        data="20/03/2026"
+                        fundo="bg-[#F9F9F9]"
+                    >
+                        <Button
+                            className="w-[142px] h-[31px] rounded-2x1 transform-gpu transition-all duration-300 ease-in-out hover:scale-110"
+                            variantClick="basicClick"
+                            onClick={() => navigate("/detalhesTentativa")}
+                        >
+                            Ver detalhes
+                        </Button>
+                    </CardTentativa>
+                
+                    <CardTentativa
+                        titulo="Atividade realizada com auxílio parcial"
+                        descricao="Resultado: Êxito"
+                        data="20/03/2026"
+                        fundo="bg-[#F9F9F9]"
+                    >
+                        <Button
+                            className="w-[142px] h-[31px] rounded-2x1 transform-gpu transition-all duration-300 ease-in-out hover:scale-110"
+                            variantClick="basicClick"
+                            onClick={() => navigate("/detalhesTentativa")}
+                        >
+                            Ver detalhes
+                        </Button>
+                    </CardTentativa>
 
-                <Card></Card>
+                    <CardTentativa
+                        titulo="Atividade realizada com auxílio parcial"
+                        descricao="Resultado: Êxito"
+                        data="20/03/2026"
+                        fundo="bg-[#F9F9F9]"
+                    >
+                        <Button
+                            className="w-[142px] h-[31px] rounded-2x1 transform-gpu transition-all duration-300 ease-in-out hover:scale-110"
+                            variantClick="basicClick"
+                            onClick={() => navigate("/detalhesTentativa")}
+                        >
+                            Ver detalhes
+                        </Button>
+                    </CardTentativa>
+                </div>
 
-                <Card></Card>
+                <h2 className="w-full text-left ml-[38px] mt-[18px] text-black font-['Instrument_Sans'] text-[22px] font-bold">
+                    Representação gráfica: 
+                </h2>
+
+
             </div>
         </div>
     )
