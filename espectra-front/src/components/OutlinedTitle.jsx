@@ -17,6 +17,7 @@ export default function OutlinedTitle({ children }) {
           text-2xl
           instrument-sans
           md:text-6xl -translate-x-[45px]
+          lg:m-0
         "
       >
         {children}
@@ -31,6 +32,7 @@ export default function OutlinedTitle({ children }) {
           mt-10
           instrument-sans
           md:text-5xl
+          lg:mt-1
         "
       >
         {children}
