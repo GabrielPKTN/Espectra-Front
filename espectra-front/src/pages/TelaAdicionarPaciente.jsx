@@ -2,6 +2,7 @@ import { ChevronLeft } from "lucide-react";
 import logotipo from "../assets/logotipos/logo.png";
 import default_photo from "../assets/general_photos/default-photo.png";
 import InputHome from "../components/input/InputHome";
+import Button from "../components/Button";
 
 
 function TelaAdicionarPaciente() {
@@ -22,8 +23,41 @@ function TelaAdicionarPaciente() {
         <InputHome></InputHome>
       </div>
 
-      {/*div que carregará o card com informações do paciente. Possivelmente vai ser preciso componentizar.*/}
-      <div></div>
+      {/*div que carregará o card cinza com informações do paciente. Possivelmente vai ser preciso componentizar.*/}
+      <div className="bg-gray-200 h-auto w-full mt-8 rounded-2xl shadow-lg/20 border border-[#C9C9C9] ">
+        <div className="flex flex-col justify-center items-center gap-4 mb-4">
+
+        <img src={default_photo}
+        alt="foto usuario"
+        className="w-20 h-20 mt-5"/>
+
+        <h1 className="primary-color font-bold text-2xl instrument-sans">
+          NOME USUÁRIO
+        </h1>
+
+        <p className="primary-color font-inclusive-sans text-center text-lg p-2 font-medium italic">
+        NOME USUÁRIO nasceu em DATA, tem IDADE,
+        está na SERIE-ESCOLA e possui diagnóstico de DIAGNOSTICO com grau de suporte X.
+        </p>
+        </div>
+      </div>
+
+      <div className="flex flex-col justify-center items-center gap-4 mt-5">        
+          <Button
+            variantClick="basicClick"
+            // *onClick={}*/ 
+          >
+            Iniciar avaliação
+          </Button>
+
+          <Button
+            variantClick="basicClick"
+            // *onClick={}*/ 
+          >
+            Adicionar paciente
+          </Button>
+        </div>
+
 
     </div>
       
