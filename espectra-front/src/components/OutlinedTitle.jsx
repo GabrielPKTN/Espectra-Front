@@ -14,7 +14,7 @@ export default function OutlinedTitle({ children }) {
           opacity-30
           select-none
           mt-9
-          text-2xl
+          text-3xl
           instrument-sans
           md:text-6xl -translate-x-[45px]
           lg:m-0
@@ -26,7 +26,7 @@ export default function OutlinedTitle({ children }) {
       <h1
         className="
           relative
-          text-lg
+          text-2xl
           font-bold
           text-[#89C771]
           mt-10
