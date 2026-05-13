@@ -1,8 +1,53 @@
 import { CircleUser } from "lucide-react";
 import { ChevronLeft } from "lucide-react";
 import LegendaHabilidade from "../components/LegendaHabilidade";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  Cell,
+  LabelList,
+} from "recharts";
 
 function TelaPerfilPaciente() {
+  const data = [
+    {
+      nome: "Socialização",
+      idade: 1,
+      cor: "#a2e289",
+      classe: "cor-socializacao",
+    },
+    {
+      nome: "Cognição",
+      idade: 6,
+      cor: "#71afff",
+      classe: "cor-cognicao",
+    },
+    {
+      nome: "Auto-cuidado",
+      idade: 3,
+      cor: "#d293f0",
+      classe: "cor-autocuidado",
+    },
+    {
+      nome: "Linguagem",
+      idade: 5,
+      cor: "#ffc87b",
+      classe: "cor-linguagem",
+    },
+    {
+      nome: "Desenvolvimento-motor",
+      idade: 4,
+      cor: "#c8c8c8",
+      classe: "cor-devmotor",
+    },
+  ];
+
   return (
     <div className=" flex flex-col w-screen h-auto p-2 ">
       {/*HEADER*/}
@@ -34,15 +79,60 @@ function TelaPerfilPaciente() {
 
         {/*Informações de desempenho*/}
         <div className="mt-5">
-          <h2 className="secondary-color font-semibold text-2xl instrument-sans">
+          <h2 className="secondary-color font-semibold text-2xl instrument-sans text-center">
             Gráfico de desempenho
           </h2>
 
+          {/*GRAFICO*/}
+          <div className="h-64 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={data}
+                margin={{
+                  top: 35,
+                  right: 30,
+                  left: 20,
+                  bottom: 0,
+                }}
+              >
+                <XAxis dataKey="nome" tick={false} />
+                <YAxis hide domain={[0, 6]} allowDataOverflow={false} />
+                <Tooltip cursor={{ fill: "transparent" }} />
+
+                <Bar dataKey="idade" barSize={40}>
+                  {data.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.cor} />
+                  ))}
+
+                  <LabelList
+                    dataKey="idade"
+                    position="top"
+                    offset={10}
+                    className="instrument-sans"
+                    formatter={(value) =>
+                      `${value} ${value === 1 ? "ano" : "anos"}`
+                    }
+                    style={{
+                      fill: "#000000",
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                    }}
+                  />
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
           {/*Legenda*/}
-          <div>
-            <LegendaHabilidade color="cor-socializacao">
-              Socialização
-            </LegendaHabilidade>
+          <div className="flex flex-col gap-3 mt-3">
+            <h3 className="instrument-sans font-bold p-2 text-lg">Legenda:</h3>
+            <div className="flex flex-wrap gap-4 items-center">
+              {data.map((item) => (
+                <LegendaHabilidade key={item.classe} color={item.classe}>
+                  {item.nome}
+                </LegendaHabilidade>
+              ))}
+            </div>
           </div>
         </div>
       </div>
