@@ -32,7 +32,7 @@ function TelaInicial() {
             <NavItem href="https://github.com/GabrielPKTN/Espectra-Front.git">
               Sobre
             </NavItem>
-            <NavItem href="/Login">Login</NavItem>
+            <NavItem href="/login">Login</NavItem>
           </ul>
         </nav>
       </div>
