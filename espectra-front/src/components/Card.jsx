@@ -27,7 +27,7 @@ function Card({
       {/* BOTÕES */}
       <div
         className={`w-full flex gap-3 ${
-          rowButtons ? "flex-row justify-center" : "flex-col"
+          rowButtons ? "flex-row justify-center items-center" : "flex-col"
         }`}
       >
         {children}
