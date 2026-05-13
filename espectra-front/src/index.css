@@ -3,7 +3,7 @@
 @theme {
   --font-inclusive-sans: "Inclusive Sans", sans-serif;
   --font-instrument-sans: "Instrument Sans", sans-serif;
-  --bg-card: #F2F3F7;
+  --bg-card: #f2f3f7;
   --bg-primary-color: #3277cf;
 }
 
@@ -39,25 +39,39 @@ body {
   color: #00459c;
 }
 
+.cor-socializacao {
+  background-color: #a2e289;
+}
+
+.cor-cognicao {
+  background-color: #71afff;
+}
+
+.cor-autocuidado {
+  background-color: #d293f0;
+}
+
+.cor-linguagem {
+  background-color: #ffc87b;
+}
+
+.cor-devmotor {
+  background-color: #c8c8c8;
+}
+
 :root {
   --bg-primary-color: #3277cf;
   --bg-secondary-color: #4285f4;
 }
 
-
 @layer utilities {
-
   .scrollbar-custom::-webkit-scrollbar {
     width: 0.3rem;
     background-color: var(--bg-card);
-
   }
 
   .scrollbar-custom::-webkit-scrollbar-thumb {
-  
-      background-color: var(--bg-primary-color);
-      border-radius: 0.2rem;
-
+    background-color: var(--bg-primary-color);
+    border-radius: 0.2rem;
   }
-
 }
