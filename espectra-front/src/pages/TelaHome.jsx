@@ -4,8 +4,11 @@ import ContainerPacientes from "../components/ContainerPacientes.jsx";
 import Button from "../components/Button.jsx";
 import { Filter } from "lucide-react";
 import { useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function TelaHome() {
+  const navigate = useNavigate();
+
   const [pacientes, setPacientes] = useState([
     {
       id: 2,
@@ -157,7 +160,12 @@ function TelaHome() {
           }
         />
 
-        <Button>Adicionar paciente</Button>
+        <Button
+          variantClick="basicClick"
+          onClick={() => navigate("/adicionar_paciente")}
+        >
+          Adicionar paciente
+        </Button>
       </main>
     </div>
   );
