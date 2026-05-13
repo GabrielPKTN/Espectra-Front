@@ -3,9 +3,8 @@ import { useState } from "react";
 import OutlinedTitle from "../components/OutlinedTitle";
 import logotipoAzul from "../assets/logotipos/logotipo-azul.svg";
 import CheckboxAtividade from "../components/CheckboxTipoAtividade";
-import arrow from "../assets/general_photos/arrow.svg";
-import userPhoto from "../assets/general_photos/userPhoto.png";
 import OptionPaneMeses from "../components/OptionPaneMeses";
+import HeaderUsuario from "../components/HeaderUsuario";
 
 function telaCadastroAtividade() {
     const navigate = useNavigate();
@@ -15,13 +14,7 @@ function telaCadastroAtividade() {
     return(
       <div className="overflow-y-hidden w-full h-screen md:h-auto md:min-h-screen md:bg-[var(--light-blue)] md:flex md:flex-col md:items-center md:justify-center lg:justify-start lg:h-auto lg:h-screen">
 
-        <header className="flex items-center justify-between p-4 md:hidden lg:h-0">
-       
-            <img src={arrow} alt="" />
-           
-
-            <img src={userPhoto} alt=""/>
-        </header>
+       <HeaderUsuario/>
       
                   <img  
                       src={logotipoAzul}
