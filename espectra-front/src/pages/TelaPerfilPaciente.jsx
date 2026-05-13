@@ -83,8 +83,20 @@ function TelaPerfilPaciente() {
             Gráfico de desempenho
           </h2>
 
+          {/*Legenda*/}
+          <div className="flex flex-col gap-3 mt-3">
+            <h3 className="instrument-sans font-bold p-2 text-lg">Legenda:</h3>
+            <div className="flex flex-wrap gap-4 items-center p-2">
+              {data.map((item) => (
+                <LegendaHabilidade key={item.classe} color={item.classe}>
+                  {item.nome}
+                </LegendaHabilidade>
+              ))}
+            </div>
+          </div>
+
           {/*GRAFICO*/}
-          <div className="h-64 w-full">
+          <div className="h-64 w-full mt-4">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={data}
@@ -122,17 +134,14 @@ function TelaPerfilPaciente() {
               </BarChart>
             </ResponsiveContainer>
           </div>
+        </div>
 
-          {/*Legenda*/}
-          <div className="flex flex-col gap-3 mt-3">
-            <h3 className="instrument-sans font-bold p-2 text-lg">Legenda:</h3>
-            <div className="flex flex-wrap gap-4 items-center">
-              {data.map((item) => (
-                <LegendaHabilidade key={item.classe} color={item.classe}>
-                  {item.nome}
-                </LegendaHabilidade>
-              ))}
-            </div>
+        {/*Lista de habilidades. NECESSÁRIO COMPONENTIZAR.*/}
+        <div className="px-8 mt-4 w-full flex flex-col justify-center">
+          <div className="cor-socializacao h-8 flex items-center justify-center rounded-lg ">
+            <p className="text-center instrument-sans font-semibold text-lg">
+              Socialização
+            </p>
           </div>
         </div>
       </div>
