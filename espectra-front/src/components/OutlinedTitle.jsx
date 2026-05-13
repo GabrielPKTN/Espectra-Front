@@ -5,9 +5,8 @@ export default function OutlinedTitle({ children }) {
         className="
           absolute
           top-0
-          left-0
+          left-6
           font-bold
-          -translate-x-[18px]
           -translate-y-[2px]
           text-transparent
           [-webkit-text-stroke:1px_#89C771]

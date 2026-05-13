@@ -4,6 +4,8 @@ import OutlinedTitle from "../components/OutlinedTitle";
 import interrogacao from "../assets/general_photos/interrogacao.svg";
 import logotipoAzul from "../assets/logotipos/logotipo-azul.svg";
 import CheckboxAtividade from "../components/CheckboxTipoAtividade";
+import arrow from "../assets/general_photos/arrow.svg";
+import userPhoto from "../assets/general_photos/userPhoto.png";
 
 function telaCadastroAtividade() {
     const navigate = useNavigate();
@@ -11,15 +13,23 @@ function telaCadastroAtividade() {
     const [opcaoSelecionada, setOpcaoSelecionada] = useState("");
 
     return(
-      <div className="w-full lg:min-h-screen lg:bg-[var(--light-blue)] lg:flex lg:flex-col lg:items-center lg:justify-center ">
+      <div className="w-full md:min-h-screen md:bg-[var(--light-blue)] md:flex md:flex-col md:items-center md:justify-center lg:justify-start">
+
+        <header className="flex items-center justify-between p-4 md:hidden lg:h-0">
+       
+            <img src={arrow} alt="" />
+           
+
+            <img src={userPhoto} alt=""/>
+        </header>
       
                   <img 
                       src={logotipoAzul}
                       alt="" 
-                      className="hidden lg:block "
+                      className="hidden md:block md:w-40"
                   />
       
-                  <div className="w-full h-screen px-8 flex flex-col lg:w-[60%] lg:bg-white lg:rounded-xl lg:h-[40%] lg:p-10 lg:gap-10 lg:shadow-[0_0_50px_rgba(0,0,0,0.25)]">
+                  <div className="w-full h-screen px-8 flex flex-col md:w-[90%] md:bg-white md:rounded-xl md:h-[50%] md:p-10 md:gap-10 md:shadow-[0_0_50px_rgba(0,0,0,0.25)] ">
                       
                       <div className="flex justify-center w-full">
                           <OutlinedTitle>
@@ -50,8 +60,15 @@ function telaCadastroAtividade() {
                         )}
 
                         {opcaoSelecionada === 'portage' && (
-                             <div>
-
+                             <div className="">
+                                <p className="instrument-sans font-semibold text-lg">Escolha uma das habilidades ainda não desenvolvidas:</p>
+                                <select 
+                                    name="" 
+                                    id=""
+                                    className="shadow-[0_0_20px_rgba(0,0,0,0.25)] p-2 rounded-lg w-full"
+                                >
+                                    <option value="">1. Observa uma pessoa movimentando -se em seu campo visual.</option>
+                                </select>
                              </div>
                         )}
 
@@ -71,7 +88,7 @@ function telaCadastroAtividade() {
                                       id="" 
                                       className="
                                           shadow-[0_0_20px_rgba(0,0,0,0.25)] px-1 w-25 rounded-lg h-7 inclusive-sans text-sm 
-                                          md:text-2xl md:w-40 md:h-12 
+                                          md:text-lg md:w-40 md:h-8 
                                           "
                                       >
                                       <option value="">0 Meses</option>
@@ -85,7 +102,7 @@ function telaCadastroAtividade() {
                       </div>
       
       
-                      <div className="flex flex-col mt-5 justify-items-center-safe w-full gap-3 md:gap-5 md:mt-40 lg:mt-0 lg:flex-row-reverse lg:w-full lg:justify-center">
+                      <div className="flex flex-col mt-5 justify-items-center-safe w-full gap-3 md:gap-5 md:mt-40 lg:mt-0 md:flex-row-reverse lg:w-full lg:justify-center">
                           <button className="
                               bg-[var(--bg-secondary-color)] w-70 rounded-md instrument-sans self-center text-white p-1
                               md:w-80 md:h-14 md:text-xl md:font-semibold md:rounded-2xl
