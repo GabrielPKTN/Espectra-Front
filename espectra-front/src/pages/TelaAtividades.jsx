@@ -1,49 +1,17 @@
 import CardAtividade from "../components/CardAtividadeAndamento"
 import CardAtividadeAdquirida from "../components/CardAtividadeAdquirida"
 import HeaderUsuario from "../components/HeaderUsuario"
-import userPhoto from "../assets/general_photos/userPhoto.png";
-import home from "../assets/general_photos/home.svg";
-import add from "../assets/general_photos/add.svg";
+import CardUser from "../components/CardUser";
+import { useNavigate } from "react-router-dom";
 
 function TelaAtividades(){
+    
+    const navigate = useNavigate()
+
     return(
         <div className="flex md:gap-5">
 
-            <div className="
-                hidden 
-                md:flex md:flex-col md:w-[50%] md:gap-10 md:p-4  md:shadow-[10px_0_15px_-3px_rgba(0,0,0,0.3)] rounded-3xl
-                lg:w-[30%]"
-                >
-
-                <div className="flex items-center gap-4">
-
-                    <img src={userPhoto} alt="" />
-
-                    <span className="instrument-sans text-xl font-bold text-[var(--bg-primary-color)]">Olá, Larissa</span>
-
-                </div>
-
-                <div className="flex flex-col gap-4 pl-2">
-
-                    <div className="flex gap-3">
-
-                        <img src={home} alt="" />
-
-                        <span className="instrument-sans font-bold text-[var(--bg-primary-color)] text-lg">Início</span>
-
-                    </div>
-
-                    <div className="flex gap-3">
-
-                        <img src={add} alt="" />
-
-                        <span className="instrument-sans font-bold text-[var(--bg-primary-color)] text-lg">Adicionar atividade</span>
-
-                    </div>
-                </div>
-
-                
-            </div>
+            <CardUser/>
 
             <div className="h-screen w-full flex flex-col px-4 md:py-8 gap-6 lg:gap-10">
             
@@ -65,9 +33,9 @@ function TelaAtividades(){
                     <h2 className="
                         instrument-sans font-bold text-lg 
                         md:text-2xl
-                        lg:"
+                        lg:text-3xl"
                         >
-                            Atividades Em andamento
+                            Atividades Em andamento:
                     </h2>
 
                     <div className="flex flex-col w-full gap-3 lg:flex-row lg:gap-3">
@@ -81,14 +49,20 @@ function TelaAtividades(){
     
                 <div className="flex flex-col justify-items-center items-center gap-5 lg:items-start">
                     <h2 className="
-                        instrument-sans font-bold text-lg md:text-2xl"
+                        instrument-sans font-bold text-lg 
+                        md:text-2xl
+                        lg:text-3xl"
                         >
-                            Habilidades adquiridas
+                            Habilidades adquiridas:
                     </h2>
 
-                    <CardAtividadeAdquirida/>
+                    <div className="flex flex-col w-full gap-3 lg:flex-row lg:gap-3 ">
+                        <CardAtividadeAdquirida/>
     
-                    <CardAtividadeAdquirida/>
+                        <CardAtividadeAdquirida/>
+                    </div>
+
+                   
                 </div>
     
                 <button className="
@@ -96,6 +70,9 @@ function TelaAtividades(){
                     instrument-sans font-bold 
                     md:hidden
                     "
+                    onClick={() => {
+                        navigate('/atividades/cadastrar')
+                    }}
                     >
                         Adicionar atividade
                 </button>

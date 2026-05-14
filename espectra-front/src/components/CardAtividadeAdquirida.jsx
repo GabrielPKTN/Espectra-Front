@@ -22,6 +22,7 @@ export default function CardAtividade() {
                 border-[#C6C6C6]
                 shadow-[0_4px_20px_rgba(0,0,0,0.08)]
                 w-full
+                lg:self-start
             "
         >
 
@@ -35,7 +36,7 @@ export default function CardAtividade() {
                 "
             >
 
-                <p className="instrument-sans font-semibold md:text-xl md:font-medium">
+                <p className="instrument-sans font-semibold md:text-xl md:font-medium lg:text-2xl">
                     Descrição da atividade
                 </p>
 
@@ -54,7 +55,7 @@ export default function CardAtividade() {
                 <div className="mt-5 flex flex-col gap-5">
 
                     <button className="
-                        instrument-sans font-bold bg-[var(--bg-secondary-color)] p-2 rounded-full text-white"
+                        instrument-sans font-bold bg-[var(--bg-secondary-color)] p-2 rounded-full text-white md:text-lg lg:text-xl"
 
                         >
                             Histórico de tentativas
