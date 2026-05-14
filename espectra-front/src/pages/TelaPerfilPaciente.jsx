@@ -60,7 +60,7 @@ function TelaPerfilPaciente() {
 
       {/*MAIN*/}
       <div className="flex flex-col justify-center items-center">
-        {/*Dados do paciente.*/}
+        {/*Nome e foto do paciente.*/}
         <div className="flex flex-col items-center gap-3">
           <CircleUser className="primary-color size-24 lg:size-28"></CircleUser>
 
@@ -73,24 +73,25 @@ function TelaPerfilPaciente() {
           </h1>
         </div>
 
-        <div className="flex flex-col lg:grid lg:grid-cols-2">
-          <p
-            className="text-center italic primary-color inclusive-san font-lights
+        <div className="flex flex-col lg:grid lg:grid-cols-2 lg:gap-x-10 ">
+          <div className="mt-5 flex flex-col ">
+            {/*descricao e numero. */}
+            <p
+              className="text-center italic primary-color inclusive-san font-lights
               md:text-lg md:px-10"
-          >
-            Nome do paciente nasceu em Data, tem Idade, está na 5° Série e
-            possui diagnóstico de Diagnostico com grau de suporte X.
-          </p>
+            >
+              Nome do paciente nasceu em Data, tem Idade, está na 5° Série e
+              possui diagnóstico de Diagnostico com grau de suporte X.
+            </p>
 
-          <div
-            className="flex flex-row gap-1 font-semibold instrument-sans text-base p-3 justify-center
+            <div
+              className="flex flex-row gap-1 font-semibold instrument-sans text-base p-3 justify-center
               md:text-lg"
-          >
-            <p className="primary-color">Telefone do responsável:</p>
-            <p>+55 11 91234-5678</p>
-          </div>
-          {/*Informações de desempenho*/}
-          <div className="mt-5">
+            >
+              <p className="primary-color">Telefone do responsável:</p>
+              <p>+55 11 91234-5678</p>
+            </div>
+
             <h2 className="secondary-color font-semibold text-2xl instrument-sans text-center">
               Gráfico de desempenho
             </h2>
