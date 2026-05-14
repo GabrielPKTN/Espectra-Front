@@ -43,6 +43,10 @@ body {
   background-color: #a2e289;
 }
 
+.cor-socializacao-hover:hover {
+  background-color: #7bd059;
+}
+
 .cor-cognicao {
   background-color: #71afff;
 }

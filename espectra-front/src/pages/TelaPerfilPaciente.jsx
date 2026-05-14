@@ -13,6 +13,7 @@ import {
   Cell,
   LabelList,
 } from "recharts";
+import ButtonHabilidade from "../components/ButtonHabilidade";
 
 function TelaPerfilPaciente() {
   const data = [
@@ -30,13 +31,13 @@ function TelaPerfilPaciente() {
     },
     {
       nome: "Auto-cuidado",
-      idade: 3,
+      idade: 2,
       cor: "#d293f0",
       classe: "cor-autocuidado",
     },
     {
       nome: "Linguagem",
-      idade: 5,
+      idade: 3,
       cor: "#ffc87b",
       classe: "cor-linguagem",
     },
@@ -138,11 +139,13 @@ function TelaPerfilPaciente() {
 
         {/*Lista de habilidades. NECESSÁRIO COMPONENTIZAR.*/}
         <div className="px-8 mt-4 w-full flex flex-col justify-center">
-          <div className="cor-socializacao h-8 flex items-center justify-center rounded-lg ">
-            <p className="text-center instrument-sans font-semibold text-lg">
-              Socialização
-            </p>
-          </div>
+          <ButtonHabilidade
+            color="cor-socializacao"
+            colorHover="cor-socializacao-hover"
+            type="button"
+          >
+            Socialização
+          </ButtonHabilidade>
         </div>
       </div>
     </div>
