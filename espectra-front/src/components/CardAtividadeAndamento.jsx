@@ -35,7 +35,7 @@ export default function CardAtividade() {
                 "
             >
 
-                <p className="instrument-sans font-semibold">
+                <p className="instrument-sans font-semibold md:text-xl md:font-medium">
                     Descrição da atividade
                 </p>
 
@@ -53,21 +53,24 @@ export default function CardAtividade() {
             {expandido && (
                 <div className="mt-5 flex flex-col gap-5">
                     <button className="
-                        instrument-sans font-bold bg-[var(--bg-secondary-color)] p-2 rounded-full text-white"
+                        instrument-sans font-bold bg-[var(--bg-secondary-color)] p-2 rounded-full text-white
+                        md:text-lg"
 
                         >
                             Realizar Tentativa
                     </button>
 
                     <button className="
-                        instrument-sans font-bold bg-[var(--bg-secondary-color)] p-2 rounded-full text-white"
+                        instrument-sans font-bold bg-[var(--bg-secondary-color)] p-2 rounded-full text-white
+                        md:text-lg"
 
                         >
                             Histórico de tentativas
                     </button>
 
                     <button className="
-                        instrument-sans font-bold bg-[var(--bg-secondary-color)] p-2 rounded-full text-white"
+                        instrument-sans font-bold bg-[var(--bg-secondary-color)] p-2 rounded-full text-white
+                        md:text-lg"
 
                         >
                             Declarar Habilidade
@@ -77,15 +80,15 @@ export default function CardAtividade() {
                     <div className="flex gap-8 mt-4 justify-center">
 
                         <div className="flex items-center justify-center gap-1">
-                            <img src={trash} alt="Excluir" className="w-7"/>
-                            <span className="instrument-sans text-sm text-[#F94C4C] text-xs">
+                            <img src={trash} alt="Excluir" className="w-7 md:w-8"/>
+                            <span className="instrument-sans text-[#F94C4C] text-xs md:text-lg">
                                 Excluir atividade
                             </span>
                         </div>
 
                         <div className="flex items-center justify-center gap-1">
-                            <img src={pen} alt="Editar" className="w-7"/>
-                            <span className="instrument-sans text-sm text-[var(--bg-secondary-color)] text-xs">
+                            <img src={pen} alt="Editar" className="w-7 md:w-8"/>
+                            <span className="instrument-sans text-[var(--bg-secondary-color)] text-xs md:text-lg">
                                 Editar atividade
                             </span>
                         </div>

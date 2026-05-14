@@ -5,10 +5,10 @@ export default function HeaderUsuario(){
     return(
         <header className="flex items-center justify-between p-4 md:hidden">
        
-        <img src={arrow} alt="" />
-       
+            <img src={arrow} alt="" />
+        
 
-        <img src={userPhoto} alt=""/>
-    </header>
+            <img src={userPhoto} alt=""/>
+        </header>
     )
 }

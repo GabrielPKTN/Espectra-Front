@@ -35,7 +35,7 @@ export default function CardAtividade() {
                 "
             >
 
-                <p className="instrument-sans font-semibold">
+                <p className="instrument-sans font-semibold md:text-xl md:font-medium">
                     Descrição da atividade
                 </p>
 
