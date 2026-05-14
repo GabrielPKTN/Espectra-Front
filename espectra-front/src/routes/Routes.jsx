@@ -1,10 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import HistoricoTentativa from "../pages/TelaHistoricoTentativa";
+import PerfilPsicopedagogo from "../pages/TelaPerfilPsicopedagogo";
+import TelaInicial from "../pages/TelaInicial";
 
 function Rotas() {
   return (
     <Routes>
-      <Route path="/" element={<HistoricoTentativa />} />
+      <Route path="/" element={<PerfilPsicopedagogo />} />
+      <Route path="/telaInicial" element={< TelaInicial/>} />
     </Routes>
   );
 }
