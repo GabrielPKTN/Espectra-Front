@@ -2,54 +2,60 @@ import logo from "../assets/logotipos/logo.png";
 import Button from "../components/Button";
 import CardQuestionFormulario from "../components/CardQuestionFormulario";
 import CardTextFormulario from "../components/CardTextFormulario";
-import { useNavigate } from "react-router-dom";
+import Header from "../components/HeaderFormulario"; // Importe o Header criado
 import GroupResposta from "../components/GroupResposta";
+import { useNavigate } from "react-router-dom";
 
 function TelaFormulario() {
   const navigate = useNavigate();
 
   return (
-     <div className="w-full lg:min-h-screen lg:bg-blue-300 lg:flex lg:flex-col lg:items-center lg:justify-center ">
+    <div className="min-h-screen bg-[#3277CF] flex flex-col">
+      {/* TOPO: O Header fica fora da div de conteúdo principal */}
+      <Header 
+        title="0 a 6 anos" 
+        userImage="https://via.placeholder.com/150" // Troque pela sua lógica de imagem
+        logoSource={logo} 
+      />
 
-            <img 
-                src={logo}
-                alt="" 
-                className="hidden lg:block "
-            />
-      {/* CONTEÚDO */}
-      <div className="instrument-sans min-h-screen px-4 py-5 sm:px-6 md:px-10 lg:px-20 flex flex-col gap-8">
-        
-        {/* TÍTULO */}
-        <CardTextFormulario
-          titulo="Socialização"
-          corFundoTitulo="bg-[#A2E289]"
-          corTitulo="text-black"
-        />
-
-        <div className="Inclusive Sans gap-8">
+      {/* CONTEÚDO BRANCO CHANFRADO */}
+      <div className="flex-1 bg-white rounded-t-[10px] px-4 py-8 sm:px-6 md:px-10 lg:px-20 mt-[-30px] shadow-2xl">
+        <div className="max-w-4xl mx-auto flex flex-col gap-8">
           
-          {/* PERGUNTA */}
-          <CardQuestionFormulario
-            numero="1"
-            corNumero="bg-[#A2E289]"
-            pergunta="Observa uma pessoa movimentando-se em seu campo visual."
-            corFundoPergunta="bg-[#F9F9F9]"
-            corPergunta="text-black"
-            sizePergunta="text-sm sm:text-base md:text-lg"
+          {/* TÍTULO DA SEÇÃO */}
+          <CardTextFormulario
+            titulo="Socialização"
+            corFundoTitulo="bg-[#A2E289]"
+            corTitulo="text-black"
           />
 
-          {/* RESPOSTAS */}
-          <div className="w-full mt-10">
-            <GroupResposta
-              opcoes={["Sim", "Não", "Sim, com mediação"]}
-            />
-          </div>
+          <div className="flex flex-col gap-8">
+            {/* PERGUNTA 01 */}
+            <div>
+              <CardQuestionFormulario
+                numero="1"
+                corNumero="bg-[#A2E289]"
+                pergunta="Observa uma pessoa movimentando-se em seu campo visual."
+                corFundoPergunta="bg-[#F9F9F9]"
+                corPergunta="text-black"
+                sizePergunta="text-sm sm:text-base md:text-lg"
+              />
+              <div className="w-full mt-6">
+                <GroupResposta
+                  opcoes={["Sim", "Não", "Sim, com mediação"]}
+                />
+              </div>
+            </div>
 
-          {/* BOTÕES */}
-          <div className="w-full flex flex-col sm:flex-row items-center justify-center gap-50 mt-15">
-            <Button>Cancelar</Button>
-
-            <Button>Enviar</Button>
+            {/* BOTÕES DE AÇÃO */}
+            <div className="w-full flex flex-row items-center justify-center gap-4 mt-10">
+              <Button className="w-full sm:w-auto px-10 bg-blue-500 hover:bg-blue-600 text-white">
+                Cancelar
+              </Button>
+              <Button className="w-full sm:w-auto px-10 bg-blue-600 hover:bg-blue-700 text-white">
+                Enviar
+              </Button>
+            </div>
           </div>
         </div>
       </div>
@@ -58,5 +64,3 @@ function TelaFormulario() {
 }
 
 export default TelaFormulario;
-
- //<div className="w-full lg:min-h-screen lg:bg-blue-300 lg:flex lg:flex-col lg:items-center lg:justify-center "></div>
