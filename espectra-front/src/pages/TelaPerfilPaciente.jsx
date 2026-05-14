@@ -14,6 +14,7 @@ import {
   LabelList,
 } from "recharts";
 import ButtonHabilidade from "../components/ButtonHabilidade";
+import Button from "../components/Button";
 
 function TelaPerfilPaciente() {
   const data = [
@@ -137,8 +138,11 @@ function TelaPerfilPaciente() {
           </div>
         </div>
 
-        {/*Lista de habilidades. NECESSÁRIO COMPONENTIZAR.*/}
-        <div className="px-8 mt-4 w-full flex flex-col justify-center">
+        {/*Lista de habilidades. NECESSÁRIO ADICIONAR OS ONCLICK QUE DIRECIONAM PARA A TELA DAS RESPECTIVAS HABILIDADES.*/}
+        <div className="px-8 mt-6 w-full flex flex-col justify-center gap-4">
+          <h2 className="text-center font-semibold instrument-sans secondary-color text-2xl">
+            Habilidades
+          </h2>
           <ButtonHabilidade
             color="cor-socializacao"
             colorHover="cor-socializacao-hover"
@@ -146,6 +150,48 @@ function TelaPerfilPaciente() {
           >
             Socialização
           </ButtonHabilidade>
+
+          <ButtonHabilidade
+            color="cor-cognicao"
+            colorHover="cor-cognicao-hover"
+            type="button"
+          >
+            Cognição
+          </ButtonHabilidade>
+
+          <ButtonHabilidade
+            color="cor-autocuidado"
+            colorHover="cor-autocuidado-hover"
+            type="button"
+          >
+            Auto-cuidado
+          </ButtonHabilidade>
+
+          <ButtonHabilidade
+            color="cor-linguagem"
+            colorHover="cor-linguagem-hover"
+            type="button"
+          >
+            Linguagem
+          </ButtonHabilidade>
+
+          <ButtonHabilidade
+            color="cor-devmotor"
+            colorHover="cor-devmotor-hover"
+            type="button"
+          >
+            Desenvolvimento-motor
+          </ButtonHabilidade>
+        </div>
+
+        <div className="flex flex-col gap-4 mt-16 items-center">
+          <Button variantClick="basicClick" type="button" className="w-fit p-3">
+            Editar avaliação de desempenho
+          </Button>
+
+          <Button variantClick="deleteButton" type="button" className="w-full">
+            Remover paciente
+          </Button>
         </div>
       </div>
     </div>

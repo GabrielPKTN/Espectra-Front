@@ -51,16 +51,32 @@ body {
   background-color: #71afff;
 }
 
+.cor-cognicao-hover:hover {
+  background-color: #549cfb;
+}
+
 .cor-autocuidado {
   background-color: #d293f0;
+}
+
+.cor-autocuidado-hover:hover {
+  background-color: #c66fee;
 }
 
 .cor-linguagem {
   background-color: #ffc87b;
 }
 
+.cor-linguagem-hover:hover {
+  background-color: #f9b658;
+}
+
 .cor-devmotor {
   background-color: #c8c8c8;
+}
+
+.cor-devmotor-hover:hover {
+  background-color: #989898;
 }
 
 :root {

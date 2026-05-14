@@ -2,6 +2,7 @@ function Button({
   children,
   onClick,
   variantClick = "basicClick",
+  className = "",
   type = "button",
 }) {
   const estiloBase =
@@ -17,7 +18,7 @@ function Button({
     <button
       type={type}
       onClick={onClick}
-      className={`${estiloBase} ${variants[variantClick]}`}
+      className={`${estiloBase} ${variants[variantClick]} ${className}`}
     >
       {children}
     </button>

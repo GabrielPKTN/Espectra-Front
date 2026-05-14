@@ -9,7 +9,7 @@ function ButtonHabilidade({
   className,
 }) {
   const estiloBase =
-    "h-8 flex items-center justify-center rounded-lg text-center instrument-sans font-semibold text-lg transition-colors";
+    "h-9 flex items-center justify-center rounded-lg text-center instrument-sans font-semibold text-lg transition-colors";
 
   const alteracoesEstilo = className;
 
