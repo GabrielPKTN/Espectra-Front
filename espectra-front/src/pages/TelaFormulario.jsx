@@ -1,4 +1,5 @@
 import logo from "../assets/logotipos/logo.png";
+import psicopedagogo from "../assets/general_photos/psicopedagogo.png";
 import Button from "../components/Button";
 import CardQuestionFormulario from "../components/CardQuestionFormulario";
 import CardTextFormulario from "../components/CardTextFormulario";
@@ -14,7 +15,7 @@ function TelaFormulario() {
       {/* TOPO: O Header fica fora da div de conteúdo principal */}
       <Header 
         title="0 a 6 anos" 
-        userImage="https://via.placeholder.com/150" // Troque pela sua lógica de imagem
+        userImage={psicopedagogo} // Troque pela sua lógica de imagem
         logoSource={logo} 
       />
 
