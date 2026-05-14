@@ -64,16 +64,25 @@ function TelaPerfilPaciente() {
         <div className="flex flex-col items-center gap-3">
           <CircleUser className="primary-color size-24"></CircleUser>
 
-          <h1 className="primary-color font-bold instrument-sans uppercase text-xl">
+          <h1
+            className="primary-color font-bold instrument-sans uppercase text-xl
+          md:text-2xl"
+          >
             Nome do paciente
           </h1>
 
-          <p className="text-center italic primary-color inclusive-san font-lights">
+          <p
+            className="text-center italic primary-color inclusive-san font-lights
+          md:text-lg md:px-10"
+          >
             Nome do paciente nasceu em Data, tem Idade, está na 5° Série e
             possui diagnóstico de Diagnostico com grau de suporte X.
           </p>
 
-          <div className="flex flex-row gap-1 font-semibold instrument-sans text-base p-3">
+          <div
+            className="flex flex-row gap-1 font-semibold instrument-sans text-base p-3
+              md:text-lg"
+          >
             <p className="primary-color">Telefone do responsável:</p>
             <p>+55 11 91234-5678</p>
           </div>
@@ -86,9 +95,20 @@ function TelaPerfilPaciente() {
           </h2>
 
           {/*Legenda*/}
-          <div className="flex flex-col gap-3 mt-3">
-            <h3 className="instrument-sans font-bold p-2 text-lg">Legenda:</h3>
-            <div className="flex flex-wrap gap-4 items-center p-2">
+          <div
+            className="flex flex-col gap-3 mt-3
+          md:items-center"
+          >
+            <h3
+              className="instrument-sans font-bold p-2 text-lg
+            md:text-xl md:font-sbold"
+            >
+              Legenda:
+            </h3>
+            <div
+              className="flex flex-wrap gap-4 items-center p-2
+            md:items-center md:justify-center"
+            >
               {data.map((item) => (
                 <LegendaHabilidade key={item.classe} color={item.classe}>
                   {item.nome}
