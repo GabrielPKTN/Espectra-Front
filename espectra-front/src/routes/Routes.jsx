@@ -5,6 +5,7 @@ import TelaCadastro from "../pages/TelaCadastro";
 import TelaAdicionarPaciente from "../pages/TelaAdicionarPaciente";
 import TelaHome from "../pages/TelaHome";
 import TelaLogin from "../pages/TelaLogin";
+import TelaRealizarTentativa from "../pages/TelaRealizarTentativa";
 
 function Rotas() {
   return (
@@ -17,6 +18,7 @@ function Rotas() {
       <Route path="/" element={<TelaInicial />} />
       <Route path="/cadastro" element={<TelaCadastro />} />
       <Route path="/login" element={<TelaLogin />} />
+      <Route path="/tentativa" element={<TelaRealizarTentativa />} />
     </Routes>
   );
 }
