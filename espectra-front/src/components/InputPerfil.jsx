@@ -1,6 +1,7 @@
 function InputPerfil({
     label,
     className = "",
+    inputClassName = "",
     type = "text",
     value
 }) {
@@ -15,7 +16,7 @@ function InputPerfil({
                 type={type} 
                 value={value}
                 readOnly
-                className="bg-[#F1F1F1] text-center rounded-lg px-4 h-[40px] w-[192px] outline-none"
+                className={`bg-[#F1F1F1] text-center rounded-lg px-4 outline-none ${inputClassName}`}
             />
         </div>
     )

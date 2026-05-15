@@ -43,19 +43,20 @@ function PerfilPsicopedagogo() {
 
             {/* Div do Nome do Psicopedagogo */}
             <div className="flex justify-center items-center w-full mt-2">
-                <h1 className="text-[#3277CF] text-[28px] font-inclusive-sans font-bold uppercase">
+                <h1 className="text-[#3277CF] text-[28px] md:text-[44px] font-inclusive-sans font-bold uppercase">
                     Larissa Almeida Lessa
                 </h1>
             </div>
 
             {/* Div que guarda os dados do Psicopedagogo */}
-            <div className="flex flex-col justify-center items-center gap-4 mt-4 w-full">
+            <div className="flex flex-col justify-center items-center gap-4 mt-4 w-full lg:grid lg:grid-cols-2 lg:gap-x-8 lg:gap-y-6">
 
                 {/* Div que guarda Label e Input de Nome */}
-                <div className="flex justify-center w-full">
+                <div className="flex justify-center w-full md:w-[]">
                     <InputPerfil
                         label="Nome"
                         value="Larissa Almeida Lessa"
+                        inputClassName="h-[40px] w-[300px] md:text-[22px] md:h-[55px] md:w-[360px] lg:h-[55px] lg:w-[450px]"
                     />
                 </div>
 
@@ -64,6 +65,7 @@ function PerfilPsicopedagogo() {
                     <InputPerfil
                         label="Data de Nascimento"
                         value="10/05/2025"
+                        inputClassName="h-[40px] w-[300px] md:text-[22px] md:h-[55px] md:w-[360px] lg:h-[55px] lg:w-[450px]"
                     />
                 </div>
 
@@ -72,6 +74,7 @@ function PerfilPsicopedagogo() {
                     <InputPerfil
                         label="Email"
                         value="larissa@gmail.com"
+                        inputClassName="h-[40px] w-[300px] md:text-[22px] md:h-[55px] md:w-[360px] lg:h-[55px] lg:w-[450px]"
                     />
                 </div>
 
@@ -80,26 +83,29 @@ function PerfilPsicopedagogo() {
                     <InputPerfil
                         label="Telefone"
                         value="+55 11 9 6207-1110"
+                        inputClassName="h-[40px] w-[300px] md:text-[22px] md:h-[55px] md:w-[360px] lg:h-[55px] lg:w-[450px]"
                     />
                 </div>
+            </div>
 
-                {/* Div dos botões */}
-                <div className="flex flex-col justify-center items-center w-full mt-2">
-                    <Button 
-                        className="w-[170px] text-[#3277CF]"
-                        color="#FFFFFF"
-                    >
-                        Editar perfil
-                    </Button>
+            {/* Div dos botões */}
+            <div className="flex flex-col justify-center items-center w-full mt-4 md:mt-10 lg:flex-row lg:gap-6">
+                <Button
+                    variantClick="editButton"
+                    className="w-[170px] text-[#3277CF] md:h-[62px] md:w-[320px] lg: cursor-pointer transform-gpu transform-all duration-300 ease-in-out hover:scale-110"
+                    color="#FFFFFF"
+                    onClick="" // Navigate para a tela de atualizar perfil
+                >
+                    Editar perfil
+                </Button>
 
-                    <Button
-                        variantClick="basicClick"
-                        onClick=""
-                        className="mt-4 w-[170px]"
-                    >
-                        Excluir conta
-                    </Button>
-                </div>
+                <Button
+                    variantClick="basicClick"
+                    onClick="" // Abre modal do card de exclusao
+                    className="mt-2 w-[170px] mb-5 md:h-[62px] md:w-[320px] md:mt-6 cursor-pointer transform-gpu transform-all duration-300 ease-in-out hover:scale-110"
+                >
+                    Excluir conta
+                </Button>
             </div>
         </>
 
