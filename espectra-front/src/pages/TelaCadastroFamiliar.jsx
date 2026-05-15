@@ -14,13 +14,22 @@ function TelaCadastroFamiliar(){
             foto={antonioPhoto}
           />
 
-            <div className="flex flex-col items-center gap-25 lg:gap-0 lg:mt-25">
+            <div className="flex flex-col items-center gap-10 lg:gap-0 lg:mt-25">
                 <img src={defaultPhoto} alt=""  className="w-25 md:w-35"/>
 
                 <div className="flex flex-col gap-2 px-10">
 
                     <div>
                         <span className="inclusive-sans text-xl font-semibold text-[var(--dark-blue)]">Nome</span>
+                        <InputDefault
+                            //value={}
+                            //onChange={}
+                            
+                        />
+                    </div>
+
+                    <div>
+                        <span className="inclusive-sans text-xl font-semibold text-[var(--dark-blue)]">CPF</span>
                         <InputDefault
                             //value={}
                             //onChange={}
