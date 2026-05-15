@@ -11,16 +11,17 @@ function TelaFormulario() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-[#3277CF] flex flex-col">
+    <div className="min-h-screen bg-[#3277CF] flex flex-col lg:bg-white">
       {/* TOPO: O Header fica fora da div de conteúdo principal */}
       <Header 
         title="0 a 6 anos" 
         userImage={psicopedagogo} // Troque pela sua lógica de imagem
+        userName={"Larissa"}
         logoSource={logo} 
       />
 
       {/* CONTEÚDO BRANCO CHANFRADO */}
-      <div className="flex-1 bg-white rounded-t-[10px] px-4 py-8 sm:px-6 md:px-10 lg:px-20 mt-[-30px] shadow-2xl">
+      <div className="flex-1 bg-white rounded-t-[20px] px-4 py-8 sm:px-6 md:px-10 lg:px-20 mt-[-30px] shadow-2xl lg:w-[65%] lg:self-center">
         <div className="max-w-4xl mx-auto flex flex-col gap-8">
           
           {/* TÍTULO DA SEÇÃO */}

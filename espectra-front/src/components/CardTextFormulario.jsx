@@ -1,9 +1,9 @@
 function CardTextFormulario({ titulo, corFundoTitulo, corTitulo }) {
   return (
     <div
-      className={`${corFundoTitulo} w-full p-3  flex flex-col items-center  `}
+      className={`${corFundoTitulo} w-full p-3  flex flex-col items-center  md:w-[60%] md:self-center lg:w-full`}
     >
-      <h2 className={`${corTitulo} text-2xl font-bold`}>{titulo}</h2>
+      <h2 className={`${corTitulo} text-2xl font-bold instrument-sans lg:text-3xl`}>{titulo}</h2>
     </div>
   );
 }

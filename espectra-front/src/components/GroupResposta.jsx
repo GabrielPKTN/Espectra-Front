@@ -9,6 +9,9 @@ function GroupResposta() {
         items-start
         gap-4
         w-full
+        md:justify-around
+        lg:justify-center
+        lg:gap-12
       "
     >
       <OptionResposta texto="Sim" name="resposta1" />
