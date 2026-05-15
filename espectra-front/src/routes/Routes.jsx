@@ -5,8 +5,8 @@ import TelaInicial from "../pages/TelaInicial";
 function Rotas() {
   return (
     <Routes>
-      <Route path="/" element={<PerfilPsicopedagogo />} />
-      <Route path="/telaInicial" element={< TelaInicial/>} />
+      <Route path="/" element={<PerfilPsicopedagogo/>} />
+      <Route path="/telaInicial" element={<TelaInicial/>} />
     </Routes>
   );
 }

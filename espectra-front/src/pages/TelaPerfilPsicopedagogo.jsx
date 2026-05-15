@@ -2,8 +2,13 @@ import { useState } from "react";
 import fotoPsicopedagogo from "../assets/general_photos/fotoPsicopedagogo.png";
 import logo from "../assets/logotipos/logo.png";
 import InputPerfil from "../components/InputPerfil";
+import InputSenha from "../components/InputSenha";
 import Button from "../components/Button";
+import Card from "../components/Card";
 import { ChevronLeft } from "lucide-react";
+import { CircleX } from "lucide-react";
+import { LockKeyhole } from "lucide-react";
+import { LockKeyholeOpen } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 function PerfilPsicopedagogo() {
@@ -11,6 +16,37 @@ function PerfilPsicopedagogo() {
     const navigate = useNavigate()
 
     const [abrirModal, setAbrirModal] = useState(false)
+
+    const [senha, setSenha] = useState("")
+    const [erro, setErro] = useState("")
+
+    function validarSenha() {
+        const senhaCorreta = "123456"
+
+        if (senha.trim() === "") {
+            setErro("Digite sua senha")
+            return
+        }
+
+        if (senha !== senhaCorreta) {
+            setErro("Senha incorreta")
+            return
+        }
+
+        setErro("")
+
+        confirmaExclusao()
+
+        navigate("/telaInicial")
+    }
+
+    function confirmaExclusao() {
+        alert("Sua conta foi excluída com sucesso!")
+    }
+
+    function fechar() {
+        setAbrirModal(false)
+    }
 
     return (
         <>
@@ -101,14 +137,64 @@ function PerfilPsicopedagogo() {
 
                 <Button
                     variantClick="basicClick"
-                    onClick="" // Abre modal do card de exclusao
+                    onClick={() => setAbrirModal(true)}
                     className="mt-2 w-[170px] mb-5 md:h-[62px] md:w-[320px] md:mt-6 cursor-pointer transform-gpu transform-all duration-300 ease-in-out hover:scale-110"
                 >
                     Excluir conta
                 </Button>
             </div>
-        </>
 
+            {
+                abrirModal && (
+                    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex justify-center items-center z-50">
+                        <div className="relative overflow-hidden">
+                            <Card
+                                titulo="Tem certeza que deseja excluir essa conta?"
+                                descricao="ESSA AÇÃO É IRREVERSÍVEL"
+                                corDescricao="text-red-600"
+                                classname="h-[400px] font-['Inclusive_Sans'] font-bold"
+                                fundo="bg-[#FFFFFF] pt-16"
+                            >
+                                <CircleX
+                                    className="absolute top-4 right-4 h-[26px] w-[26px] cursor-pointer transform-gpu transition-all duration-300 ease-in-out hover:scale-100"
+                                    color="#EA1212"
+                                    onClick={fechar}
+                                />
+
+
+
+                                <div className="relative w-[300px] flex flex-col items-center gap-6 mt-10">
+                                    <InputSenha
+                                        value={senha}
+                                        onChange={(e) => {
+                                            setSenha(e.target.value)
+                                            setErro("")
+                                        }}
+
+                                        erro={erro}
+                                    />
+                                    {
+                                        erro && (
+                                            <p className="w-full text-left text-[#FF0000] text-sm font-normal">
+                                                {erro}
+                                            </p>
+                                        )
+                                    }
+
+                                    <Button
+                                        variantClick="basicClick"
+                                        onClick={validarSenha}
+                                    >
+                                        Confirmar
+                                    </Button>
+                                </div>
+
+                            </Card>
+                        </div>
+                    </div>
+                )
+            }
+        </>
     )
 }
 
