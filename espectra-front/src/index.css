@@ -35,6 +35,10 @@ body {
   color: #4285f4;
 }
 
+.bg-light-blue {
+  background-color: #dfedff;
+}
+
 .dark-blue {
   color: #00459c;
 }
