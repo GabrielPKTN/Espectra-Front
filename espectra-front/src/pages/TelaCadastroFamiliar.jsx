@@ -1,26 +1,21 @@
 import InputDefault from "../components/InputDefault"
-import antonioPhoto from "../assets/general_photos/antonio_photo.png"
-import logo from "../assets/logotipos/logo.png"
 import defaultPhoto from "../assets/general_photos/default-photo.png"
 import  Button from "../components/Button.jsx"
+import HeaderResponsavel from "../components/HeaderResponsavel.jsx"
+import antonioPhoto from "../assets/general_photos/antonio_photo.png"
 
 
 function TelaCadastroFamiliar(){
     return(
         <div className="flex flex-col h-screen w-full gap-5">
 
-            <header className="flex items-center justify-between p-5">
-                <img src={logo} alt=""  className="w-15"/>
+          <HeaderResponsavel
+            nome="Antônio"
+            foto={antonioPhoto}
+          />
 
-                <div className="flex items-center gap-4">
-                    <span className="hidden md:block md:instrument-sans md:font-bold md:text-[var(--bg-primary-color)]">Olá Antônio</span>
-                    <img src={antonioPhoto} alt=""  className="rounded-full"/>
-                </div>
-
-            </header>
-
-            <div className="flex flex-col items-center gap-25">
-                <img src={defaultPhoto} alt=""  className="w-25"/>
+            <div className="flex flex-col items-center gap-25 lg:gap-0 lg:mt-25">
+                <img src={defaultPhoto} alt=""  className="w-25 md:w-35"/>
 
                 <div className="flex flex-col gap-2 px-10">
 
@@ -72,14 +67,16 @@ function TelaCadastroFamiliar(){
                         <InputDefault
                             //value={}
                             //onChange={}
+                            
                         />
                     </div>
                    
                 </div>
 
                  
-                <div className="flex self-center">
+                <div className="flex self-center md:gap-10 md:flex md:flex-row-reverse lg:mt-10">
                     <Button>Salvar</Button>
+                    <button className="hidden md:block md:text-[var(--bg-primary-color)] md:instrument-sans md:text-xl md:w-48 md:h-12 md:rounded-lg md:font-bold md:shadow-2xl">Cancelar</button>
                 </div>
 
             </div>
