@@ -1,4 +1,3 @@
-import { useState } from "react";
 import fotoPsicopedagogo from "../assets/general_photos/fotoPsicopedagogo.png";
 import logo from "../assets/logotipos/logo.png";
 import InputPerfil from "../components/InputPerfil";
@@ -10,6 +9,7 @@ import { CircleX } from "lucide-react";
 import { LockKeyhole } from "lucide-react";
 import { LockKeyholeOpen } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function PerfilPsicopedagogo() {
 
@@ -19,6 +19,15 @@ function PerfilPsicopedagogo() {
 
     const [senha, setSenha] = useState("")
     const [erro, setErro] = useState("")
+
+    function formatarTelefone(valor) {
+        const numeros = valor.replace(/\D/g, "")
+
+        return numeros
+            .replace(/^(\d{2})(\d{2})(\d{1})(\d)/, "+$1 $2 $3 $4")
+            .replace(/(\d{4})(\d)/, "$1-$2")
+            .slice(0, 18)
+    }
 
     function validarSenha() {
         const senhaCorreta = "123456"
@@ -118,7 +127,7 @@ function PerfilPsicopedagogo() {
                 <div className="flex justify-center w-full">
                     <InputPerfil
                         label="Telefone"
-                        value="+55 11 9 6207-1110"
+                        value={formatarTelefone("+5511999998888")}
                         inputClassName="h-[40px] w-[300px] md:text-[22px] md:h-[55px] md:w-[360px] lg:h-[55px] lg:w-[450px]"
                     />
                 </div>
@@ -130,7 +139,7 @@ function PerfilPsicopedagogo() {
                     variantClick="editButton"
                     className="w-[170px] text-[#3277CF] md:h-[62px] md:w-[320px] lg: cursor-pointer transform-gpu transform-all duration-300 ease-in-out hover:scale-110"
                     color="#FFFFFF"
-                    onClick="" // Navigate para a tela de atualizar perfil
+                    onClick={() => navigate("/atualizarPerfilPsicopedagogo")} 
                 >
                     Editar perfil
                 </Button>
