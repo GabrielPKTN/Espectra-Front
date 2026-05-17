@@ -7,9 +7,11 @@ import { use, useState } from "react";
 import { LockKeyhole } from "lucide-react";
 import { LockKeyholeOpen } from "lucide-react";
 import Button from "../components/Button";
-import access_control from "../assets/general_photos/access_control.png"
+import access_control from "../assets/general_photos/access_control.png";
+import { useNavigate } from "react-router-dom";
 
 function TelaCadastro() {
+  const navigate = useNavigate();
   const [inputTocado, setInputTocado] = useState("");
 
   const [nome, setNome] = useState("");
@@ -188,33 +190,45 @@ function TelaCadastro() {
 
   return (
     // div que guarda tudo que estiver da tela
-    <div className="flex flex-col bg-primary-color w-full min-h-screen items-center
-    lg:grid lg:grid-cols-2">
+    <div
+      className="flex flex-col bg-primary-color w-full min-h-screen items-center
+    lg:grid lg:grid-cols-2"
+    >
+      <div
+        className="flex justify-center items-center p-12
+      lg:h-full lg:flex lg:flex-col"
+      >
+        <img
+          src={logotipo}
+          alt="logotipo espectra"
+          className="w-auto h-32 lg:h-28
+        "
+        />
 
-      <div className="flex justify-center items-center p-12
-      lg:h-full lg:flex lg:flex-col">
-        <img src={logotipo} 
-        alt="logotipo espectra" 
-        className="w-auto h-32 lg:h-28
-        " />
-
-        <img src={access_control} alt="photo login" 
-        className="hidden 
-        lg:block lg:w-auto lg:h-128"/>
+        <img
+          src={access_control}
+          alt="photo login"
+          className="hidden 
+        lg:block lg:w-auto lg:h-128"
+        />
       </div>
-      
-      <div className="bg-white w-screen h-auto rounded-ss-4xl flex flex-col items-center
-      lg:w-full lg:rounded-l-4xl lg:shadow-xl">
-        <h1 className="primary-color instrument-sans dark-blue font-bold text-2xl p-6
-        lg:text-3xl lg:mt-10">
+
+      <div
+        className="bg-white w-screen h-auto rounded-ss-4xl flex flex-col items-center
+      lg:w-full lg:rounded-l-4xl lg:shadow-xl"
+      >
+        <h1
+          className="primary-color instrument-sans dark-blue font-bold text-2xl p-6
+        lg:text-3xl lg:mt-10"
+        >
           Cadastro
         </h1>
-      
 
         {/*div que possue as modalidades de cadastro, sendo elas psicopedagogo e familiar*/}
-        <div className="flex gap-10 instrument-sans primary-color font-bold
-        ">
-
+        <div
+          className="flex gap-10 instrument-sans primary-color font-bold
+        "
+        >
           <div className="flex gap-2">
             <button onClick={trocarImagem}>
               <img
@@ -232,13 +246,15 @@ function TelaCadastro() {
                 alt="status do button"
               />
             </button>
-            <span >Familiar</span>
+            <span>Familiar</span>
           </div>
         </div>
 
         {/*div que carrega as informacoes de cadastro*/}
-        <div className="flex flex-col mt-8 max-w-md 
-        lg:mt-2">
+        <div
+          className="flex flex-col mt-8 max-w-md 
+        lg:mt-2"
+        >
           {/* NOME */}
           <div className="w-auto flex flex-col p-2">
             <p className="font-semibold text-lg inclusive-sans primary-color">
@@ -391,15 +407,16 @@ function TelaCadastro() {
         <div className="m-6 flex flex-col gap-4 items-center">
           <Button
             variantClick="basicClick"
-            /* // onClick={} */
+            // onClick={}
           >
             Cadastrar
           </Button>
 
-          <div className="text-center instrument-sans mt-3">
+          <div className="text-center instrument-sans mt-3 ">
             <p>Já possui uma conta?</p>
-            <a /*href= "ROTA DA OUTRA TELA"*/
-              className="primary-color font-semibold text-lg"
+            <a
+              href="/login"
+              className="primary-color font-semibold text-lg underline"
             >
               Login
             </a>

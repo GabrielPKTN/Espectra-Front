@@ -1,6 +1,7 @@
 import { useState } from "react";
 import React from "react";
 import Rotas from "./routes/Routes";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import TelaInicial from "./pages/TelaInicial";
 import TelaCadastro from "./pages/TelaCadastro";
@@ -11,7 +12,7 @@ import TelaModalConfirmacao from "./pages/TelaModalConfirmacao";
 // AS PAGINAS DEVEM SER CRIADAS NA PASTA PAGES.
 function App() {
    return <Rotas />;
-  //return <TelaHome />
+  // return <TelaHome />
 }
 
 export default App;

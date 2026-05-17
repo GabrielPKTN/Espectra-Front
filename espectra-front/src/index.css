@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inclusive+Sans&display=swap");
+@import url("ttps://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap");
 @import "tailwindcss";
 
 @theme {
@@ -86,6 +88,11 @@ body {
 :root {
   --bg-primary-color: #3277cf;
   --bg-secondary-color: #4285f4;
+  --light-blue: #DFEDFF;
+}
+
+.stroke-text {
+  -webkit-text-stroke: 2px #89C771;
 }
 
 @layer utilities {
