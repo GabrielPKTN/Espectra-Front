@@ -11,6 +11,7 @@ import TelaAtividades from "../pages/TelaAtividades";
 import TelaAdicionarPaciente from "../pages/TelaAdicionarPaciente";
 import TelaHome from "../pages/TelaHome";
 import TelaLogin from "../pages/TelaLogin";
+import TelaRealizarTentativa from "../pages/TelaRealizarTentativa";
 import TelaCadastroFamiliar from "../pages/TelaCadastroFamiliar";
 
 function Rotas() {
@@ -36,6 +37,7 @@ function Rotas() {
       <Route path="/atividade/editar" element={<TelaEditarAtividade />} />
       <Route path="/atividade/cadastrar" element={<TelaCadastroAtividade />} />
       <Route path="/login" element={<TelaLogin />} />
+      <Route path="/tentativa" element={<TelaRealizarTentativa />} />
     </Routes>
   );
 }
