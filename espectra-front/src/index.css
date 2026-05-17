@@ -1,10 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Inclusive+Sans&display=swap");
+@import url("ttps://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap");
 @import "tailwindcss";
 
 @theme {
   --font-inclusive-sans: "Inclusive Sans", sans-serif;
   --font-instrument-sans: "Instrument Sans", sans-serif;
-  --bg-card: #F2F3F7;
+  --bg-card: #f2f3f7;
   --bg-primary-color: #3277cf;
 }
 
@@ -36,30 +37,73 @@ body {
   color: #4285f4;
 }
 
+.bg-light-blue {
+  background-color: #dfedff;
+}
+
 .dark-blue {
   color: #00459c;
+}
+
+.cor-socializacao {
+  background-color: #a2e289;
+}
+
+.cor-socializacao-hover:hover {
+  background-color: #7bd059;
+}
+
+.cor-cognicao {
+  background-color: #71afff;
+}
+
+.cor-cognicao-hover:hover {
+  background-color: #549cfb;
+}
+
+.cor-autocuidado {
+  background-color: #d293f0;
+}
+
+.cor-autocuidado-hover:hover {
+  background-color: #c66fee;
+}
+
+.cor-linguagem {
+  background-color: #ffc87b;
+}
+
+.cor-linguagem-hover:hover {
+  background-color: #f9b658;
+}
+
+.cor-devmotor {
+  background-color: #c8c8c8;
+}
+
+.cor-devmotor-hover:hover {
+  background-color: #989898;
 }
 
 :root {
   --bg-primary-color: #3277cf;
   --bg-secondary-color: #4285f4;
   --dark-blue: #00459c;
+  --light-blue: #DFEDFF;
 }
 
+.stroke-text {
+  -webkit-text-stroke: 2px #89C771;
+}
 
 @layer utilities {
-
   .scrollbar-custom::-webkit-scrollbar {
     width: 0.3rem;
     background-color: var(--bg-card);
-
   }
 
   .scrollbar-custom::-webkit-scrollbar-thumb {
-  
-      background-color: var(--bg-primary-color);
-      border-radius: 0.2rem;
-
+    background-color: var(--bg-primary-color);
+    border-radius: 0.2rem;
   }
-
 }
