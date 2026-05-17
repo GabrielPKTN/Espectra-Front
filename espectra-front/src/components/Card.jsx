@@ -6,11 +6,12 @@ function Card({
   corDescricao = "",
   fundo = "",
   children,
+  classname = "",
   rowButtons = {},
 }) {
   return (
     <div
-      className={`${fundo} rounded-2xl shadow-md hover:shadow-2xl hover:-translate-y-3 transition-all duration-300 p-10 w-[340px] flex flex-col items-center text-center gap-5 mb-3`}
+      className={`${fundo} ${classname} rounded-2xl shadow-md hover:shadow-2xl hover:-translate-y-3 transition-all duration-300 p-10 w-[340px] flex flex-col items-center text-center gap-5 mb-3`}
     >
       {imagem && (
         <img
