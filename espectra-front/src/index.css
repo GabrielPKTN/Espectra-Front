@@ -2,6 +2,13 @@
 @import url("ttps://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap");
 @import "tailwindcss";
 
+@theme {
+  --font-inclusive-sans: "Inclusive Sans", sans-serif;
+  --font-instrument-sans: "Instrument Sans", sans-serif;
+  --bg-card: #F2F3F7;
+  --bg-primary-color: #3277cf;
+}
+
 body {
   margin: 0;
 }
@@ -43,6 +50,19 @@ body {
   -webkit-text-stroke: 2px #89C771;
 }
 
-@theme {
-  --bg-primary-color: #3277cf;
+@layer utilities {
+
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 0.3rem;
+    background-color: var(--bg-card);
+
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+  
+      background-color: var(--bg-primary-color);
+      border-radius: 0.2rem;
+
+  }
+
 }
