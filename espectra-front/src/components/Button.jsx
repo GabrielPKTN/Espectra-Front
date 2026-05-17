@@ -2,6 +2,7 @@ function Button({
   children,
   onClick,
   variantClick = "basicClick",
+  className = "",
   type = "button",
   className = ""
 }) {

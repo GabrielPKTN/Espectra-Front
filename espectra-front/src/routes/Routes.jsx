@@ -3,6 +3,7 @@ import HistoricoTentativa from "../pages/TelaHistoricoTentativa";
 import CardExclusao from "../pages/CardExclusao";;
 import TelaInicial from "../pages/TelaInicial";
 import TelaCadastro from "../pages/TelaCadastro";
+import TelaPerfilPaciente from "../pages/TelaPerfilPaciente";
 import TelaFormulario from "../pages/TelaFormulario";
 import TelaEditarAtividade from "../pages/TelaEditarAtividade";
 import TelaCadastroAtividade from "../pages/TelaCadastroAtividade";
@@ -22,6 +23,7 @@ function Rotas() {
       <Route path="/adicionar_paciente" element={<TelaAdicionarPaciente />} />
       <Route path="/" element={<TelaInicial />} />
       <Route path="/cadastro" element={<TelaCadastro />} />
+      <Route path="/perfil-paciente" element={<TelaPerfilPaciente />} />
       <Route path="/atividades/" element={<TelaAtividades />} />
       <Route path="/atividades/editar" element={<TelaEditarAtividade />} />
       <Route path="/atividades/cadastrar" element={<TelaCadastroAtividade />} />
