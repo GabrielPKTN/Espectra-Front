@@ -6,6 +6,7 @@ import TelaCadastro from "../pages/TelaCadastro";
 import TelaFormulario from "../pages/TelaFormulario";
 import TelaEditarAtividade from "../pages/TelaEditarAtividade";
 import TelaCadastroAtividade from "../pages/TelaCadastroAtividade";
+import TelaAtividades from "../pages/TelaAtividades";
 import TelaAdicionarPaciente from "../pages/TelaAdicionarPaciente";
 import TelaHome from "../pages/TelaHome";
 import TelaLogin from "../pages/TelaLogin";
@@ -21,6 +22,10 @@ function Rotas() {
       <Route path="/adicionar_paciente" element={<TelaAdicionarPaciente />} />
       <Route path="/" element={<TelaInicial />} />
       <Route path="/cadastro" element={<TelaCadastro />} />
+      <Route path="/atividades/" element={<TelaAtividades />} />
+      <Route path="/atividades/editar" element={<TelaEditarAtividade />} />
+      <Route path="/atividades/cadastrar" element={<TelaCadastroAtividade />} />
+
       <Route path="/formulario" element={<TelaFormulario />} />
 
       <Route path="/cadastro-atividade" element={<TelaCadastroAtividade />} />
