@@ -1,10 +1,52 @@
 import logotipo from "../assets/logotipos/logotipo.svg";
 import InputDefault from "../components/InputDefault";
-import { use, useState } from "react";
+import { useState } from "react";
 import Button from "../components/Button";
 import authentication from "../assets/general_photos/authentication.png";
+import axios from "axios"
+import { jsx } from "react/jsx-runtime";
+import { data, useNavigate } from "react-router-dom";
+
 
 function TelaLogin() {
+
+  const navigate = useNavigate()
+
+  const [email, setEmail] = useState("")
+  const [senha, setSenha] = useState("")
+  const [mensagemErro, setMensagemErro] = useState("");
+
+  async function realizarLogin() {
+
+    try {
+      const response = await axios.post(
+      
+      "http://localhost:8080/v1/espectra/usuario/login",
+      {
+        email,
+        senha
+      }
+    )
+    
+    const data = response.data
+
+      localStorage.setItem("token", data.token)
+      localStorage.setItem("usuario", JSON.stringify(data.items))
+
+      navigate('/home')
+
+
+    } catch (error) {
+      const status = error.response?.status
+
+      if(status === 400 || status === 404){
+        setMensagemErro("Email ou senha inválidos.")
+      }
+
+    }
+ 
+  }
+
   return (
     //div que gurda tudo na tela.
     <div
@@ -57,8 +99,11 @@ function TelaLogin() {
               E-mail
             </p>
             <InputDefault
-              //   value={}
-              //   onChange={}
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value)
+                setMensagemErro("")
+              }}
               name="E-mail usuário"
               limiteCaracteres={255}
             />
@@ -70,12 +115,30 @@ function TelaLogin() {
               Senha
             </p>
             <InputDefault
-              //   value={}
-              //   onChange={}
+              value={senha}
+              onChange={(e) => {
+                setSenha(e.target.value)
+                setMensagemErro("")
+              }}
               name="E-mail usuário"
               limiteCaracteres={255}
             />
           </div>
+
+          {
+            mensagemErro && (
+              <p className="
+                text-red-500
+                instrument-sans
+                text-sm
+                px-4
+                mt-2
+              "
+              >
+                {mensagemErro}
+              </p>
+            )
+          }
 
           <a
             className="flex justify-end mr-4 text-gray-500 underline inclusive-sans"
@@ -94,7 +157,12 @@ function TelaLogin() {
             md:mt-24
             lg:mt-10"
           >
-            <Button variantClick="basicClick">Entrar</Button>
+            <Button 
+              variantClick="basicClick"
+              onClick={ realizarLogin }
+              >
+                Entrar
+            </Button>
           </div>
 
           <div
