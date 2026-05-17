@@ -4,7 +4,6 @@ function Button({
   variantClick = "basicClick",
   className = "",
   type = "button",
-  className = ""
 }) {
   const estiloBase =
     "instrument-sans text-xl w-48 h-12 rounded-lg font-bold shadow-[5px_10px_20px_rgba(0,0,0,0.25)] transition-colors duration-200";

@@ -5,8 +5,9 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../components/Button";
 
 function TelaInicial() {
-   
 
+  const navigate = useNavigate();
+   
   return (
     // div que gurdar tudo na tela.
     <div className="w-full h-screen flex flex-col overflow-hidden">

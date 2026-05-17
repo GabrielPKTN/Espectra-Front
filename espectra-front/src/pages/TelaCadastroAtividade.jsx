@@ -4,8 +4,6 @@ import interrogacao from "../assets/general_photos/interrogacao.svg";
 import OutlinedTitle from "../components/OutlinedTitle";
 import logotipoAzul from "../assets/logotipos/logotipo-azul.svg";
 import { useState } from "react";
-import OutlinedTitle from "../components/OutlinedTitle";
-import logotipoAzul from "../assets/logotipos/logotipo-azul.svg";
 import CheckboxAtividade from "../components/CheckboxTipoAtividade";
 import OptionPaneMeses from "../components/OptionPaneMeses";
 import HeaderUsuario from "../components/HeaderUsuario";
