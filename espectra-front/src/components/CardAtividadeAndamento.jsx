@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-export default function CardAtividade() {
+export default function CardAtividade({atividade}) {
     const navigate = useNavigate()
 
     const [expandido, setExpandido] = useState(false);
@@ -39,7 +39,7 @@ export default function CardAtividade() {
             >
 
                 <p className="instrument-sans font-semibold md:text-xl md:font-medium lg:text-2xl">
-                    Descrição da atividade
+                    { atividade }
                 </p>
 
                 <img
