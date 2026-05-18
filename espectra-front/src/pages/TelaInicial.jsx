@@ -5,8 +5,9 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../components/Button";
 
 function TelaInicial() {
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
+   
   return (
     // div que gurdar tudo na tela.
     <div className="w-full h-screen flex flex-col overflow-hidden">
@@ -32,7 +33,7 @@ function TelaInicial() {
             <NavItem href="https://github.com/GabrielPKTN/Espectra-Front.git">
               Sobre
             </NavItem>
-            <NavItem href="/Login">Login</NavItem>
+            <NavItem href="/login">Login</NavItem>
           </ul>
         </nav>
       </div>
