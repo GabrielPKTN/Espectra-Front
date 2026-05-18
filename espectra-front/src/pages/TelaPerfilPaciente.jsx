@@ -17,12 +17,58 @@ import ButtonHabilidade from "../components/ButtonHabilidade";
 import Button from "../components/Button";
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import { useParams } from "react-router-dom";
 
 function TelaPerfilPaciente() {
+  const [paciente, setPaciente] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  const {id} = useParams();
+
+  useEffect(()=> {
+    async function carregarDadosPaciente() {
+      try{
+        const token = localStorage.getItem("token");
+        const response = await api.get(`/v1/espectra/paciente/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        if(response.data && response.data.items){
+          setPaciente(response.data.items)
+        }
+      }catch(error){
+        console.error("Erro ao buscar dados do paciente: ", error)
+      }finally{
+        setLoading(false)
+      }
+    }
+
+    if(id){
+      carregarDadosPaciente();
+    }
+  }, [id]);
+
+  // FAZER LOGICA MELHOR PRA CARREGAMENTO.
+  // if(loading){
+  //   return (
+  //     <div className="flex h-screen w-screen items-center justify-center">
+  //       <p className="text-xl font-semibold primary-color animate-pulse">Carregando dados do paciente...</p>
+  //     </div>
+  //   );
+  // } else {
+  //   return (
+  //     <div className="flex h-screen w-screen items-center justify-center">
+  //       <p className="text-xl font-semibold text-red-500">Paciente não encontrado.</p>
+  //     </div>
+  //   );
+  // }
+
+  
   const data = [
     {
-      nome: "Socialização",
-      idade: 1,
+      
       cor: "#a2e289",
       classe: "cor-socializacao",
     },
@@ -68,6 +114,10 @@ function TelaPerfilPaciente() {
   };
 
   const isDesktop = barraGraficoDesktop();
+
+  const deletarPaciente = async() => {
+    
+  }
 
   return (
     <div className="lg:bg-[#dfedff] flex flex-col justify-between gap-2 lg:h-auto lg:overflow-hidden">

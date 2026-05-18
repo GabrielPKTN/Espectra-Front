@@ -22,7 +22,7 @@ function Rotas() {
       <Route path="/login" element={<TelaLogin />} />
       <Route path="/cadastro" element={<TelaCadastro />} />
       <Route path="/home" element={<TelaHome />} />
-      <Route path="/perfil-paciente" element={<TelaPerfilPaciente />} />
+      <Route path="/perfil-paciente/:id" element={<TelaPerfilPaciente />} />
       <Route path="/adicionar-paciente" element={<TelaAdicionarPaciente />} />
       <Route path="/formulario" element={<TelaFormulario />} />
       <Route path="/atividades/" element={<TelaAtividades />} />
