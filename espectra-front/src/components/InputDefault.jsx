@@ -5,6 +5,7 @@ function InputDefault({
   onBlur,
   variantInput = "basicInput",
   name,
+  className = "",
   limiteCaracteres,
   placeholder,
 }) {
@@ -25,7 +26,7 @@ function InputDefault({
       id={name}
       maxLength={limiteCaracteres}
       placeholder={placeholder}
-      className={`${estiloInput} ${variants[variantInput]}`}
+      className={`${estiloInput} ${variants[variantInput]} ${className}`}
     />
   );
 }
