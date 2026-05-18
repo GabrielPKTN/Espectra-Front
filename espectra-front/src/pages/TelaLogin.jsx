@@ -6,6 +6,7 @@ import authentication from "../assets/general_photos/authentication.png";
 import axios from "axios"
 import { jsx } from "react/jsx-runtime";
 import { data, useNavigate } from "react-router-dom";
+import api from "../services/api"
 
 
 function TelaLogin() {
@@ -19,9 +20,9 @@ function TelaLogin() {
   async function realizarLogin() {
 
     try {
-      const response = await axios.post(
+      const response = await api.post(
       
-        "http://localhost:8080/v1/espectra/usuario/login",
+        "/v1/espectra/usuario/login",
         {
           email,
           senha
@@ -29,8 +30,6 @@ function TelaLogin() {
       )
     
       const data = response.data
-
-      console.log(data)
 
       localStorage.setItem("token", data.token)
       localStorage.setItem("usuario", JSON.stringify(data.items))
@@ -122,7 +121,7 @@ function TelaLogin() {
                 setSenha(e.target.value)
                 setMensagemErro("")
               }}
-              name="E-mail usuário"
+              name="Senha usuário"
               limiteCaracteres={255}
               type={"password"}
             />
