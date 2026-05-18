@@ -6,13 +6,33 @@ import GraficoTentativas from "../components/GraficoTentativas";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import { CircleX } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
+
 
 function HistoricoTentativa() {
 
     const navigate = useNavigate()
 
     const [abrirModal, setAbrirModal] = useState(false)
+
+    const [tentativas, setTentativas] = useState([])
+    const [tentativaSelecionada, setTentativaSelecionada] = useState(null)
+
+    async function buscarTentativas(id) {
+        try {
+            const response = await axios.get(`http://localhost:8080/v1/espectra/tentativa/${id}`)
+            console.log(response.data)
+            setTentativas(response.data.items)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        buscarTentativas(1)
+    }, [])
 
     function fechar() {
         setAbrirModal(false)
@@ -69,40 +89,32 @@ function HistoricoTentativa() {
 
                             {/* Container -> Lado esquerdo */}
                             <div className="w-full lg:w-1/2">
+                                {
+                                    tentativas.map((tentativa) => (
+                                        <CardTentativa
+                                            key={tentativa.id_tentativa}
+                                            titulo={`Atividade realizada com ${tentativa.auxilio}`}
+                                            descricao="Resultado: "
+                                            resultado={tentativa.resultado ? "Êxito" : "Falha"}
+                                            data={tentativa.data_tentativa}
+                                            fundo="bg-[#F9F9F9]"
+                                            className="mt-4 lg:w-[575px]"
+                                        >
+                                            <Button
+                                                className="w-[142px] h-[31px] rounded-2x1 transform-gpu transition-all duration-300 ease-in-out hover:scale-110"
+                                                variantClick="basicClick"
+                                                onClick={() => {
+                                                    setTentativaSelecionada(tentativa)
+                                                    setAbrirModal(true)
+                                                }}
+                                            >
+                                                Ver detalhes
+                                            </Button>
+                                        </CardTentativa>
+                                    ))
+                                }
 
-                                <CardTentativa
-                                    titulo="Atividade realizada com auxílio parcial"
-                                    descricao="Resultado: "
-                                    resultado="Êxito"
-                                    data="20/03/2026"
-                                    fundo="bg-[#F9F9F9]"
-                                    className="mt-4 lg:w-[575px]"
-                                >
-                                    <Button
-                                        className="w-[142px] h-[31px] rounded-2x1 transform-gpu transition-all duration-300 ease-in-out hover:scale-110"
-                                        variantClick="basicClick"
-                                        onClick={() => setAbrirModal(true)}
-                                    >
-                                        Ver detalhes
-                                    </Button>
-                                </CardTentativa>
 
-                                <CardTentativa
-                                    titulo="Atividade realizada com auxílio parcial"
-                                    descricao="Resultado: "
-                                    resultado="Êxito"
-                                    data="20/03/2026"
-                                    fundo="bg-[#F9F9F9]"
-                                    className="mt-4 lg:w-[575px]"
-                                >
-                                    <Button
-                                        className="w-[142px] h-[31px] rounded-2x1 transform-gpu transition-all duration-300 ease-in-out hover:scale-110"
-                                        variantClick="basicClick"
-                                        onClick={() => setAbrirModal(true)}
-                                    >
-                                        Ver detalhes
-                                    </Button>
-                                </CardTentativa>
 
                                 <CardTentativa
                                     titulo="Atividade realizada com auxílio parcial"
@@ -133,7 +145,7 @@ function HistoricoTentativa() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
 
             {
                 abrirModal && (

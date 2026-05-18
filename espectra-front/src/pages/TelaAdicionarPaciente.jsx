@@ -6,7 +6,6 @@ import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import { CircleUser } from 'lucide-react';
 
-
 function TelaAdicionarPaciente() {
 
   const navigate = useNavigate()
