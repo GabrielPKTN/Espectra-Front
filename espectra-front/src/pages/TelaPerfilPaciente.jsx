@@ -70,31 +70,32 @@ function TelaPerfilPaciente() {
   const isDesktop = barraGraficoDesktop();
 
   return (
-    <div className="lg:bg-[#dfedff] flex flex-col justify-between gap-2 lg:h-screen lg:overflow-hidden">
+    <div className="lg:bg-[#dfedff] flex flex-col justify-between gap-2 lg:h-auto lg:overflow-hidden">
       {/*HEADER*/}
-      <div className="flex flex-row justify-between p-2 m-2">
-        <ChevronLeft className="primary-color size-8 lg:size-12" />
-        <CircleUser className="primary-color size-10 lg:size-14"></CircleUser>
+      <div className="flex flex-row justify-between p-2 m-2 lg:m-0.5">
+
+        <ChevronLeft className="primary-color size-8 lg:size-10" />
+        <CircleUser className="primary-color size-10 lg:size-12"></CircleUser>
       </div>
 
       <div
         className="flex flex-col w-screen h-fit p-2 
-        lg:bg-[#dfedff] lg:h-screen lg:justify-start lg:items-center lg:overflow-hidden
+        lg:bg-[#dfedff] lg:h-auto lg:justify-start lg:items-center
         xl:bg-[#dfedff] xl:h-screen"
       >
         {/*MAIN*/}
         <div
           className="flex flex-col justify-center items-center
-        lg:bg-white lg:p-4 lg:m-6 lg:rounded-4xl lg:max-w-max"
+        lg:bg-white lg:p-1 lg:rounded-4xl lg:max-w-max"
         >
           {/*Nome e foto do paciente.*/}
           <div className="flex flex-col items-center gap-3 lg:mt-4">
-            <CircleUser className="primary-color size-24 lg:size-28"></CircleUser>
+            <CircleUser className="primary-color size-24 lg:size-24"></CircleUser>
 
             <h1
               className="primary-color font-bold instrument-sans uppercase text-xl
           md:text-2xl
-          lg:text-3xl lg:mt-4"
+          lg:text-2xl lg:mt-4"
             >
               Nome do paciente
             </h1>
@@ -103,7 +104,7 @@ function TelaPerfilPaciente() {
           <p
             className="text-center italic primary-color inclusive-san font-lights
               md:text-lg md:px-10
-              lg:mt-6 lg:text-[22px] lg:px-30"
+              lg:mt-6 lg:text-[18px] lg:px-30"
           >
             Nome do paciente nasceu em Data, tem Idade, está na 5° Série e
             possui diagnóstico de Diagnostico com grau de suporte X.
@@ -112,7 +113,7 @@ function TelaPerfilPaciente() {
           <div
             className="flex flex-row gap-1 font-semibold instrument-sans text-base p-3 justify-center
               md:text-lg
-              lg:text-[22px] lg:p-4"
+              lg:text-[20px] lg:p-4"
           >
             <p className="primary-color">Telefone do responsável:</p>
             <p className="text-gray-700">+55 11 91234-5678</p>
@@ -217,7 +218,7 @@ function TelaPerfilPaciente() {
 
           <div
             className="flex flex-col gap-4 mt-16 items-center lg:flex-row
-        lg:w-175 lg:m-8 lg:mt-12"
+        lg:w-175 lg:m-8 lg:mt-8"
           >
             <Button
               variantClick="basicClick"
