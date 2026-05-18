@@ -16,6 +16,7 @@ import {
 import ButtonHabilidade from "../components/ButtonHabilidade";
 import Button from "../components/Button";
 import { useEffect, useState } from "react";
+import api from "../services/api";
 
 function TelaPerfilPaciente() {
   const data = [
