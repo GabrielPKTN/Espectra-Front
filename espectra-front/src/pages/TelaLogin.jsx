@@ -21,14 +21,16 @@ function TelaLogin() {
     try {
       const response = await axios.post(
       
-      "http://localhost:8080/v1/espectra/usuario/login",
-      {
-        email,
-        senha
-      }
-    )
+        "http://localhost:8080/v1/espectra/usuario/login",
+        {
+          email,
+          senha
+        }
+      )
     
-    const data = response.data
+      const data = response.data
+
+      console.log(data)
 
       localStorage.setItem("token", data.token)
       localStorage.setItem("usuario", JSON.stringify(data.items))
@@ -122,6 +124,7 @@ function TelaLogin() {
               }}
               name="E-mail usuário"
               limiteCaracteres={255}
+              type={"password"}
             />
           </div>
 
