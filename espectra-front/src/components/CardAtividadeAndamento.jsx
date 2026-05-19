@@ -6,6 +6,7 @@ import trash from "../assets/general_photos/trash.svg";
 import pen from "../assets/general_photos/pen.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
+import ModalExclusao from "../pages/TelaCardExclusao"
 
 
 
@@ -13,6 +14,7 @@ export default function CardAtividade({atividade, id, questao}) {
     const navigate = useNavigate()
 
     const [expandido, setExpandido] = useState(false);
+    const [modal, setModal] = useState(false)
 
     const token = localStorage.getItem("token")
 
@@ -42,6 +44,7 @@ export default function CardAtividade({atividade, id, questao}) {
             console.log(error)
         }
     }
+
 
     return (
         <div
@@ -143,17 +146,33 @@ export default function CardAtividade({atividade, id, questao}) {
                     </div>
                     ) : (
                         <div className="flex gap-8 mt-4 justify-center"> 
-                            <div className="flex items-center justify-center gap-1 cursor-pointer">
+
+                            <div className="
+                                flex items-center justify-center gap-1 cursor-pointer"
+                                onClick={() => {
+                                    setModal(true)
+                                }}
+                                >
                                 <img src={trash} alt="Excluir" className="w-7 md:w-8"/>
                                 <span className="instrument-sans text-[#F94C4C] text-xs md:text-lg lg:text-xl">
                                     Excluir atividade
                                 </span>
                             </div>
+
                         </div>
                     )}
 
 
                 </div>
+            )}
+
+            {modal && (
+                <ModalExclusao
+                    onCancel={() => setModal(false)}
+                    onConfirm={() => {
+                        setModal(false)
+                    }}
+                />
             )}
 
         </div>
