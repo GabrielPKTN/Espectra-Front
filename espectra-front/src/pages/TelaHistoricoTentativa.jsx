@@ -54,6 +54,27 @@ function HistoricoTentativa() {
         }
     }
 
+    const dadosGrafico = tentativas.map((tentativa) => {
+            let valor = 1
+            let color = "#FF2D2D"
+    
+            if(tentativa.auxilio === "Parcial"){
+                valor = 2
+                color = "#FAE938"
+            }
+    
+            if(tentativa.auxilio === "Independente"){
+                valor = 3
+                color = "#A2E289"
+            }
+    
+            return {
+                data: formatarData(tentativa.data_tentativa),
+                valor,
+                color
+            }
+        })
+
     async function buscarTentativas(idAtividade) {
         try {
 
@@ -187,7 +208,7 @@ function HistoricoTentativa() {
                                 Representação gráfica:
                             </h2>
 
-                            <GraficoTentativas />
+                            <GraficoTentativas data={dadosGrafico}/>
                         </div>
                     </div>
                 </div>
