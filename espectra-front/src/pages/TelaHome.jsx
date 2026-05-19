@@ -112,7 +112,7 @@ function TelaHome() {
 
                 <Button
                     variantClick="basicClick"
-                    onClick={() => navigate("/adicionar_paciente")}
+                    onClick={() => navigate("/adicionar-paciente")}
                 >
                     Adicionar paciente
                 </Button>
