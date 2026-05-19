@@ -18,6 +18,9 @@ export default function CardAtividade({atividade, id, questao}) {
 
     const token = localStorage.getItem("token")
 
+    const idPaciete = 1 //localStorage.getItem("idPaciente")
+    const idUsuario = 1
+
     
     function navegar(path){
         localStorage.setItem("idAtividade", id)
@@ -25,10 +28,10 @@ export default function CardAtividade({atividade, id, questao}) {
         navigate(`${path}`)
     }
 
-    async function declararHailidade(idHabilidade) {
+    async function declararHailidade(idAtividade) {
         try {
             const response = await axios.put(
-                `http://localhost:8080/v1/espectra/atividade/${idHabilidade}`,
+                `http://localhost:8080/v1/espectra/atividade/${idAtividade}`,
                 {},
                 { 
                     headers: {
@@ -39,6 +42,32 @@ export default function CardAtividade({atividade, id, questao}) {
 
             const data = response.data
             console.log(data)
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async function excluirAtividade(idAtividade, idPaciente, idUsuario) {
+        try {
+            const response = await axios.delete(
+                `http://localhost:8080/v1/espectra/atividade/${idAtividade}`,
+             
+                { 
+                    headers: {
+                        'x-access-token': token
+                    },
+
+                    data: {
+                        id_usuario: idUsuario,
+                        id_paciente: idPaciente
+                    },
+                }
+            )
+
+            const data = response.data
+            window.location.reload()
+            
 
         } catch (error) {
             console.log(error)
@@ -124,7 +153,12 @@ export default function CardAtividade({atividade, id, questao}) {
                     {questao == null ? (
                         <div className="flex gap-8 mt-4 justify-center">
 
-                        <div className="flex items-center justify-center gap-1 cursor-pointer">
+                        <div className="
+                            flex items-center justify-center gap-1 cursor-pointer"
+                            onClick={() => {
+                                setModal(true)
+                            }}
+                            >
                             <img src={trash} alt="Excluir" className="w-7 md:w-8"/>
                             <span className="instrument-sans text-[#F94C4C] text-xs md:text-lg lg:text-xl">
                                 Excluir atividade
@@ -170,6 +204,7 @@ export default function CardAtividade({atividade, id, questao}) {
                 <ModalExclusao
                     onCancel={() => setModal(false)}
                     onConfirm={() => {
+                        excluirAtividade(id, idPaciete, idUsuario)
                         setModal(false)
                     }}
                 />
