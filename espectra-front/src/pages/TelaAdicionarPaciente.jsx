@@ -5,10 +5,48 @@ import InputHome from "../components/input/InputHome";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import { CircleUser } from 'lucide-react';
+import { useState } from "react";
+import axios from "axios";
 
 function TelaAdicionarPaciente() {
 
+  const [cpf, setCpf] = useState("")
+  const [paciente, setPaciente] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [erro, setErro] = useState(null)
+
   const navigate = useNavigate()
+
+  async function buscarPacientePorCpf() {
+    try {
+      setLoading(true)
+      setErro(null)
+
+      //const token = localStorage.getItem("token")
+      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTc3ODc4NzYzNCwiZXhwIjoxNzc4Nzg5NDM0fQ.q13OCluSH1nDWQsyrRX_OmnFiJbvBGEsQYpOBfwPbXY"
+
+      if (!token) {
+        setErro("Token não encontrado!")
+        return
+      }
+
+      const response = await axios.get(`http://localhost:8080/v1/espectra/paciente/`, {
+        params: {
+          cpf: cpf
+        },
+        headers: {
+          "x-access-token": token
+        }
+      })
+
+      setPaciente(response.data)
+    } catch (error) {
+      console.log(error)
+      setErro("Paciente não encontrado!")
+    } finally {
+      setLoading(true)
+    }
+  }
 
   return (
     // div que carrega tudo na tela
@@ -16,18 +54,18 @@ function TelaAdicionarPaciente() {
 
       {/*div do header*/}
       <div className="flex justify-between items-center lg:mt-2">
-        <button onClick={()=> navigate("/home")}>
-          <ChevronLeft 
-          className="primary-color size-10
+        <button onClick={() => navigate("/home")}>
+          <ChevronLeft
+            className="primary-color size-10
           lg:size-11"/>
         </button>
 
-      
-      <img src={logotipo} alt="logotipo do app" 
-      className="size-10 w-auto
+
+        <img src={logotipo} alt="logotipo do app"
+          className="size-10 w-auto
       lg:size-14 lg:w-auto"/>
 
-    <CircleUser className="size-12 lg:size-16 primary-color"></CircleUser>
+        <CircleUser className="size-12 lg:size-16 primary-color"></CircleUser>
       </div>
 
       {/*div do input*/}
@@ -37,55 +75,71 @@ function TelaAdicionarPaciente() {
         lg:text-3xl">
           Digite o CPF do paciente
         </p>
-        <InputHome></InputHome>
+        <InputHome
+          value={cpf}
+          placeholder="Digite o CPF do paciente..."
+          onChange={(e) => setCpf(e.target.value)}
+
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              buscarPacientePorCpf()
+            }
+          }}
+
+          onSearch={buscarPacientePorCpf}
+        ></InputHome>
       </div>
 
       {/*div que carregará o card cinza com informações do paciente.*/}
-      <div className="bg-gray-200 h-auto w-full mt-8 rounded-2xl shadow-lg/20 border border-[#C9C9C9]
+      {
+        paciente && (
+          <div className="bg-gray-200 h-auto w-full mt-8 rounded-2xl shadow-lg/20 border border-[#C9C9C9]
       md:mt-12 md:h-125
       lg:w-175 lg:mx-auto lg:h-90 lg:mt-10">
-        <div className="flex flex-col justify-center items-center gap-4 mb-4">
+            <div className="flex flex-col justify-center items-center gap-4 mb-4">
 
-        <CircleUser className="size-16 primary-color mt-5
+              <CircleUser className="size-16 primary-color mt-5
         md:mt-18 md:size-22
         lg:mt-8 lg:size-20">
-        </CircleUser>
+              </CircleUser>
 
 
-        <h1 className="primary-color font-bold text-2xl instrument-sans
+              <h1 className="primary-color font-bold text-2xl instrument-sans
         md:text-3xl md:mt-4">
-          NOME USUÁRIO
-        </h1>
+                {paciente.nome}
+              </h1>
 
-        <p className="primary-color font-inclusive-sans text-center text-lg p-2 font-medium italic
+              <p className="primary-color font-inclusive-sans text-center text-lg p-2 font-medium italic
         md:text-2xl">
-        NOME USUÁRIO nasceu em DATA, tem IDADE,
-        está na SERIE-ESCOLA e possui diagnóstico de DIAGNOSTICO com grau de suporte X.
-        </p>
-        </div>
-      </div>
+                NOME USUÁRIO nasceu em DATA, tem IDADE,
+                está na SERIE-ESCOLA e possui diagnóstico de DIAGNOSTICO com grau de suporte X.
+              </p>
+            </div>
+          </div>
+        )
+      }
 
       <div className="flex flex-col justify-center items-center gap-4 mt-5
-      lg:flex lg:flex-row">      
+      lg:flex lg:flex-row">
 
-      {/*Nestes buttons vai ser necessário adicionar a rota da tela do formulário ou retorná-lo para a tela home,
-        já com o novo paciente adicionado.*/}  
-          <Button
-            variantClick="basicClick"
-            // *onClick={}*/ 
-          >
-            Iniciar avaliação
-          </Button>
+        {/*Nestes buttons vai ser necessário adicionar a rota da tela do formulário ou retorná-lo para a tela home,
+        já com o novo paciente adicionado.*/}
+        <Button
+          variantClick="basicClick"
+          onClick={() => navigate("/formulario")}
+        >
+          Iniciar avaliação
+        </Button>
 
-          <Button
-            variantClick="basicClick"
-            onClick={()=> navigate("/home")}
-          >
-            Adicionar paciente
-          </Button>
-        </div>
+        <Button
+          variantClick="basicClick"
+          onClick={() => navigate("/home")}
+        >
+          Adicionar paciente
+        </Button>
+      </div>
     </div>
-      
+
   )
 }
 
