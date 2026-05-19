@@ -4,14 +4,6 @@ import LabelInfoCard from "./LabelInfoCard"
 
 function CardPaciente(props) {
 
-    const diagnostico = useMemo(() => {
-
-        return props.diagnostico_breve.map(
-            diag => diag.sigla
-        ).join(" ")
-
-    }, [props.diagnostico_breve])
-
     return <div key={props.id} className="
     bg-white shadow-lg w-[90%] h-full max-h-35 justify-between items-center rounded-3xl p-2 flex border-2 border-(--bg-primary-color) md:w-full">
 
@@ -24,7 +16,7 @@ function CardPaciente(props) {
                 <LabelInfoCard info={`${props.idade} ANOS`} ></LabelInfoCard>
                 <LabelInfoCard info={props.cpf} ></LabelInfoCard>
                 <LabelInfoCard info={props.serie_escolar} ></LabelInfoCard>
-                <LabelInfoCard info={diagnostico} ></LabelInfoCard>
+                <LabelInfoCard info={props.diagnostico} ></LabelInfoCard>
                 <LabelInfoCard info={props.grau_suporte} ></LabelInfoCard>
             </div>
         </div>

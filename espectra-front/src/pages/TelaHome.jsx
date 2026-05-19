@@ -4,7 +4,7 @@ import ContainerPacientes from "../components/ContainerPacientes.jsx";
 import Button from "../components/Button.jsx";
 import app from "../services/api.js"
 import { Filter } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 function TelaHome() {
@@ -18,25 +18,14 @@ function TelaHome() {
         paciente.nome.toLowerCase().includes(busca.toLowerCase()),
     );
 
-    console.log(pacientesFiltrados)
-
-    localStorage.setItem(
-
-        "id_usuario", 1
-
-    )
-
-    localStorage.setItem(
-
-        "token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTc3OTEzNjcwNiwiZXhwIjoxMDAwMDE3NzkxMzY3MDZ9.Ao3CYRUsrq-Wn9cHhobuEc3kRsTibpzdXTayJFVc8xE"
-
-    )
-
     const requestData = async () => {
+
+        const usuarioStringObject = localStorage.getItem("usuario")
+        const usuarioObject       = JSON.parse(usuarioStringObject)
 
         try {
 
-            const result = await app.get(`/v1/espectra/usuario/home/${localStorage.getItem('id_usuario')}`,
+            const result = await app.get(`/v1/espectra/usuario/home/${usuarioObject.id}`,
                 {
                     headers: {
                         'x-access-token': localStorage.getItem('token')
@@ -45,6 +34,18 @@ function TelaHome() {
             )
 
             let rawData = result.data
+
+            let pacientes = rawData.items.pacientes || []
+
+            if(Array.isArray(pacientes)) {
+
+                rawData.items.pacientes = pacientes.map(paciente => ({
+                    ...paciente, diagnostico_breve: (paciente.diagnostico_breve || []).map(
+                        diag => diag.sigla
+                    ).join(" ")
+                }))
+
+            }
 
             const jsonHome = JSON.stringify(rawData)
             localStorage.setItem("home", jsonHome)
@@ -55,8 +56,6 @@ function TelaHome() {
                 setPacientes(rawData.items.familiares)
             }
 
-
-
         } catch (error) {
             return false
         }
@@ -65,10 +64,11 @@ function TelaHome() {
 
     const returnFoto = () => {
 
-        const json = JSON.parse(localStorage.getItem('home'))
+        const jsonString = localStorage.getItem('home')
+        const jsonObject = JSON.parse(jsonString)
 
-        if (json.items.foto) {
-            return json.items.foto
+        if (jsonObject.items.foto) {
+            return jsonObject.items.foto
         } else {
             return null
         }
