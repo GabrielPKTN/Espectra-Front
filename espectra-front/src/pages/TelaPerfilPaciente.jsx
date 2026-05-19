@@ -18,24 +18,29 @@ import Button from "../components/Button";
 import { useEffect, useState } from "react";
 import api from "../services/api";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import { toast } from "react-hot-toast";
 
 function TelaPerfilPaciente() {
   const [paciente, setPaciente] = useState(null)
   const [loading, setLoading] = useState(true)
-
   const {id} = useParams();
+  const navigate = useNavigate();
+
 
   useEffect(()=> {
+
     async function carregarDadosPaciente() {
       try{
         const token = localStorage.getItem("token");
         const response = await api.get(`/v1/espectra/paciente/${id}`, {
           headers: {
-            Authorization: `Bearer ${token}`
+           "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTc3OTE5Njc1NSwiZXhwIjoxMDAwMDE3NzkxOTY3NTV9.ndalelKb8yyym5wgNfMa94CTco6os-hFlI3UXupiNGY"
           }
         });
 
-        if(response.data && response.data.items){
+        if(response.data.items){
           setPaciente(response.data.items)
         }
       }catch(error){
@@ -50,56 +55,80 @@ function TelaPerfilPaciente() {
     }
   }, [id]);
 
-  // FAZER LOGICA MELHOR PRA CARREGAMENTO.
-  // if(loading){
-  //   return (
-  //     <div className="flex h-screen w-screen items-center justify-center">
-  //       <p className="text-xl font-semibold primary-color animate-pulse">Carregando dados do paciente...</p>
-  //     </div>
-  //   );
-  // } else {
-  //   return (
-  //     <div className="flex h-screen w-screen items-center justify-center">
-  //       <p className="text-xl font-semibold text-red-500">Paciente não encontrado.</p>
-  //     </div>
-  //   );
-  // }
+  async function removerPaciente() {
+    const confirmar = window.confirm("Tem certeza que deseja remover esse paciente?")
+
+    if(!confirmar) return;
+
+    try {
+
+        const token = localStorage.getItem("token");
+    
+        const usuarioDecodificado = jwtDecode(token);
+    
+        const idUsuario = usuarioDecodificado.userID;
+    
+        await api.delete(`/v1/espectra/paciente/${id}/${idUsuario}`, {
+          headers: {
+            "x-access-token": token
+          }
+        });
+
+        toast.success("Paciente removido com sucesso!")
+
+        navigate("/home");
+    } catch (error){
+        console.error(error);
+
+        toast.error("Erro ao remover paciente")
+    }
+}
+
+
 
   
-  const data = [
-    {
-      
-      cor: "#a2e289",
-      classe: "cor-socializacao",
-    },
-    {
-      nome: "Cognição",
-      idade: 6,
-      cor: "#71afff",
-      classe: "cor-cognicao",
-    },
-    {
-      nome: "Auto-cuidado",
-      idade: 2,
-      cor: "#d293f0",
-      classe: "cor-autocuidado",
-    },
-    {
-      nome: "Linguagem",
-      idade: 3,
-      cor: "#ffc87b",
-      classe: "cor-linguagem",
-    },
-    {
-      nome: "Desenvolvimento-motor",
-      idade: 4,
-      cor: "#c8c8c8",
-      classe: "cor-devmotor",
-    },
-  ];
-
   // função que faz o gráfico ficar maior na tela de computador, considerando o tamanho a partir de 768px.
-  const barraGraficoDesktop = () => {
+  const estiloHabilidade = (nomeHabilidade) =>{
+    const nomeFormatado = nomeHabilidade.toLowerCase().trim();
+    if(nomeFormatado.includes("socializa")){
+        return {cor: "#a2e289", classe: "cor-socializacao"}
+    }
+    if (nomeFormatado.includes("cogni")) {
+        return { cor: "#71afff", classe: "cor-cognicao" };
+      }
+    if (nomeFormatado.includes("cuidado") || nomeFormatado.includes("auto")) {
+        return { cor: "#d293f0", classe: "cor-autocuidado" };
+      }
+    if (nomeFormatado.includes("lingua")) {
+        return { cor: "#ffc87b", classe: "cor-linguagem" };
+      }
+    if (nomeFormatado.includes("motor") || nomeFormatado.includes("desenvolv")) {
+        return { cor: "#c8c8c8", classe: "cor-devmotor" };
+      }
+      return { cor: "#cccccc", classe: "cor-padrao" }; // Fallback
+    };
+
+    const formatarDadosGrafico = () => {
+        if(!paciente || !paciente.grafico) return[];
+
+        return paciente.grafico.map((hab) => {
+            const estilo = estiloHabilidade(hab.nome);
+
+            const valorIdade = Math.round(hab.idade_meses / 12) || hab.idade_meses
+
+            return {
+                id: hab.id,
+                nome: hab.nome,
+                idade: valorIdade, 
+                cor: estilo.cor,
+                classe: estilo.classe,
+              };
+        })
+    }
+
+    const dadosGrafico = formatarDadosGrafico();
+
+
     const [isDesktop, setIsDesktop] = useState(false);
 
     useEffect(() => {
@@ -108,23 +137,39 @@ function TelaPerfilPaciente() {
 
       const listener = (e) => setIsDesktop(e.matches);
       media.addEventListener("change", listener);
+
+      return () => media.removeEventListener("change", listener)
     }, []);
 
-    return isDesktop;
-  };
 
-  const isDesktop = barraGraficoDesktop();
-
-  const deletarPaciente = async() => {
-    
+  if (loading) {
+    return (
+      <div className="flex h-screen w-screen items-center justify-center bg-[#dfedff]">
+        <p className="text-xl font-bold primary-color animate-pulse">Carregando dados do paciente...</p>
+      </div>
+    );
   }
+
+  if (!paciente) {
+    return (
+      <div className="flex h-screen w-screen items-center justify-center bg-[#dfedff]">
+        <p className="text-xl font-bold text-red-500">Paciente não encontrado.</p>
+      </div>
+    );
+  }
+
+  console.log(paciente)
+  const primeiroResponsavel =  paciente.responsavel[0]
+  const listaDiagnosticos = paciente.diagnostico
+  ?.map((d) => `${d.nome_completo} (${d.sigla})`)
+  .join(", ");
 
   return (
     <div className="lg:bg-[#dfedff] flex flex-col justify-between gap-2 lg:h-auto lg:overflow-hidden">
       {/*HEADER*/}
       <div className="flex flex-row justify-between p-2 m-2 lg:m-0.5">
 
-        <ChevronLeft className="primary-color size-8 lg:size-10" />
+        <ChevronLeft className="primary-color size-8 lg:size-10 cursor-pointer" onClick={()=> navigate(-1)}/> 
         <CircleUser className="primary-color size-10 lg:size-12"></CircleUser>
       </div>
 
@@ -140,14 +185,19 @@ function TelaPerfilPaciente() {
         >
           {/*Nome e foto do paciente.*/}
           <div className="flex flex-col items-center gap-3 lg:mt-4">
-            <CircleUser className="primary-color size-24 lg:size-24"></CircleUser>
+            {paciente.foto ? (
+                <img src={paciente.foto} alt={paciente.nome} className="size-24 lg:size-24 rounded-full object-cover border-2 border-blue-500" />
+            ) : (
+                <CircleUser className="primary-color size-24 lg:size-24"></CircleUser>
+            )}
+            
 
             <h1
               className="primary-color font-bold instrument-sans uppercase text-xl
           md:text-2xl
           lg:text-2xl lg:mt-4"
             >
-              Nome do paciente
+              {paciente.nome}
             </h1>
           </div>
 
@@ -156,8 +206,7 @@ function TelaPerfilPaciente() {
               md:text-lg md:px-10
               lg:mt-6 lg:text-[18px] lg:px-30"
           >
-            Nome do paciente nasceu em Data, tem Idade, está na 5° Série e
-            possui diagnóstico de Diagnostico com grau de suporte X.
+           {paciente.nome} nasceu em {paciente.data_nascimento}, tem {paciente.idade} anos, está na {paciente.serie_escolar} e possui diagnóstico de {listaDiagnosticos} com grau de suporte {paciente.grau_suporte}
           </p>
 
           <div
@@ -166,7 +215,7 @@ function TelaPerfilPaciente() {
               lg:text-[20px] lg:p-4"
           >
             <p className="primary-color">Telefone do responsável:</p>
-            <p className="text-gray-700">+55 11 91234-5678</p>
+            <p className="text-gray-700">{primeiroResponsavel.telefone}</p>
           </div>
 
           <div className="flex flex-col w-screen lg:grid lg:grid-cols-2 lg:gap-x-10 lg:w-full">
@@ -182,7 +231,7 @@ function TelaPerfilPaciente() {
               <div className="h-64 w-full mt-4">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
-                    data={data}
+                    data={dadosGrafico}
                     margin={{
                       top: 35,
                       right: 30,
@@ -191,11 +240,11 @@ function TelaPerfilPaciente() {
                     }}
                   >
                     <XAxis dataKey="nome" tick={false} />
-                    <YAxis hide domain={[0, 6]} allowDataOverflow={false} />
+                    <YAxis hide domain={[0, 'dataMax + 2']} allowDataOverflow={false} />
                     <Tooltip cursor={{ fill: "transparent" }} />
 
                     <Bar dataKey="idade" barSize={isDesktop ? 65 : 44}>
-                      {data.map((entry, index) => (
+                      {dadosGrafico.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={entry.cor} />
                       ))}
 
@@ -224,45 +273,18 @@ function TelaPerfilPaciente() {
               <h2 className="text-center font-semibold instrument-sans secondary-color text-2xl">
                 Habilidades
               </h2>
-              <ButtonHabilidade
-                color="cor-socializacao"
-                colorHover="cor-socializacao-hover"
-                type="button"
-              >
-                Socialização
-              </ButtonHabilidade>
 
-              <ButtonHabilidade
-                color="cor-cognicao"
-                colorHover="cor-cognicao-hover"
-                type="button"
-              >
-                Cognição
-              </ButtonHabilidade>
-
-              <ButtonHabilidade
-                color="cor-autocuidado"
-                colorHover="cor-autocuidado-hover"
-                type="button"
-              >
-                Auto-cuidado
-              </ButtonHabilidade>
-
-              <ButtonHabilidade
-                color="cor-linguagem"
-                colorHover="cor-linguagem-hover"
-                type="button"
-              >
-                Linguagem
-              </ButtonHabilidade>
-
-              <ButtonHabilidade
-                color="cor-devmotor"
-                colorHover="cor-devmotor-hover"
-                type="button"
-              >
-                Desenvolvimento-motor
-              </ButtonHabilidade>
+              {dadosGrafico.map((hab, index) => (
+                <ButtonHabilidade
+                    key={index}
+                    color={hab.classe}
+                    colorHover={`${hab.classe}-hover`}
+                    type="button"
+                    onClick={() => navigate(`/atividade/${id}/${hab.id}`)}
+                >
+                    {hab.nome}
+                </ButtonHabilidade>
+              ))}
             </div>
           </div>
 
@@ -271,6 +293,7 @@ function TelaPerfilPaciente() {
         lg:w-175 lg:m-8 lg:mt-8"
           >
             <Button
+            
               variantClick="basicClick"
               type="button"
               className="w-full p-3"
@@ -279,6 +302,7 @@ function TelaPerfilPaciente() {
             </Button>
 
             <Button
+            onClick={removerPaciente}
               variantClick="deleteButton"
               type="button"
               className="w-full"
