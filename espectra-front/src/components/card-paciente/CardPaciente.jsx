@@ -16,7 +16,7 @@ function CardPaciente(props) {
                 <LabelInfoCard info={`${props.idade} ANOS`} ></LabelInfoCard>
                 <LabelInfoCard info={props.cpf} ></LabelInfoCard>
                 <LabelInfoCard info={props.serie_escolar} ></LabelInfoCard>
-                <LabelInfoCard info={props.diagnostico} ></LabelInfoCard>
+                <LabelInfoCard info={props.diagnostico_breve} ></LabelInfoCard>
                 <LabelInfoCard info={props.grau_suporte} ></LabelInfoCard>
             </div>
         </div>
