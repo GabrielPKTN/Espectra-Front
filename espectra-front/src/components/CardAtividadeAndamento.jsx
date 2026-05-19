@@ -5,13 +5,43 @@ import Button from "./Button";
 import trash from "../assets/general_photos/trash.svg";
 import pen from "../assets/general_photos/pen.svg";
 import { useNavigate } from "react-router-dom";
+import axios from "axios"
 
 
 
-export default function CardAtividade({atividade}) {
+export default function CardAtividade({atividade, id, questao}) {
     const navigate = useNavigate()
 
     const [expandido, setExpandido] = useState(false);
+
+    const token = localStorage.getItem("token")
+
+    
+    function navegar(path){
+        localStorage.setItem("idAtividade", id)
+
+        navigate(`${path}`)
+    }
+
+    async function declararHailidade(idHabilidade) {
+        try {
+            const response = await axios.put(
+                `http://localhost:8080/v1/espectra/atividade/${idHabilidade}`,
+                {},
+                { 
+                    headers: {
+                        'x-access-token': token
+                    }
+                }
+            )
+
+            const data = response.data
+            console.log(data)
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <div
@@ -38,7 +68,7 @@ export default function CardAtividade({atividade}) {
                 "
             >
 
-                <p className="instrument-sans font-semibold md:text-xl md:font-medium lg:text-2xl">
+                <p className="instrument-sans whitespace-nowrap overflow-hidden font-semibold md:text-xl md:font-medium lg:text-2xl">
                     { atividade }
                 </p>
 
@@ -59,6 +89,7 @@ export default function CardAtividade({atividade}) {
                         instrument-sans font-bold cursor-pointer bg-[var(--bg-secondary-color)] p-2 rounded-full text-white
                         md:text-lg
                         lg:text-xl"
+                        onClick={() => navegar('/tentativa')}
 
                         >
                             Realizar Tentativa
@@ -68,6 +99,7 @@ export default function CardAtividade({atividade}) {
                         instrument-sans font-bold cursor-pointer bg-[var(--bg-secondary-color)] p-2 rounded-full text-white
                         md:text-lg
                         lg:text-xl"
+                        onClick={() => navegar('/tentativa/historico')}
 
                         >
                             Histórico de tentativas
@@ -77,13 +109,17 @@ export default function CardAtividade({atividade}) {
                         instrument-sans font-bold cursor-pointer bg-[var(--bg-secondary-color)] p-2 rounded-full text-white
                         md:text-lg
                         lg:text-xl"
+                        onClick={() => {
+                            declararHailidade(id)
+                            window.location.reload()
+                        }}
 
                         >
                             Declarar Habilidade
                     </button>
 
-
-                    <div className="flex gap-8 mt-4 justify-center">
+                    {questao == null ? (
+                        <div className="flex gap-8 mt-4 justify-center">
 
                         <div className="flex items-center justify-center gap-1 cursor-pointer">
                             <img src={trash} alt="Excluir" className="w-7 md:w-8"/>
@@ -105,6 +141,16 @@ export default function CardAtividade({atividade}) {
                         </div>
 
                     </div>
+                    ) : (
+                        <div className="flex gap-8 mt-4 justify-center"> 
+                            <div className="flex items-center justify-center gap-1 cursor-pointer">
+                                <img src={trash} alt="Excluir" className="w-7 md:w-8"/>
+                                <span className="instrument-sans text-[#F94C4C] text-xs md:text-lg lg:text-xl">
+                                    Excluir atividade
+                                </span>
+                            </div>
+                        </div>
+                    )}
 
 
                 </div>

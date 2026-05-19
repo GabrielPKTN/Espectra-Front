@@ -12,7 +12,7 @@ function TelaAtividades(){
 
     const pacienteId = 1
     const habilidadeId = 1
-    const tokenTeste = localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTc3OTEwODg4NywiZXhwIjoxMDAwMDE3NzkxMDg4ODd9.5CqFzcqs0rMDgo0-aoTCYYCr7c7r8oap-iLwibhf6ig")
+    const tokenTeste = localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTc3OTE4ODI1MCwiZXhwIjoxMDAwMDE3NzkxODgyNTB9.0N10krJeH87PiEk41wLB6i1dXTQZnWyC-auoAA-aaxk")
     const token = localStorage.getItem("token")
     const [atividades, setAtividades] = useState([])
 
@@ -26,7 +26,7 @@ function TelaAtividades(){
             })
 
             const data = response.data
-
+           
             return data.items
 
         } catch (error) {
@@ -47,6 +47,8 @@ function TelaAtividades(){
         carregar()
     }, [])
 
+    const atividadesConcluidas = atividades.filter(atividade => atividade.concluida == 1)
+    const atividadesAndamento = atividades.filter(atividade => atividade.concluida == 0)
     
 
     return(
@@ -54,7 +56,7 @@ function TelaAtividades(){
 
             <CardUser/>
 
-            <div className="h-screen w-full flex flex-col px-4 md:py-8 gap-6 lg:gap-10">
+            <div className="h-screen w-full flex flex-col px-4 md:w-[65%] md:py-8 gap-6 lg:gap-10">
             
                 <div>
                     <HeaderUsuario/>
@@ -80,9 +82,12 @@ function TelaAtividades(){
                     </h2>
 
                     <div className="flex flex-col w-full gap-3 lg:grid lg:grid-cols-2 ">
-                            {atividades.map((item) => (
+                            {atividadesAndamento.map((item) => (
                                 <CardAtividade
+                                    key={item.id_atividade}
                                     atividade={item.comportamento}
+                                    id={item.id_atividade}
+                                    questao={item.numero_questao}
                                 />
                                 
                             ))}
@@ -102,9 +107,13 @@ function TelaAtividades(){
                 
                     
                     <div className="flex flex-col w-full gap-3 lg:grid lg:grid-cols-2 ">
-                        <CardAtividadeAdquirida/>
-        
-                        <CardAtividadeAdquirida/>
+                            {atividadesConcluidas.map((item) => (
+                                        <CardAtividadeAdquirida
+                                            key={item.id_atividade}
+                                            atividade={item.comportamento}
+                                            id={item.id_atividade}
+                                        />
+                            ))}
                     </div>
                     
                 
@@ -116,7 +125,7 @@ function TelaAtividades(){
                     md:hidden
                     "
                     onClick={() => {
-                        navigate('/atividades/cadastrar')
+                        navigate('/atividades/adicionar')
                     }}
                     >
                         Adicionar atividade

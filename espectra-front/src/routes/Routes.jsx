@@ -26,7 +26,7 @@ function Rotas() {
       <Route path="/atividades/" element={<TelaAtividades />} />
       <Route path="/atividades/editar" element={<TelaEditarAtividade />} />
       <Route path="/atividades/adicionar" element={<TelaCadastroAtividade />} />
-      <Route path="/tentativa" element={<TelaRealizarTentativa />} />
+      <Route path="/tentativa/" element={<TelaRealizarTentativa />} />
       <Route path="/tentativa/historico" element={<HistoricoTentativa />} />
       
       <Route path="/cadastro-familiar" element={<TelaCadastroFamiliar />} />    
