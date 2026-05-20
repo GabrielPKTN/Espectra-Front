@@ -46,7 +46,6 @@ function TelaAtividades(){
 
     const atividadesConcluidas = atividades.filter(atividade => atividade.concluida == 1)
     const atividadesAndamento = atividades.filter(atividade => atividade.concluida == 0)
-    console.log(atividadesConcluidas)
 
     useEffect(() => {
         if (atividadesConcluidas.length === 0) {
