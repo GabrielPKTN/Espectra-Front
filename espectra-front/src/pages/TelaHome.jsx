@@ -66,7 +66,7 @@ function TelaHome() {
 
         const jsonString = localStorage.getItem('home')
         const jsonObject = JSON.parse(jsonString)
-
+        
         if (jsonObject.items.foto) {
             return jsonObject.items.foto
         } else {
@@ -75,13 +75,26 @@ function TelaHome() {
 
     }
 
-    useEffect(() => {
-        requestData()
+    const returnUsuarioId = () => {
+
+        const jsonString = localStorage.getItem('home')
+        const jsonObject = JSON.parse(jsonString)
+        
+        if (jsonObject.items.id) {
+            return jsonObject.items.id
+        } else {
+            return null
+        }
+
+    }
+
+    useEffect(async () => {
+        await requestData()
     }, [])
 
     return (
         <div className="py-4 px-5 gap-8 flex flex-col h-screen">
-            <ContainerHeader foto={returnFoto()} />
+            <ContainerHeader foto={returnFoto()} id={returnUsuarioId()} />
             <main
                 className="
         gap-2 flex flex-col justify-center items-center grow md:gap-8
