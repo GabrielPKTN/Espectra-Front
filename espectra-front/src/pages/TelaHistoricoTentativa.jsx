@@ -31,7 +31,7 @@ function HistoricoTentativa() {
     }
 
     useEffect(() => {
-        buscarTentativas(1)
+        buscarTentativas(id)
     }, [])
 
     function fechar() {

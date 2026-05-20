@@ -1,6 +1,5 @@
 import { ChevronLeft } from "lucide-react";
 import logotipo from "../assets/logotipos/logo.png";
-import default_photo from "../assets/general_photos/default-photo.png";
 import InputHome from "../components/input/InputHome";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
@@ -21,9 +20,15 @@ function TelaAdicionarPaciente() {
     try {
       setLoading(true)
       setErro(null)
+      setPaciente(null)
 
       //const token = localStorage.getItem("token")
-      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTc3ODc4NzYzNCwiZXhwIjoxNzc4Nzg5NDM0fQ.q13OCluSH1nDWQsyrRX_OmnFiJbvBGEsQYpOBfwPbXY"
+      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTc3OTI4MjM1NywiZXhwIjoxMDAwMDE3NzkyODIzNTd9.Gg83eaBKGXg2Xa9tNm5rjAxXn9_8mJxj4w2GBG756yk"
+
+      if (!cpf) {
+        setErro("Digite um CPF!")
+        return
+      }
 
       if (!token) {
         setErro("Token não encontrado!")
@@ -39,12 +44,43 @@ function TelaAdicionarPaciente() {
         }
       })
 
-      setPaciente(response.data)
+      console.log(response.data)
+      setPaciente(response.data.items)
     } catch (error) {
       console.log(error)
       setErro("Paciente não encontrado!")
     } finally {
-      setLoading(true)
+      setLoading(false)
+    }
+  }
+
+  async function adicionarPaciente() {
+    if (!paciente) {
+      setErro("Busque um paciente!")
+      return
+    }
+
+    try {
+      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTc3OTI4MjM1NywiZXhwIjoxMDAwMDE3NzkyODIzNTd9.Gg83eaBKGXg2Xa9tNm5rjAxXn9_8mJxj4w2GBG756yk"
+      //const token = localStorage.getItem("token")
+
+
+      await axios.post(`http://localhost:8080/v1/espectra/paciente/${paciente.id, paciente.id_usuario}`, {
+        id_paciente: paciente.id,
+        id_usuario: paciente.id_usuario
+      },
+        {
+          headers: {
+            "x-access-token": token,
+          }
+        }
+      )
+
+
+      navigate("/home")
+    } catch (error) {
+      console.log(error)
+      setErro("Erro ao adicionar paciente!")
     }
   }
 
@@ -78,7 +114,7 @@ function TelaAdicionarPaciente() {
         <InputHome
           value={cpf}
           placeholder="Digite o CPF do paciente..."
-          onChange={(e) => setCpf(e.target.value)}
+          onChange={setCpf}
 
           onKeyDown={(e) => {
             if (e.key === "Enter") {
@@ -87,8 +123,24 @@ function TelaAdicionarPaciente() {
           }}
 
           onSearch={buscarPacientePorCpf}
-        ></InputHome>
+        />
       </div>
+
+      {
+        loading && (
+          <p className="text-center mt-4">
+            Buscando paciente...
+          </p>
+        )
+      }
+
+      {
+        erro && (
+          <p className="text-center mt-4 text-red-500">
+            {erro}
+          </p>
+        )
+      }
 
       {/*div que carregará o card cinza com informações do paciente.*/}
       {
@@ -109,10 +161,11 @@ function TelaAdicionarPaciente() {
                 {paciente.nome}
               </h1>
 
+              {/* Adicionar diagnóstico logo mais! */}
               <p className="primary-color font-inclusive-sans text-center text-lg p-2 font-medium italic
         md:text-2xl">
-                NOME USUÁRIO nasceu em DATA, tem IDADE,
-                está na SERIE-ESCOLA e possui diagnóstico de DIAGNOSTICO com grau de suporte X.
+                {paciente.nome} nasceu em {paciente.data_nascimento}, tem {paciente.idade},
+                está na {paciente.serie_escolar} e possui grau de suporte {paciente.grau_suporte}.
               </p>
             </div>
           </div>
@@ -133,7 +186,8 @@ function TelaAdicionarPaciente() {
 
         <Button
           variantClick="basicClick"
-          onClick={() => navigate("/home")}
+          onClick={adicionarPaciente}
+          disabled={!paciente}
         >
           Adicionar paciente
         </Button>

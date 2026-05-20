@@ -20,7 +20,7 @@ function InputHome(
                     onChange={(event) => {
 
                         if(props.onChange){
-                            props.onChange(event)
+                            props.onChange(event.target.value)
                         }
 
                         if(props.busca){
