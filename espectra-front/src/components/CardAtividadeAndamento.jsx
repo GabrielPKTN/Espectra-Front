@@ -100,9 +100,23 @@ export default function CardAtividade({atividade, id, questao}) {
                 "
             >
 
-                <p className="instrument-sans whitespace-nowrap overflow-hidden font-semibold md:text-xl md:font-medium lg:text-2xl">
-                    { atividade }
-                </p>
+                <p
+                className={`
+                    instrument-sans
+                    font-semibold
+                    md:text-xl
+                    md:font-medium
+                    lg:text-2xl
+                    transition-all duration-300
+                    ease-in-out
+
+                    ${
+                    expandido
+                        ? "whitespace-normal break-words"
+                        : "whitespace-nowrap overflow-hidden text-ellipsis"
+                    }
+                `}
+                > {atividade} </p>
 
                 <img
                     src={setaBaixo}

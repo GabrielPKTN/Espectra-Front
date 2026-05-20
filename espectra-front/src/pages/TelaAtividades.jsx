@@ -12,9 +12,11 @@ function TelaAtividades(){
 
     const pacienteId = 1
     const habilidadeId = 1
-    const tokenTeste = localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTc3OTE4ODI1MCwiZXhwIjoxMDAwMDE3NzkxODgyNTB9.0N10krJeH87PiEk41wLB6i1dXTQZnWyC-auoAA-aaxk")
+    const tokenTeste = localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTc3OTI4Mjc0MCwiZXhwIjoxMDAwMDE3NzkyODI3NDB9.PADYrX_7RhbXYWq58ncbdX4Zf_FujUjpcS4286AIxSw")
     const token = localStorage.getItem("token")
     const [atividades, setAtividades] = useState([])
+    const [mensagemErroCadastradas, setErroCadastradas] = useState("");
+    const [mensagemErroConcluidas, setErroConcluidas] = useState("");
 
     async function getAtividades() {
         try {
@@ -25,30 +27,42 @@ function TelaAtividades(){
                     }
             })
 
-            const data = response.data
            
-            return data.items
+            return response.data.items || []
 
         } catch (error) {
-            console.log(error)
+            return []
         }
     }
 
     
     useEffect(() => {
         async function carregar() {
-            try{
-                const atividades = await getAtividades()
-                setAtividades(atividades)
-            }catch(error){
-                console.log(error)
-            }
+            const atividades = await getAtividades()
+            setAtividades(atividades)
         }
         carregar()
     }, [])
 
     const atividadesConcluidas = atividades.filter(atividade => atividade.concluida == 1)
     const atividadesAndamento = atividades.filter(atividade => atividade.concluida == 0)
+    console.log(atividadesConcluidas)
+
+    useEffect(() => {
+        if (atividadesConcluidas.length === 0) {
+            setErroConcluidas("Não existem atividades concluídas")
+        } else {
+            setErroConcluidas("")
+        }
+    }, [atividadesConcluidas])
+
+    useEffect(() => {
+        if (atividadesAndamento.length === 0) {
+            setErroCadastradas("Não existem atividades cadastradas")
+        } else {
+            setErroCadastradas("")
+        }
+    }, [atividadesConcluidas])
     
 
     return(
@@ -81,7 +95,7 @@ function TelaAtividades(){
                             Atividades Em andamento:
                     </h2>
 
-                    <div className="flex flex-col w-full gap-3 lg:grid lg:grid-cols-2 ">
+                    <div className="flex flex-col w-full overflow-y-auto max-h-[40vh] gap-3 lg:grid lg:grid-cols-2 ">
                             {atividadesAndamento.map((item) => (
                                 <CardAtividade
                                     key={item.id_atividade}
@@ -91,6 +105,24 @@ function TelaAtividades(){
                                 />
                                 
                             ))}
+
+                            {
+                                mensagemErroCadastradas && (
+                                    <p className="
+                                    text-red-500
+                                    instrument-sans
+                                    text-md
+                                    md:text-lg
+                                    lg:text-xl
+                                    px-4
+                                    mt-2
+                                    self-center
+                                  "
+                                  >
+                                    {mensagemErroCadastradas}
+                                  </p>
+                                )
+                            }
                     </div>
     
                   
@@ -106,7 +138,7 @@ function TelaAtividades(){
                     </h2>
                 
                     
-                    <div className="flex flex-col w-full gap-3 lg:grid lg:grid-cols-2 ">
+                    <div className="flex flex-col overflow-y-auto max-h-[40vh] w-full gap-3 lg:grid lg:grid-cols-2 ">
                             {atividadesConcluidas.map((item) => (
                                         <CardAtividadeAdquirida
                                             key={item.id_atividade}
@@ -114,6 +146,24 @@ function TelaAtividades(){
                                             id={item.id_atividade}
                                         />
                             ))}
+
+{
+                                mensagemErroConcluidas && (
+                                    <p className="
+                                    text-red-500
+                                    instrument-sans
+                                    text-md
+                                    md:text-lg
+                                    lg:text-xl
+                                    px-4
+                                    mt-2
+                                    self-center
+                                  "
+                                  >
+                                    {mensagemErroConcluidas}
+                                  </p>
+                                )
+                            }
                     </div>
                     
                 
