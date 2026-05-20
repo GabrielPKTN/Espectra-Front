@@ -1,18 +1,23 @@
 import logotipo from "../assets/logotipos/logotipo.svg";
 import button_unselected from "../assets/general_photos/button_unselected.svg";
 import button_selected from "../assets/general_photos/button_select.svg";
-import cadeado from "../assets/general_photos/cadeado.svg";
 import InputDefault from "../components/InputDefault";
-import { use, useState } from "react";
+import { useState } from "react";
 import { LockKeyhole } from "lucide-react";
 import { LockKeyholeOpen } from "lucide-react";
 import Button from "../components/Button";
 import access_control from "../assets/general_photos/access_control.png";
 import { useNavigate } from "react-router-dom";
+import api from "../services/api";
+import { toast } from "react-hot-toast";
 
 function TelaCadastro() {
   const navigate = useNavigate();
-  const [inputTocado, setInputTocado] = useState("");
+
+  const [inputsTocados, setInputsTocados] = useState({});
+  const marcarComoTocado = (campo) => {
+    setInputsTocados((prev) => ({ ...prev, [campo]: true }));
+  };
 
   const [nome, setNome] = useState("");
   const [erroNome, setErroNome] = useState("");
@@ -188,6 +193,69 @@ function TelaCadastro() {
     }
   }
 
+  const handleCadastro = async (e) => {
+    e.preventDefault();
+
+    if (
+      !nome ||
+      !email ||
+      !telefone ||
+      !dataNascimento ||
+      !senha ||
+      !confirmarSenha
+    ) {
+      toast.error("Por favor, preencha todos os campos antes de enviar.");
+      return;
+    }
+
+    if (
+      erroNome ||
+      erroEmail ||
+      erroTelefone ||
+      erroData ||
+      erroSenha ||
+      erroConfirmacao
+    ) {
+      toast.error("Corrija os erros do formulário antes de prosseguir.");
+      return;
+    }
+
+    const [dia, mes, ano] = dataNascimento.split("/");
+    const dataFormatadaBackEnd = `${ano}-${mes}-${dia}`;
+
+    const idTipoUsuario = isAtivo ? 1 : 2;
+
+    const dadosCadastro = {
+      nome,
+      email,
+      data_nascimento: dataFormatadaBackEnd,
+      telefone: telefone.replace(/\D/g, ""),
+      senha,
+      id_tipo_usuario: idTipoUsuario,
+    };
+
+    try {
+      const response = await api.post("/v1/espectra/usuario", dadosCadastro);
+
+      if (response.status === 201 || response.status === 200) {
+        toast.success("Usuário cadastrado com sucesso!");
+
+        setTimeout(() => {
+          navigate("/login");
+        }, 1500);
+      }
+    } catch (error) {
+      if (error.response) {
+        toast.error(
+          `Erro no cadastro: ${error.response.data.message || "Tente novamente mais tarde."}`,
+        );
+      } else {
+        toast.error("Não foi possível conectar ao servidor.");
+      }
+      console.error("Erro na requisição de cadastro: ", error);
+    }
+  };
+
   return (
     // div que guarda tudo que estiver da tela
     <div
@@ -230,7 +298,7 @@ function TelaCadastro() {
         "
         >
           <div className="flex gap-2">
-            <button onClick={trocarImagem}>
+            <button type="button" onClick={() => setIsAtivo(true)}>
               <img
                 src={isAtivo ? button_selected : button_unselected}
                 alt="status do button"
@@ -240,7 +308,7 @@ function TelaCadastro() {
           </div>
 
           <div className="flex gap-2">
-            <button onClick={trocarImagem}>
+            <button type="button" onClick={() => setIsAtivo(false)}>
               <img
                 src={isAtivo ? button_unselected : button_selected}
                 alt="status do button"
@@ -251,7 +319,8 @@ function TelaCadastro() {
         </div>
 
         {/*div que carrega as informacoes de cadastro*/}
-        <div
+        <form
+          onSubmit={handleCadastro}
           className="flex flex-col mt-8 max-w-md 
         lg:mt-2"
         >
@@ -263,12 +332,14 @@ function TelaCadastro() {
             <InputDefault
               value={nome}
               onChange={validarNomeUsuario}
-              onBlur={() => setInputTocado(true)}
-              variantInput={erroNome ? "errorInput" : "basicInput"}
+              onBlur={() => marcarComoTocado("nome")}
+              variantInput={
+                inputsTocados.nome && erroNome ? "errorInput" : "basicInput"
+              }
               name="nome de usuário"
               limiteCaracteres={150}
             />
-            {inputTocado && erroNome && (
+            {inputsTocados.nome && erroNome && (
               <p className="text-red-500 text-sm p-1">{erroNome}</p>
             )}
           </div>
@@ -281,12 +352,14 @@ function TelaCadastro() {
             <InputDefault
               value={email}
               onChange={validarEmailUsuario}
-              onBlur={() => setInputTocado(true)}
-              variantInput={erroEmail ? "errorInput" : "basicInput"}
+              onBlur={() => marcarComoTocado("email")}
+              variantInput={
+                inputsTocados.email && erroEmail ? "errorInput" : "basicInput"
+              }
               name="email de usuário"
               limiteCaracteres={255}
             />
-            {inputTocado && erroEmail && (
+            {inputsTocados.email && erroEmail && (
               <p className="text-red-500 text-sm p-1">{erroEmail}</p>
             )}
           </div>
@@ -301,12 +374,16 @@ function TelaCadastro() {
               <InputDefault
                 value={telefone}
                 onChange={validarNumeroTelefone}
-                onBlur={() => setInputTocado(true)}
-                variantInput={erroTelefone ? "errorInput" : "basicInput"}
+                onBlur={() => marcarComoTocado("telefone")}
+                variantInput={
+                  inputsTocados.telefone && erroTelefone
+                    ? "errorInput"
+                    : "basicInput"
+                }
                 name="telefone de usuário"
                 limiteCaracteres={20}
               />
-              {inputTocado && erroTelefone && (
+              {inputsTocados.telefone && erroTelefone && (
                 <p className="text-red-500 text-sm p-1">{erroTelefone}</p>
               )}
             </div>
@@ -318,13 +395,17 @@ function TelaCadastro() {
               <InputDefault
                 value={dataNascimento}
                 onChange={validarDataNascimento}
-                onBlur={() => setInputTocado(true)}
-                variantInput={erroData ? "errorInput" : "basicInput"}
+                onBlur={() => marcarComoTocado("dataNascimento")}
+                variantInput={
+                  inputsTocados.dataNascimento && erroData
+                    ? "errorInput"
+                    : "basicInput"
+                }
                 name="nascimento do usuário"
                 limiteCaracteres={10}
                 placeholder="DD/MM/AAAA"
               />
-              {inputTocado && erroData && (
+              {inputsTocados.dataNascimento && erroData && (
                 <p className="text-red-500 text-sm p-1">{erroData}</p>
               )}
             </div>
@@ -341,8 +422,10 @@ function TelaCadastro() {
                 type={mostrarSenha ? "text" : "password"}
                 value={senha}
                 onChange={validarSenha}
-                onBlur={() => setInputTocado(true)}
-                variantInput={erroSenha ? "errorInput" : "basicInput"}
+                onBlur={() => marcarComoTocado("senha")}
+                variantInput={
+                  inputsTocados.senha && erroSenha ? "errorInput" : "basicInput"
+                }
                 name="senha de usuário"
                 limiteCaracteres={15}
               />
@@ -361,7 +444,7 @@ function TelaCadastro() {
               </button>
             </div>
 
-            {inputTocado && erroSenha && (
+            {inputsTocados.senha && erroSenha && (
               <p className="text-red-500 text-sm p-1">{erroSenha}</p>
             )}
           </div>
@@ -377,8 +460,12 @@ function TelaCadastro() {
                 type={mostrarConfirmacaoSenha ? "text" : "password"}
                 value={confirmarSenha}
                 onChange={confirmacaoDeSenha}
-                onBlur={() => setInputTocado(true)}
-                variantInput={erroConfirmacao ? "errorInput" : "basicInput"}
+                onBlur={() => marcarComoTocado("confirmarSenha")}
+                variantInput={
+                  inputsTocados.confirmarSenha && erroConfirmacao
+                    ? "errorInput"
+                    : "basicInput"
+                }
                 name="senha de usuário repetida"
                 limiteCaracteres={15}
               />
@@ -397,31 +484,29 @@ function TelaCadastro() {
               </button>
             </div>
 
-            {inputTocado && erroConfirmacao && (
+            {inputsTocados.confirmarSenha && erroConfirmacao && (
               <p className="text-red-500 text-sm p-1">{erroConfirmacao}</p>
             )}
           </div>
-        </div>
+
+          <div className="m-6 flex flex-col gap-4 items-center">
+            <Button variantClick="basicClick" type="submit">
+              Cadastrar
+            </Button>
+
+            <div className="text-center instrument-sans mt-3 ">
+              <p>Já possui uma conta?</p>
+              <a
+                href="/login"
+                className="primary-color font-semibold text-lg underline"
+              >
+                Login
+              </a>
+            </div>
+          </div>
+        </form>
 
         {/* NECESSÁRIO FAZER O ONCLICK PARA FAZER O POST NO BANCO */}
-        <div className="m-6 flex flex-col gap-4 items-center">
-          <Button
-            variantClick="basicClick"
-            // onClick={}
-          >
-            Cadastrar
-          </Button>
-
-          <div className="text-center instrument-sans mt-3 ">
-            <p>Já possui uma conta?</p>
-            <a
-              href="/login"
-              className="primary-color font-semibold text-lg underline"
-            >
-              Login
-            </a>
-          </div>
-        </div>
       </div>
     </div>
   );
