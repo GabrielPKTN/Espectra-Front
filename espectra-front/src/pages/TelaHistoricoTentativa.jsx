@@ -65,7 +65,7 @@ function HistoricoTentativa() {
                         </h2>
 
                         {/* Div dos Cards */}
-                        <div className="flex flex-col w-full gap-4 -mt-4 md:bg-[#FFFFFF] md:w-[90%] md:w-[825px] md:p-6 md:rounded-2xl md:shadow-[0px_0px_12px_rgba(0,0,0,0.40)] md:mt-6 lg:w-1/2 lg:h-[500px]">
+                        <div className="flex flex-col w-full gap-4 -mt-4 md:bg-[#FFFFFF] md:w-[90%] md:w-[810px] md:p-6 md:rounded-2xl md:shadow-[0px_0px_12px_rgba(0,0,0,0.40)] md:mt-6 lg:w-1/2 lg:h-[500px]">
 
                             {/* Container -> Lado esquerdo */}
                             <div className="w-full lg:w-1/2">

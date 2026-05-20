@@ -26,8 +26,9 @@ function CardExclusao(){
                     <Card 
                         titulo="Tem certeza que deseja excluir essa atividade?"
                         fundo="bg-[#F9F9F9]"
-                        corTitulo="text-black font-['Inclusive_Sans'] text-[36px]"
+                        corTitulo="text-black text-[36px] font-inclusive-sans"
                         rowButtons={false}
+                        className="md:w-[700px] md:h-[400px]"
                     >
 
                         <img
@@ -37,7 +38,7 @@ function CardExclusao(){
                             className="w-10 h-10 cursos-pointer absolute top-2 right-2 transition duration-300 hover:scale-125"
                         />
 
-                        <Button className="w-full transform-gpu transition-all duration-300 ease-in-out hover:scale-110"
+                        <Button className="w-full transform-gpu transition-all duration-300 ease-in-out hover:scale-110 md:w-full md:mt-7 md:h-[60px]"
                             variantClick="basicClick"
                             onClick={confirmar}
                         >
@@ -45,7 +46,7 @@ function CardExclusao(){
                         </Button>
 
                         <Button
-                            className="w-full transform-gpu transition-all duration-300 ease-in-out hover:scale-110"
+                            className="w-full transform-gpu transition-all duration-300 ease-in-out hover:scale-110 md:w-full md:h-[60px]"
                             variantClick="basicClick"
                             onClick={cancelar}
                         >

@@ -1,17 +1,17 @@
-import {CircleUser} from 'lucide-react'
+import { CircleUser } from 'lucide-react'
 
 function ContainerPacientePhoto(props) {
 
-    if (props) {
+    if (props.foto == null) {
 
         return <div className={`
         shrink-0 rounded-[50%] mx-2 size-15 overflow-hidden
         `}>
-            <CircleUser className="object-cover w-full h-full text-(--bg-primary-color)"/>
+            <CircleUser className="object-cover w-full h-full text-(--bg-primary-color)" />
         </div>
 
     } else {
-        
+
         return <div className={`
         border border-(--bg-primary-color) shrink-0 rounded-[50%] mx-2 size-15 overflow-hidden
         `}>
@@ -20,7 +20,7 @@ function ContainerPacientePhoto(props) {
 
     }
 
-    
+
 
 }
 
