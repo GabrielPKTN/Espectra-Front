@@ -21,7 +21,7 @@ function TelaHome() {
     const requestData = async () => {
 
         const usuarioStringObject = localStorage.getItem("usuario")
-        const usuarioObject       = JSON.parse(usuarioStringObject)
+        const usuarioObject = JSON.parse(usuarioStringObject)
 
         try {
 
@@ -37,7 +37,7 @@ function TelaHome() {
 
             let pacientes = rawData.items.pacientes || []
 
-            if(Array.isArray(pacientes)) {
+            if (Array.isArray(pacientes)) {
 
                 rawData.items.pacientes = pacientes.map(paciente => ({
                     ...paciente, diagnostico_breve: (paciente.diagnostico_breve || []).map(
@@ -62,39 +62,19 @@ function TelaHome() {
 
     }
 
-    const returnFoto = () => {
+    const homeDataString = localStorage.getItem('home');
+    const homeDataObject = homeDataString ? JSON.parse(homeDataString) : null;
 
-        const jsonString = localStorage.getItem('home')
-        const jsonObject = JSON.parse(jsonString)
-        
-        if (jsonObject.items.foto) {
-            return jsonObject.items.foto
-        } else {
-            return null
-        }
+    const fotoUsuario = homeDataObject?.items?.foto || null;
+    const idUsuario = homeDataObject?.items?.id || null;
 
-    }
-
-    const returnUsuarioId = () => {
-
-        const jsonString = localStorage.getItem('home')
-        const jsonObject = JSON.parse(jsonString)
-        
-        if (jsonObject.items.id) {
-            return jsonObject.items.id
-        } else {
-            return null
-        }
-
-    }
-
-    useEffect(async () => {
-        await requestData()
+    useEffect(() => {
+        requestData()
     }, [])
 
     return (
         <div className="py-4 px-5 gap-8 flex flex-col h-screen">
-            <ContainerHeader foto={returnFoto()} id={returnUsuarioId()} />
+            <ContainerHeader foto={fotoUsuario} id={idUsuario} />
             <main
                 className="
         gap-2 flex flex-col justify-center items-center grow md:gap-8
