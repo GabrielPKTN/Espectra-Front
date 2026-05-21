@@ -7,6 +7,7 @@ import pen from "../assets/general_photos/pen.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
 import ModalExclusao from "../pages/TelaCardExclusao"
+import api from "../services/api"
 
 
 
@@ -19,7 +20,7 @@ export default function CardAtividade({atividade, id, questao}) {
     const token = localStorage.getItem("token")
 
     const idPaciete = 1 //localStorage.getItem("idPaciente")
-    const idUsuario = 1
+    const idUsuario = 1 //localStorage.getItem("idUsuario")
 
     
     function navegar(path){
@@ -30,8 +31,8 @@ export default function CardAtividade({atividade, id, questao}) {
 
     async function declararHailidade(idAtividade) {
         try {
-            const response = await axios.put(
-                `http://localhost:8080/v1/espectra/atividade/${idAtividade}`,
+            const response = await api.put(
+                `/v1/espectra/atividade/${idAtividade}`,
                 {},
                 { 
                     headers: {
@@ -50,8 +51,8 @@ export default function CardAtividade({atividade, id, questao}) {
 
     async function excluirAtividade(idAtividade, idPaciente, idUsuario) {
         try {
-            const response = await axios.delete(
-                `http://localhost:8080/v1/espectra/atividade/${idAtividade}`,
+            const response = await api.delete(
+                `/v1/espectra/atividade/${idAtividade}`,
              
                 { 
                     headers: {

@@ -5,23 +5,24 @@ import CardUser from "../components/CardUser";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
 import { useEffect, useState } from "react";
+import api from "../services/api"
 
 function TelaAtividades(){
     
     const navigate = useNavigate()
 
-    const pacienteId = 1
-    const habilidadeId = 1
-    const tokenTeste = localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTc3OTI4Mjc0MCwiZXhwIjoxMDAwMDE3NzkyODI3NDB9.PADYrX_7RhbXYWq58ncbdX4Zf_FujUjpcS4286AIxSw")
+    const pacienteId = 1 //localStorage.getItem("idPaciente")
+    const habilidadeId = 1 //localStorage.getItem("idHabilidade")
     const token = localStorage.getItem("token")
+    
     const [atividades, setAtividades] = useState([])
     const [mensagemErroCadastradas, setErroCadastradas] = useState("");
     const [mensagemErroConcluidas, setErroConcluidas] = useState("");
 
     async function getAtividades() {
         try {
-            const response = await axios.get(
-                `http://localhost:8080/v1/espectra/atividade/${pacienteId}/${habilidadeId}`,{ 
+            const response = await api.get(
+                `/v1/espectra/atividade/${pacienteId}/${habilidadeId}`,{ 
                     headers: {
                         'x-access-token': token
                     }
