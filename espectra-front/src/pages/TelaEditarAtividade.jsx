@@ -7,6 +7,9 @@ import logotipoAzul from "../assets/logotipos/logotipo-azul.svg";
 function telaEditarAtividade() {
     const navigate = useNavigate();
 
+    const atividadeId = localStorage.getItem('id_atividade')
+    console.log(atividadeId)
+
     return (
     
 

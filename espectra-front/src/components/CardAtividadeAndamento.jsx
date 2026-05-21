@@ -24,7 +24,7 @@ export default function CardAtividade({atividade, id, questao}) {
 
     
     function navegar(path){
-        localStorage.setItem("idAtividade", id)
+        localStorage.setItem("id_atividade", id)
 
         navigate(`${path}`)
     }
