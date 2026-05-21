@@ -13,7 +13,7 @@ import TelaRealizarTentativa from "../pages/TelaRealizarTentativa";
 import HistoricoTentativa from "../pages/TelaHistoricoTentativa";
 import TelaCadastroFamiliar from "../pages/TelaCadastroFamiliar";
 import PerfilPsicopedagogo from "../pages/TelaPerfilPsicopedagogo";
-import AtualizarPerfilPsicopedagogo from "../pages/TelaAtualizarPerfilPsicopedagogo"
+import AtualizarPerfilPsicopedagogo from "../pages/TelaAtualizarPerfilPsicopedagogo";
 
 function Rotas() {
   return (
@@ -30,11 +30,14 @@ function Rotas() {
       <Route path="/atividades/adicionar" element={<TelaCadastroAtividade />} />
       <Route path="/tentativa/" element={<TelaRealizarTentativa />} />
       <Route path="/tentativa/historico" element={<HistoricoTentativa />} />
-      
+
       <Route path="/cadastro-familiar" element={<TelaCadastroFamiliar />} />
       <Route path="/perfil" element={<PerfilPsicopedagogo />} />
-      
-      <Route path="/atualizarPerfilPsicopedagogo" element={<AtualizarPerfilPsicopedagogo />} />
+
+      <Route
+        path="/atualizarPerfilPsicopedagogo"
+        element={<AtualizarPerfilPsicopedagogo />}
+      />
     </Routes>
   );
 }
