@@ -14,9 +14,10 @@ function telaCadastroAtividade() {
 
     const [opcaoSelecionada, setOpcaoSelecionada] = useState("");
     
-    const idUsuario = localStorage.getItem('idUsuario')
-    const idPaciente = localStorage.getItem('idPaciente')
-    const idHabilidade = localStorage.getItem('idHabilidade')
+    const idUsuario = localStorage.getItem('id_usuario')
+    const idPaciente = localStorage.getItem('id_paciente')
+    const idHabilidade = localStorage.getItem('id_habilidade')
+    
     const [comportamento, setComportamento] = useState("")
     const [valorMeses, setValorMeses] = useState(0)
     
