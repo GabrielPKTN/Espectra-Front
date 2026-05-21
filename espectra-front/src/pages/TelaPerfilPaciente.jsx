@@ -27,14 +27,15 @@ function TelaPerfilPaciente() {
   const { id, id_usuario } = useParams();
   const navigate = useNavigate();
 
+  //função para consumir os dados do paciente
   useEffect(() => {
     async function carregarDadosPaciente() {
       try {
         const token = localStorage.getItem("token");
+
         const response = await api.get(`/v1/espectra/paciente/${id}`, {
           headers: {
-            "x-access-token":
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTc3OTI4NDMxNCwiZXhwIjoxMDAwMDE3NzkyODQzMTR9.UOg-xBGzA-huon-aWoc-ax9yX3Gn8vPmqCDre3CxLAQ",
+            "x-access-token": token,
           },
         });
 
@@ -53,11 +54,14 @@ function TelaPerfilPaciente() {
     }
   }, [id]);
 
+  //função para coletar os dados do usuario, para que seja possivel apagar/editar dados do paciente
   async function getUsuarioById() {
+    const token = localStorage.getItem("token");
+
     try {
       const response = await api.get(`/v1/espectra/usuario/${id_usuario}`, {
         headers: {
-          "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+          "x-access-token": token,
         },
       });
 
@@ -68,35 +72,35 @@ function TelaPerfilPaciente() {
     }
   }
 
+  //remover um paciente
   async function removerPaciente() {
     const dadosUsuario = await getUsuarioById();
 
-    if (dadosUsuario) {
+    if (!dadosUsuario) {
       toast.error("Não foi possivel validar o usuário antes da exclusão.");
       return;
     }
 
     const confirmar = window.confirm(
-      "Tem certeza que desejoa remover esse paciente?",
+      "Tem certeza que deseja remover esse paciente?",
     );
     if (!confirmar) return;
 
     try {
-      const idUsuarioParaDeletar = dadosUsuario.id || id_usuario;
+      const idUsuarioParaDeletar = dadosUsuario.id;
 
       const token = localStorage.getItem("token");
 
-      // if (!token) {
-      //   toast.error("Usuário não autenticado.");
-      //   return;
-      // }
+      if (!token) {
+        toast.error("Usuário não autenticado.");
+        return;
+      }
 
       const response = await api.delete(
         `/v1/espectra/paciente/${id}/${idUsuarioParaDeletar}`,
         {
           headers: {
-            "x-access-token":
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTc3OTI4NDMxNCwiZXhwIjoxMDAwMDE3NzkyODQzMTR9.UOg-xBGzA-huon-aWoc-ax9yX3Gn8vPmqCDre3CxLAQ",
+            "x-access-token": token,
           },
         },
       );
@@ -112,6 +116,35 @@ function TelaPerfilPaciente() {
       const mensagemErro =
         error.response?.data?.message || "Erro ao remover paciente";
       toast.error(mensagemErro);
+    }
+  }
+
+  //editar o formulário portage
+  async function editarFormulario() {
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await api.get(
+        `/v1/espectra/formulario/${id}/${id_usuario}`,
+        {
+          headers: {
+            "x-access-token": token,
+          },
+        },
+      );
+
+      const formulario = response.data;
+      navigate(`/formulario/${id}/${id_usuario}`, {
+        state: {
+          formulario,
+        },
+      });
+    } catch (error) {
+      console.error(
+        "Não foi possivel carregar o formulário do paciente!",
+        error,
+      );
+      toast.error("Não foi possivel carregar o formulário deste paciente!");
     }
   }
 
@@ -145,12 +178,14 @@ function TelaPerfilPaciente() {
     return paciente.grafico.map((hab) => {
       const estilo = estiloHabilidade(hab.nome);
 
-      const valorIdade = Math.round(hab.idade_meses / 12) || hab.idade_meses;
+      const valorIdade = Math.round(hab.idade_meses / 12);
+
+      const idadeFormatada = Number(valorIdade.toFixed(1));
 
       return {
         id: hab.id,
         nome: hab.nome,
-        idade: valorIdade,
+        idade: idadeFormatada,
         cor: estilo.cor,
         classe: estilo.classe,
       };
@@ -338,6 +373,7 @@ function TelaPerfilPaciente() {
         lg:w-175 lg:m-8 lg:mt-8"
           >
             <Button
+              onClick={editarFormulario}
               variantClick="basicClick"
               type="button"
               className="w-full p-3"
