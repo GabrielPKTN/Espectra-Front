@@ -20,6 +20,7 @@ import api from "../services/api";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import Swal from 'sweetalert2';
 
 function TelaPerfilPaciente() {
   const [paciente, setPaciente] = useState(null);
@@ -88,8 +89,18 @@ function TelaPerfilPaciente() {
         ? "Tem certeza que deseja apagar esse familiar?"
         : "Tem certeza que deseja remover esse paciente?";
 
-    const confirmar = window.confirm(mensagemConfirmaçao);
-    if (!confirmar) return;
+    const confirmar = await Swal.fire({
+    title: 'Atenção!',
+    text: mensagemConfirmacao,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#e31b1b',
+    cancelButtonColor: '#4285f4',
+    confirmButtonText: 'Apagar',
+    cancelButtonText: 'Cancelar'
+  });
+
+    if (!confirmar.isConfirmed) return;
 
     try {
       const idUsuarioParaDeletar = dadosUsuario.id;
