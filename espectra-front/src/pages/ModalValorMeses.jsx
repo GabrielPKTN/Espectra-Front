@@ -23,7 +23,7 @@ function ModalMeses({ onConfirm, onCancel }) {
                     
                     <p className="text-md md:text-xl lg:text-3xl text-center font-inclusive-sans">
                     Esse será a quantidade em meses que será adicionado a idade do paciente assim que essa atividade ser concluída.
-                    </p>
+                    </p>                    
 
                 </div>
 

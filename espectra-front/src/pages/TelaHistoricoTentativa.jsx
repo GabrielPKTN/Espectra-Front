@@ -6,7 +6,9 @@ import GraficoTentativas from "../components/GraficoTentativas";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import { CircleX } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 function HistoricoTentativa() {
 
@@ -14,9 +16,104 @@ function HistoricoTentativa() {
 
     const [abrirModal, setAbrirModal] = useState(false)
 
+    const [loading, setLoading] = useState(false)
+    const [erro, setErro] = useState(null)
+
+    const [tentativas, setTentativas] = useState([])
+    const [tentativaSelecionada, setTentativaSelecionada] = useState(null)
+
+    const {idAtividade} = useParams()
+
     function fechar() {
         setAbrirModal(false)
     }
+
+    function formatarData(data) {
+        return new Date(data).toLocaleDateString("pt-BR")
+    }
+
+    function corHabilidade(nomeHabilidade) {
+        switch (nomeHabilidade) {
+            case "Socialização":
+                return "#A2E289"
+
+            case "Linguagem":
+                return "#FFC87B"
+
+            case "Cognição":
+                return "#71AFFF"
+
+            case "Auto-Cuidados":
+                return "#CC9DFF"
+
+            case "Desenvolvimento motor":
+                return "#D9D9D9"
+
+            default:
+                return "#00459C"
+        }
+    }
+
+    const dadosGrafico = tentativas.map((tentativa) => {
+            let valor = 1
+            let color = "#FF2D2D"
+    
+            if(tentativa.auxilio === "Parcial"){
+                valor = 2
+                color = "#FAE938"
+            }
+    
+            if(tentativa.auxilio === "Independente"){
+                valor = 3
+                color = "#A2E289"
+            }
+    
+            return {
+                data: formatarData(tentativa.data_tentativa),
+                valor,
+                color
+            }
+        })
+
+    async function buscarTentativas(idAtividade) {
+        try {
+
+            setLoading(true)
+            setErro(null)
+
+            //const token = localStorage.getItem("token")
+            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTc3ODk3NDc4NywiZXhwIjoxMDAwMDE3Nzg5NzQ3ODd9.UcaW9Ocvo6Q8wORRNzKPDSd1ROdN7bC3d-nCn6E482s"
+
+            if (!token) {
+                setErro("Token não encontrado!")
+                return
+            }
+
+            const response = await axios.get(`http://localhost:8080/v1/espectra/tentativa/${idAtividade}`,
+                {
+                    headers:
+                        { "x-access-token": token }
+                })
+
+            console.log(response.data)
+            setTentativas(response.data.items || [])
+        } catch (error) {
+            console.log(error)
+            setErro("Erro ao buscar tentativa")
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        buscarTentativas(id)
+    }, [])
+
+        if (idAtividade){
+            buscarTentativas(idAtividade)
+        }
+
+    }, [idAtividade])
 
     return (
 
@@ -25,7 +122,7 @@ function HistoricoTentativa() {
                 {/* Div da seção do Header */}
                 <div className="flex justify-between items-center px-4 lg:px-10">
                     <ChevronLeft
-                        //onClick para ir retornar uma tela -> Implementação futura
+                        onClick={() => navigate ("/atividades/")}
                         className="mt-[18px] ml-[16px] w-8 h-8 text-black cursor-pointer transform-gpu transition-all duration-300 ease-in-out hover:scale-110"
                         color="#00459C"
                     />
@@ -33,7 +130,6 @@ function HistoricoTentativa() {
                     <img
                         src={fotoPsicopedagogo}
                         alt="Foto do Psicopedagogo"
-                        //onClick para ir a tela de perfil -> Implementação futura
                         className="w-[50px] h-[50px] mt-[18px] mr-[20px] rounded-full md:hidden transform-gpu transition-all duration-300 ease-in-out hover:scale-110 border-[#4285F4] border-2"
                     />
 
@@ -53,7 +149,7 @@ function HistoricoTentativa() {
                 <div className="flex flex-col justify-center items-center gap-10 mt-6 px-4">
                     <div className="md:w-[90%] md:max-w-[700px] md:bg-[#DFEDFF] md:rounded-2xl md:py-4 md:px-6 mt-[14px] md:shadow-md">
                         <h1 className="text-black font-['Inclusive_Sans'] text-[24px] text-center">
-                            9. Estende a mão em direção a um objeto oferecido
+                            {tentativas[0]?.comportamento || "Carregando atividade..."}
                         </h1>
                     </div>
 
@@ -69,57 +165,42 @@ function HistoricoTentativa() {
 
                             {/* Container -> Lado esquerdo */}
                             <div className="w-full lg:w-1/2">
+                                {
+                                    loading && (
+                                        <p>Carregando tentativas...</p>
+                                    )
+                                }
 
-                                <CardTentativa
-                                    titulo="Atividade realizada com auxílio parcial"
-                                    descricao="Resultado: "
-                                    resultado="Êxito"
-                                    data="20/03/2026"
-                                    fundo="bg-[#F9F9F9]"
-                                    className="mt-4 lg:w-[575px]"
-                                >
-                                    <Button
-                                        className="w-[142px] h-[31px] rounded-2x1 transform-gpu transition-all duration-300 ease-in-out hover:scale-110"
-                                        variantClick="basicClick"
-                                        onClick={() => setAbrirModal(true)}
-                                    >
-                                        Ver detalhes
-                                    </Button>
-                                </CardTentativa>
+                                {
+                                    erro && (
+                                        <p>{erro}</p>
+                                    )
+                                }
 
-                                <CardTentativa
-                                    titulo="Atividade realizada com auxílio parcial"
-                                    descricao="Resultado: "
-                                    resultado="Êxito"
-                                    data="20/03/2026"
-                                    fundo="bg-[#F9F9F9]"
-                                    className="mt-4 lg:w-[575px]"
-                                >
-                                    <Button
-                                        className="w-[142px] h-[31px] rounded-2x1 transform-gpu transition-all duration-300 ease-in-out hover:scale-110"
-                                        variantClick="basicClick"
-                                        onClick={() => setAbrirModal(true)}
-                                    >
-                                        Ver detalhes
-                                    </Button>
-                                </CardTentativa>
-
-                                <CardTentativa
-                                    titulo="Atividade realizada com auxílio parcial"
-                                    descricao="Resultado: "
-                                    resultado="Êxito"
-                                    data="20/03/2026"
-                                    fundo="bg-[#F9F9F9]"
-                                    className="mt-4 lg:w-[575px]"
-                                >
-                                    <Button
-                                        className="w-[142px] h-[31px] rounded-2x1 transform-gpu transition-all duration-300 ease-in-out hover:scale-110"
-                                        variantClick="basicClick"
-                                        onClick={() => setAbrirModal(true)}
-                                    >
-                                        Ver detalhes
-                                    </Button>
-                                </CardTentativa>
+                                {
+                                    tentativas.map((tentativa) => (
+                                        <CardTentativa
+                                            key={tentativa.id_tentativa}
+                                            titulo={`Atividade realizada com auxílio ${tentativa.auxilio}`}
+                                            descricao="Resultado: "
+                                            resultado={tentativa.resultado ? "Êxito" : "Falha"}
+                                            data={formatarData(tentativa?.data_tentativa)}
+                                            fundo="bg-[#F9F9F9]"
+                                            className="mt-4 lg:w-[575px]"
+                                        >
+                                            <Button
+                                                className="w-[142px] h-[31px] rounded-2x1 transform-gpu transition-all duration-300 ease-in-out hover:scale-110"
+                                                variantClick="basicClick"
+                                                onClick={() => {
+                                                    setTentativaSelecionada(tentativa)
+                                                    setAbrirModal(true)
+                                                }}
+                                            >
+                                                Ver detalhes
+                                            </Button>
+                                        </CardTentativa>
+                                    ))
+                                }
                             </div>
 
                         </div>
@@ -129,11 +210,11 @@ function HistoricoTentativa() {
                                 Representação gráfica:
                             </h2>
 
-                            <GraficoTentativas />
+                            <GraficoTentativas data={dadosGrafico}/>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
 
             {
                 abrirModal && (
@@ -155,26 +236,34 @@ function HistoricoTentativa() {
                             <div className="relative w-full flex flex-col items-center mt-4">
                                 <h1
                                     className="absolute text-[40px] font-black text-transparent stroke-text"
+                                    style={{
+                                        WebkitTextStrokeColor: corHabilidade(
+                                            tentativaSelecionada?.habilidade?.nome_habilidade
+                                        )
+                                    }}
                                 >
-                                    Socialização
+                                    {tentativaSelecionada?.habilidade?.nome_habilidade}
                                 </h1>
 
                                 <h1
-                                    className="relative translate-x-[8px] translate-y-[6px] text-[40px] font-black text-[#89C771]"
+                                    className="relative translate-x-[8px] translate-y-[6px] text-[40px] font-black"
+                                    style={{
+                                        color: corHabilidade(tentativaSelecionada?.habilidade?.nome_habilidade)
+                                    }}
                                 >
-                                    Socialização
+                                    {tentativaSelecionada?.habilidade?.nome_habilidade}
                                 </h1>
 
                                 <div className="mt-4">
                                     <div className="mt-1 w-[121px] h-[39px] bg-[#D8EAD1] rounded-2xl flex justify-center items-center shadow-md lg:w-[181px] ">
                                         <p className="text-center font-bold lg:text-[24px]">
-                                            20/03/2026
+                                            {formatarData(tentativaSelecionada?.data_tentativa)}
                                         </p>
                                     </div>
                                 </div>
 
                                 <h1 className="w-full text-center mt-6 font-['Instrument_Sans'] font-semibold text-[20px] lg:text-[30px]">
-                                    9. Estende a mão em direção a um objeto oferecido
+                                    {tentativaSelecionada?.comportamento}
                                 </h1>
 
                                 <div className="mt-4">
@@ -182,13 +271,17 @@ function HistoricoTentativa() {
                                         Resultado:
                                     </p>
 
-                                    <p className="text-center font-['Instrument_Sans'] text-[#00B521] font-bold text-[20px] lg:text-[28px]">
-                                        Êxito
+                                    <p className={`text-center font-['Instrument_Sans'] font-bold text-[20px] lg:text-[28px]`}
+                                        style={{
+                                            color: tentativaSelecionada?.resultado ? "#00B521" : "#EA1212"
+                                        }}
+                                    >
+                                        {tentativaSelecionada?.resultado ? "Êxito" : "Falha"}
                                     </p>
                                 </div>
 
                                 <p className="mt-4 text-center font-['Instrument_Sans'] text-[20px] italic lg:text-[24px]">
-                                    Atividade realizada com auxílio total do profissional
+                                    Atividade realizada com auxílio {tentativaSelecionada?.auxilio}
                                 </p>
 
                                 <div className="mt-6 w-full">
@@ -200,8 +293,7 @@ function HistoricoTentativa() {
                                         className="bg-[#E9E9E9] w-[325px] h-[173px] rounded-2xl mt-2 lg:w-[1155px]"
                                     >
                                         <p className="font-['Inclusive_Sans'] ml-4 mt-3 text-[16px]">
-                                            Em casos de extrema urgência, utilize determinado método:
-                                            ......
+                                            {tentativaSelecionada?.observacao || "Sem observações"}
                                         </p>
                                     </div>
                                 </div>

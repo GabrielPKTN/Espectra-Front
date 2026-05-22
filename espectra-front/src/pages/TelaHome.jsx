@@ -20,12 +20,11 @@ function TelaHome() {
 
     const requestData = async () => {
 
-        const usuarioStringObject = localStorage.getItem("usuario")
-        const usuarioObject = JSON.parse(usuarioStringObject)
+        const id_usuario = localStorage.getItem("id_usuario")
 
         try {
 
-            const result = await app.get(`/v1/espectra/usuario/home/${usuarioObject.id}`,
+            const result = await app.get(`/v1/espectra/usuario/home/${id_usuario}`,
                 {
                     headers: {
                         'x-access-token': localStorage.getItem('token')
@@ -34,6 +33,8 @@ function TelaHome() {
             )
 
             let rawData = result.data
+
+            localStorage.setItem("tipo_usuario", rawData.items.tipo_usuario)
 
             let pacientes = rawData.items.pacientes || []
 
