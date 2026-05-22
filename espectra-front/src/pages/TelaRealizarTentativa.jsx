@@ -8,17 +8,12 @@ import api from "../services/api";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
+import NavItem from "../components/NavItem";
 
 function TelaRealizarTentativa() {
   const navigate = useNavigate();
 
   const { id } = useParams();
-
-  const atividadeMock = {
-    id: 1,
-    comportamento:
-      "Manter contato visual por mais de 3 segundos durante a conversa",
-  };
 
   const [atividade, setAtividade] = useState(atividadeMock);
 
@@ -100,6 +95,33 @@ function TelaRealizarTentativa() {
     }
   };
 
+  async function getUsuarioById() {
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await api.get(`/v1/espectra/usuario/${id_usuario}`, {
+        headers: {
+          "x-access-token": token,
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error("Usuário não encontrado!");
+      return null;
+    }
+  }
+
+  const handlePerfilClick = async () => {
+    const perfilUsuario = await getUsuarioById();
+
+    if (!perfilUsuario) {
+      toast.error("Erro ao entrar no perfil do usuário!");
+    }
+
+    navigate(`/perfil/${id_usuario}`);
+  };
+
   if (!atividade) {
     return (
       <div className="flex h-screen w-screen items-center justify-center bg-[#dfedff]">
@@ -115,9 +137,15 @@ function TelaRealizarTentativa() {
     <div className="lg:bg-[#dfedff] lg:overflow-hidden lg:w-screen lg:h-screen">
       {/*HEADER*/}
       <div className="flex flex-row justify-between m-2">
-        <ChevronLeft className="primary-color size-12" />
+        <ChevronLeft
+          className="primary-color size-12"
+          onClick={() => navigate(-1)}
+        />
 
-        <CircleUser className=" primary-color size-12" />
+        <CircleUser
+          className=" primary-color size-12"
+          onClick={handlePerfilClick}
+        />
       </div>
 
       {/*MAIN*/}
@@ -216,7 +244,6 @@ function TelaRealizarTentativa() {
             <textarea
               value={observacao}
               onChange={(e) => setObservacao(e.target.value)}
-              type="text"
               className="h-25 p-3 w-full border-[0.2px] border-[#d5d5d5] bg-gray-100 shadow-xl rounded-2xl md:h-58 lg:h-30"
             />
           </div>
