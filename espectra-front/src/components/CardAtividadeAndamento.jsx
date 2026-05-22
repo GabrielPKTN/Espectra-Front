@@ -19,12 +19,12 @@ export default function CardAtividade({atividade, id, questao}) {
 
     const token = localStorage.getItem("token")
 
-    const idPaciete = 1 //localStorage.getItem("idPaciente")
-    const idUsuario = 1 //localStorage.getItem("idUsuario")
-
+    const idPaciete = 1 //localStorage.getItem("id_paciente")
+    const idUsuario = 1 //localStorage.getItem("id_usuario")
     
-    function navegar(path){
-        localStorage.setItem("id_atividade", id)
+    function navegar(path, idAtividade){
+        
+        localStorage.setItem("id_atividade", idAtividade)
 
         navigate(`${path}`)
     }
@@ -136,7 +136,7 @@ export default function CardAtividade({atividade, id, questao}) {
                         instrument-sans font-bold cursor-pointer bg-[var(--bg-secondary-color)] p-2 rounded-full text-white
                         md:text-lg
                         lg:text-xl"
-                        onClick={() => navegar('/tentativa')}
+                        onClick={() => navegar('/tentativa', id)}
 
                         >
                             Realizar Tentativa
@@ -146,7 +146,7 @@ export default function CardAtividade({atividade, id, questao}) {
                         instrument-sans font-bold cursor-pointer bg-[var(--bg-secondary-color)] p-2 rounded-full text-white
                         md:text-lg
                         lg:text-xl"
-                        onClick={() => navegar('/tentativa/historico')}
+                        onClick={() => navigate('/tentativa/historico')}
 
                         >
                             Histórico de tentativas
@@ -183,7 +183,7 @@ export default function CardAtividade({atividade, id, questao}) {
                         <div className="
                             flex items-center justify-center gap-1 cursor-pointer" 
                             onClick={() => {
-                                navigate('editar')
+                                navegar('/atividades/editar', id)
                             }}
                             >
                             <img src={pen} alt="Editar" className="w-7 md:w-8"/>

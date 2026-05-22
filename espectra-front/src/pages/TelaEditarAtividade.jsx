@@ -4,11 +4,16 @@ import interrogacao from "../assets/general_photos/interrogacao.svg";
 import OutlinedTitle from "../components/OutlinedTitle";
 import logotipoAzul from "../assets/logotipos/logotipo-azul.svg";
 
+import { useEffect } from "react";
+
 function telaEditarAtividade() {
     const navigate = useNavigate();
 
-    const atividadeId = localStorage.getItem('id_atividade')
-    console.log(atividadeId)
+    useEffect(() => {
+        const id = Number(localStorage.getItem("id_atividade"))
+
+        console.log(id)
+    }, [])
 
     return (
     
