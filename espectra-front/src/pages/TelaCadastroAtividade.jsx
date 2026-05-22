@@ -17,6 +17,7 @@ function telaCadastroAtividade() {
     const idUsuario = localStorage.getItem('id_usuario')
     const idPaciente = localStorage.getItem('id_paciente')
     const idHabilidade = localStorage.getItem('id_habilidade')
+    
     const token = localStorage.getItem('token')
 
     const [comportamento, setComportamento] = useState("")
