@@ -38,7 +38,6 @@ export default function OptionPaneAtividades({onChange}){
         carregar()
     }, [])
 
-    console.log(atividadesFalse)
 
     return(
         <div className="flex flex-col gap-3">

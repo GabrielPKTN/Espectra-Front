@@ -23,7 +23,7 @@ function telaCadastroAtividade() {
 
     const [comportamento, setComportamento] = useState("")
     const [valorMeses, setValorMeses] = useState(0)
-    const [valorAtividade, setValorAtividade] = useState(0)
+    const [valorAtividade, setValorAtividade] = useState({})
     
     const [erroComportamento, setErroComportamento] = useState("")
     const [mensagemSucesso, setMensagemSucesso] = useState("")
