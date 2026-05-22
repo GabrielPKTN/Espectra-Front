@@ -161,11 +161,10 @@ function TelaAdicionarPaciente() {
                 {paciente.nome}
               </h1>
 
-              {/* Adicionar diagnóstico logo mais! */}
               <p className="primary-color font-inclusive-sans text-center text-lg p-2 font-medium italic
         md:text-2xl">
                 {paciente.nome} nasceu em {paciente.data_nascimento}, tem {paciente.idade},
-                está na {paciente.serie_escolar} e possui grau de suporte {paciente.grau_suporte}.
+                está na {paciente.serie_escolar} e possui diagnóstico de {paciente.diagnostico?.map((diag) => diag.nome_completo).join(", ")} com {paciente.grau_suporte}.
               </p>
             </div>
           </div>
@@ -175,8 +174,6 @@ function TelaAdicionarPaciente() {
       <div className="flex flex-col justify-center items-center gap-4 mt-5
       lg:flex lg:flex-row">
 
-        {/*Nestes buttons vai ser necessário adicionar a rota da tela do formulário ou retorná-lo para a tela home,
-        já com o novo paciente adicionado.*/}
         <Button
           variantClick="basicClick"
           onClick={() => navigate("/formulario")}
