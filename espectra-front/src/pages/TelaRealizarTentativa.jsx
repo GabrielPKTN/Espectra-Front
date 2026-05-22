@@ -14,7 +14,13 @@ function TelaRealizarTentativa() {
 
   const { id } = useParams();
 
-  const [atividade, setAtividade] = useState(null);
+  const atividadeMock = {
+    id: 1,
+    comportamento:
+      "Manter contato visual por mais de 3 segundos durante a conversa",
+  };
+
+  const [atividade, setAtividade] = useState(atividadeMock);
 
   const [opcaoSelecionada, setOpcaoSelecionada] = useState(null);
   const [opcaoSimNao, setOpcaoSimNao] = useState(null);
@@ -22,15 +28,12 @@ function TelaRealizarTentativa() {
 
   const id_atividade = id;
   const id_auxilio = opcaoSelecionada;
+  const id_usuario = localStorage.getItem("id_usuario");
 
-  const resultado = opcaoSimNao === "sim";
+  const resultado = opcaoSimNao === 1;
 
   const selecaoTipoTentativa = (opcao) => {
-    if (opcaoSelecionada === opcao) {
-      setOpcaoSelecionada(null);
-    } else {
-      setOpcaoSelecionada(opcao);
-    }
+    setOpcaoSelecionada(opcaoSelecionada === opcao ? null : opcao);
   };
 
   const selecaoSimNao = (opcao) => {
@@ -44,9 +47,11 @@ function TelaRealizarTentativa() {
   useEffect(() => {
     const buscarAtividade = async () => {
       try {
-        const response = await api.get(`v1/espectra/atividade/?id=${id}`);
+        const response = await api.get(
+          `v1/espectra/atividade/?id_atividade=${id}&id_usuario=${id_usuario}`,
+        );
 
-        setAtividade(response.data);
+        setAtividade(response.data.items);
       } catch (error) {
         toast.error("Erro ao carregar os dados da atividade.");
         console.error(error);
@@ -54,7 +59,7 @@ function TelaRealizarTentativa() {
     };
 
     if (id) buscarAtividade();
-  }, [id]);
+  }, [id, id_usuario]);
 
   const handleTentativa = async (e) => {
     e.preventDefault();
@@ -95,6 +100,16 @@ function TelaRealizarTentativa() {
     }
   };
 
+  if (!atividade) {
+    return (
+      <div className="flex h-screen w-screen items-center justify-center bg-[#dfedff]">
+        <p className="text-xl font-semibold text-blue-600">
+          Carregando dados da atividade...
+        </p>
+      </div>
+    );
+  }
+
   return (
     // div que carrega todo o conteúdo da tela
     <div className="lg:bg-[#dfedff] lg:overflow-hidden lg:w-screen lg:h-screen">
@@ -115,52 +130,40 @@ function TelaRealizarTentativa() {
           {/*opções de tipo de realização*/}
           <div className="flex flex-col mt-10 inclusive-sans gap-4 mx-6 lg:mt-5 lg:mx-12">
             <div className="flex flex-row gap-2 text-[20px]">
-              <button onClick={() => selecaoTipoTentativa("independente")}>
+              <button onClick={() => selecaoTipoTentativa(1)}>
                 <img
                   src={
-                    opcaoSelecionada === "independente"
+                    opcaoSelecionada === 1
                       ? button_quadrado_select
                       : button_quadrado_unselected
                   }
-                  alt={
-                    opcaoSelecionada === "independente"
-                      ? button_quadrado_select
-                      : button_quadrado_unselected
-                  }
+                  alt="realização independente"
                 />
               </button>
               <p>Realização independente</p>
             </div>
             <div className="flex flex-row gap-2 text-[20px]">
-              <button onClick={() => selecaoTipoTentativa("parcial")}>
+              <button onClick={() => selecaoTipoTentativa(2)}>
                 <img
                   src={
-                    opcaoSelecionada === "parcial"
+                    opcaoSelecionada === 2
                       ? button_quadrado_select
                       : button_quadrado_unselected
                   }
-                  alt={
-                    opcaoSelecionada === "parcial"
-                      ? button_quadrado_select
-                      : button_quadrado_unselected
-                  }
+                  alt="realização com auxilio parcial"
                 />
               </button>
               <p>Realização com auxílio parcial</p>
             </div>
             <div className="flex flex-row gap-2 text-[20px]">
-              <button onClick={() => selecaoTipoTentativa("total")}>
+              <button onClick={() => selecaoTipoTentativa(3)}>
                 <img
                   src={
-                    opcaoSelecionada === "total"
+                    opcaoSelecionada === 3
                       ? button_quadrado_select
                       : button_quadrado_unselected
                   }
-                  alt={
-                    opcaoSelecionada === "total"
-                      ? button_quadrado_select
-                      : button_quadrado_unselected
-                  }
+                  alt="realização com auxilio total"
                 />
               </button>
               <p>Realização com auxilio total</p>
@@ -175,36 +178,28 @@ function TelaRealizarTentativa() {
 
             <div className="inclusive-sans text-[20px] gap-2 flex flex-col">
               <div className="flex flex-row gap-2">
-                <button onClick={() => selecaoSimNao("sim")}>
+                <button onClick={() => selecaoSimNao(1)}>
                   <img
                     src={
-                      opcaoSimNao === "sim"
+                      opcaoSimNao === 1
                         ? button_quadrado_select
                         : button_quadrado_unselected
                     }
-                    alt={
-                      opcaoSimNao === "sim"
-                        ? button_quadrado_select
-                        : button_quadrado_unselected
-                    }
+                    alt="Sim"
                   />
                 </button>
                 <p>Sim</p>
               </div>
 
               <div className="flex flex-row gap-2">
-                <button onClick={() => selecaoSimNao("nao")}>
+                <button onClick={() => selecaoSimNao(2)}>
                   <img
                     src={
-                      opcaoSimNao === "nao"
+                      opcaoSimNao === 2
                         ? button_quadrado_select
                         : button_quadrado_unselected
                     }
-                    alt={
-                      opcaoSimNao === "nao"
-                        ? button_quadrado_select
-                        : button_quadrado_unselected
-                    }
+                    alt="Não"
                   />
                 </button>
                 <p>Não</p>
@@ -235,7 +230,12 @@ function TelaRealizarTentativa() {
             >
               Salvar resposta
             </SecondButton>
-            <SecondButton variantClick="secondButton">Cancelar</SecondButton>
+            <SecondButton
+              onClick={() => navigate(-1)}
+              variantClick="secondButton"
+            >
+              Cancelar
+            </SecondButton>
           </div>
         </div>
       </div>
