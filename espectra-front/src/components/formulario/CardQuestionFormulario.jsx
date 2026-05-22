@@ -1,5 +1,4 @@
 function CardQuestionFormulario({
-  idPortage,
   numero,
   pergunta,
   corNumero,
@@ -8,7 +7,7 @@ function CardQuestionFormulario({
   sizePergunta,
 }) {
   return (
-    <div key={idPortage} data-key={idPortage}
+    <div
       className={`${corFundoPergunta} w-full flex items-start  gap-4 pt-0 px-4 pb-4  rounded-md shadow-md lg:gap-10 lg:px-5`}
     >
       {/* NÚMERO */}

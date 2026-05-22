@@ -3,7 +3,7 @@ import GeraComportamento from "./GeraComportamento";
 
 function GeraSecoes(
 
-    { arrayComportamento }
+    { arrayComportamento, setRespostas }
 
 ) {
 
@@ -41,7 +41,7 @@ function GeraSecoes(
 
     return <div className="max-w-4xl mx-auto flex flex-col gap-8">
 
-        <section className="socializacao">
+        <section className="socializacao" data-key={1} key={1}>
 
             <CardTextFormulario
                 titulo="Socialização"
@@ -51,14 +51,14 @@ function GeraSecoes(
 
             <div className="flex flex-col gap-8">
 
-                <GeraComportamento array={categorias.arraySocializacao} corNumeracao={"A2E289"} />
+                <GeraComportamento array={categorias.arraySocializacao} setRespostas={setRespostas} corNumeracao={"A2E289"} />
 
             </div>
 
 
         </section>
 
-        <section className="linguagem">
+        <section className="linguagem" data-key={2} key={2}>
 
             <CardTextFormulario
                 titulo="Linguagem"
@@ -75,7 +75,7 @@ function GeraSecoes(
 
         </section>
 
-        <section className="cognicao">
+        <section className="cognicao" data-key={3} key={3}>
 
             <CardTextFormulario
                 titulo="Cognição"
@@ -92,7 +92,7 @@ function GeraSecoes(
 
         </section>
 
-        <section className="auto-cuidados">
+        <section className="auto-cuidados" data-key={4} key={4}>
 
             <CardTextFormulario
                 titulo="Auto-cuidados"
@@ -109,7 +109,7 @@ function GeraSecoes(
 
         </section>
 
-        <section className="des-motor">
+        <section className="des-motor" data-key={5} key={5}>
 
             <CardTextFormulario
                 titulo="Desenvolvimento-motor"

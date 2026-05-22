@@ -1,10 +1,21 @@
-function OptionResposta({ texto, name }) {
+function OptionResposta({ texto, name, checked, onClick }) {
   return (
-    <label className="flex text-1xl items-center gap-2 cursor-pointer">
-      <input type="radio" name={name} className="w-6 h-6 accent-blue-500" />
+    <div onClick={onClick} className="relative">
 
-      <span className="text-md md:text-lg inclusive-sans">{texto}</span>
-    </label>
+        <label className="flex text-1xl items-center gap-2 cursor-pointer">
+        <input
+          type="radio"
+          name={name}
+          checked={checked}
+          onChange={() => {}}
+          className="w-6 h-6 accent-blue-500" />
+
+        <span className="text-md md:text-lg inclusive-sans">{texto}</span>
+        </label>
+
+        <div className="absolute w-full h-full top-0 right-0 left-0 bottom-0" onClick={onClick}></div>
+
+    </div>
   );
 }
 

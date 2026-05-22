@@ -11,6 +11,7 @@ function TelaFormulario() {
 
   const navigate = useNavigate();
   const [comportamentos, setComportamentos] = useState([]);
+  const [respostas, setRespostas] = useState([])
 
   const { id_paciente, id_usuario } = useParams()
 
@@ -61,7 +62,7 @@ function TelaFormulario() {
         <div className="max-w-4xl mx-auto flex flex-col gap-8">
 
           {comportamentos.length > 0 ? (
-            <GeraSecoes arrayComportamento={comportamentos} />
+            <GeraSecoes arrayComportamento={comportamentos} setRespostas={setRespostas}/>
           ) : (
             <div className="text-center text-gray-500 py-10 animate-pulse">
               Carregando formulário...

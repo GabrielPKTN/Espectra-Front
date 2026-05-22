@@ -1,18 +1,17 @@
 import CardQuestionFormulario from "./CardQuestionFormulario";
 import GroupResposta from "./GroupResposta";
 
-function GeraComportamento({ array, corNumeracao }) {
+function GeraComportamento({ array, corNumeracao, setRespostas }) {
 
     let arrayComponents = [];
 
-    for (let comportamento of array) {
-
+    for (let comportamento of array) {  
+        
         arrayComponents.push(
 
-            <div className="py-5">
+            <div className="py-5" key={comportamento.id_atividade_portage} data-key={comportamento.id_atividade_portage}>
 
-                <CardQuestionFormulario
-                    idPortage={comportamento.id_atividade_portage}
+                <CardQuestionFormulario 
                     numero={comportamento.numero_questao}
                     corNumero={`bg-[#${corNumeracao}]`}
                     pergunta={comportamento.comportamento}
@@ -22,7 +21,7 @@ function GeraComportamento({ array, corNumeracao }) {
                 />
 
                 <div className="w-full mt-6">
-                    <GroupResposta idPortage={comportamento.id_atividade_portage} opcoes={["Sim", "Não", "Sim, com mediação"]} />
+                    <GroupResposta setRespostas={setRespostas} idFormPortage={`${comportamento.id_habilidade}-${comportamento.id_atividade_portage}`} opcoes={["Sim", "Não", "Sim, com mediação"]} />
                 </div>
 
             </div>
