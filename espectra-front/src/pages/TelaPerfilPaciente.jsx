@@ -27,6 +27,8 @@ function TelaPerfilPaciente() {
   const { id, id_usuario } = useParams();
   const navigate = useNavigate();
 
+  const [tipoUsuario, setTipoUsuario] = useState(null);
+
   //função para consumir os dados do paciente
   useEffect(() => {
     async function carregarDadosPaciente() {
@@ -81,9 +83,12 @@ function TelaPerfilPaciente() {
       return;
     }
 
-    const confirmar = window.confirm(
-      "Tem certeza que deseja remover esse paciente?",
-    );
+    const mensagemConfirmaçao =
+      tipoUsuario === 2
+        ? "Tem certeza que deseja apagar esse familiar?"
+        : "Tem certeza que deseja remover esse paciente?";
+
+    const confirmar = window.confirm(mensagemConfirmaçao);
     if (!confirmar) return;
 
     try {
@@ -118,6 +123,17 @@ function TelaPerfilPaciente() {
       toast.error(mensagemErro);
     }
   }
+
+  useEffect(() => {
+    const tipoSalvo = localStorage.getItem("tipo_usuario");
+
+    if (tipoSalvo) {
+      setTipoUsuario(Number(tipoSalvo));
+    }
+  }, []);
+
+  const textoButton =
+    tipoUsuario === 2 ? "Apagar familiar" : "Remover paciente";
 
   //editar o formulário portage
   async function editarFormulario() {
@@ -226,11 +242,14 @@ function TelaPerfilPaciente() {
     );
   }
 
-  const primeiroResponsavel = paciente.responsavel[0];
+  const primeiroResponsavel = paciente?.responsavel?.[0];
 
-  const listaDiagnosticos = paciente.diagnostico
-    ?.map((d) => `${d.nome_completo} (${d.sigla})`)
-    .join(", ");
+  const telefoneResponsavel = primeiroResponsavel?.telefone || "Não informado";
+
+  const listaDiagnosticos =
+    paciente.diagnostico
+      ?.map((d) => `${d.nome_completo} (${d.sigla})`)
+      .join(", ") || "Não informado";
 
   return (
     <div className="lg:bg-[#dfedff] flex flex-col justify-between gap-2 lg:h-auto lg:overflow-hidden">
@@ -291,7 +310,7 @@ function TelaPerfilPaciente() {
               lg:text-[20px] lg:p-4"
           >
             <p className="primary-color">Telefone do responsável:</p>
-            <p className="text-gray-700">{primeiroResponsavel.telefone}</p>
+            <p className="text-gray-700">{telefoneResponsavel}</p>
           </div>
 
           <div className="flex flex-col w-screen lg:grid lg:grid-cols-2 lg:gap-x-10 lg:w-full">
@@ -387,7 +406,7 @@ function TelaPerfilPaciente() {
               type="button"
               className="w-full"
             >
-              Remover paciente
+              {textoButton}
             </Button>
           </div>
         </div>
