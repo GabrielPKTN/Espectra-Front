@@ -5,13 +5,76 @@ import Button from "./Button";
 import trash from "../assets/general_photos/trash.svg";
 import pen from "../assets/general_photos/pen.svg";
 import { useNavigate } from "react-router-dom";
+import axios from "axios"
+import ModalExclusao from "../pages/TelaCardExclusao"
+import api from "../services/api"
 
 
 
-export default function CardAtividade() {
+export default function CardAtividade({atividade, id, questao}) {
     const navigate = useNavigate()
 
     const [expandido, setExpandido] = useState(false);
+    const [modal, setModal] = useState(false)
+
+    const token = localStorage.getItem("token")
+
+    const idPaciete = 1 //localStorage.getItem("id_paciente")
+    const idUsuario = 1 //localStorage.getItem("id_usuario")
+    
+    function navegar(path, idAtividade){
+        
+        localStorage.setItem("id_atividade", idAtividade)
+
+        navigate(`${path}`)
+    }
+
+    async function declararHailidade(idAtividade) {
+        try {
+            const response = await api.put(
+                `/v1/espectra/atividade/${idAtividade}`,
+                {},
+                { 
+                    headers: {
+                        'x-access-token': token
+                    }
+                }
+            )
+
+            const data = response.data
+            console.log(data)
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async function excluirAtividade(idAtividade, idPaciente, idUsuario) {
+        try {
+            const response = await api.delete(
+                `/v1/espectra/atividade/${idAtividade}`,
+             
+                { 
+                    headers: {
+                        'x-access-token': token
+                    },
+
+                    data: {
+                        id_usuario: idUsuario,
+                        id_paciente: idPaciente
+                    },
+                }
+            )
+
+            const data = response.data
+            window.location.reload()
+            
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     return (
         <div
@@ -38,9 +101,23 @@ export default function CardAtividade() {
                 "
             >
 
-                <p className="instrument-sans font-semibold md:text-xl md:font-medium lg:text-2xl">
-                    Descrição da atividade
-                </p>
+                <p
+                className={`
+                    instrument-sans
+                    font-semibold
+                    md:text-xl
+                    md:font-medium
+                    lg:text-2xl
+                    transition-all duration-300
+                    ease-in-out
+
+                    ${
+                    expandido
+                        ? "whitespace-normal break-words"
+                        : "whitespace-nowrap overflow-hidden text-ellipsis"
+                    }
+                `}
+                > {atividade} </p>
 
                 <img
                     src={setaBaixo}
@@ -59,6 +136,7 @@ export default function CardAtividade() {
                         instrument-sans font-bold cursor-pointer bg-[var(--bg-secondary-color)] p-2 rounded-full text-white
                         md:text-lg
                         lg:text-xl"
+                        onClick={() => navegar('/tentativa', id)}
 
                         >
                             Realizar Tentativa
@@ -68,6 +146,7 @@ export default function CardAtividade() {
                         instrument-sans font-bold cursor-pointer bg-[var(--bg-secondary-color)] p-2 rounded-full text-white
                         md:text-lg
                         lg:text-xl"
+                        onClick={() => navigate('/tentativa/historico')}
 
                         >
                             Histórico de tentativas
@@ -77,15 +156,24 @@ export default function CardAtividade() {
                         instrument-sans font-bold cursor-pointer bg-[var(--bg-secondary-color)] p-2 rounded-full text-white
                         md:text-lg
                         lg:text-xl"
+                        onClick={() => {
+                            declararHailidade(id)
+                            window.location.reload()
+                        }}
 
                         >
                             Declarar Habilidade
                     </button>
 
+                    {questao == null ? (
+                        <div className="flex gap-8 mt-4 justify-center">
 
-                    <div className="flex gap-8 mt-4 justify-center">
-
-                        <div className="flex items-center justify-center gap-1 cursor-pointer">
+                        <div className="
+                            flex items-center justify-center gap-1 cursor-pointer"
+                            onClick={() => {
+                                setModal(true)
+                            }}
+                            >
                             <img src={trash} alt="Excluir" className="w-7 md:w-8"/>
                             <span className="instrument-sans text-[#F94C4C] text-xs md:text-lg lg:text-xl">
                                 Excluir atividade
@@ -95,7 +183,7 @@ export default function CardAtividade() {
                         <div className="
                             flex items-center justify-center gap-1 cursor-pointer" 
                             onClick={() => {
-                                navigate('editar')
+                                navegar('/atividades/editar', id)
                             }}
                             >
                             <img src={pen} alt="Editar" className="w-7 md:w-8"/>
@@ -105,9 +193,36 @@ export default function CardAtividade() {
                         </div>
 
                     </div>
+                    ) : (
+                        <div className="flex gap-8 mt-4 justify-center"> 
+
+                            <div className="
+                                flex items-center justify-center gap-1 cursor-pointer"
+                                onClick={() => {
+                                    setModal(true)
+                                }}
+                                >
+                                <img src={trash} alt="Excluir" className="w-7 md:w-8"/>
+                                <span className="instrument-sans text-[#F94C4C] text-xs md:text-lg lg:text-xl">
+                                    Excluir atividade
+                                </span>
+                            </div>
+
+                        </div>
+                    )}
 
 
                 </div>
+            )}
+
+            {modal && (
+                <ModalExclusao
+                    onCancel={() => setModal(false)}
+                    onConfirm={() => {
+                        excluirAtividade(id, idPaciete, idUsuario)
+                        setModal(false)
+                    }}
+                />
             )}
 
         </div>

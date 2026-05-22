@@ -32,7 +32,7 @@ function TelaLogin() {
       const data = response.data
 
       localStorage.setItem("token", data.token)
-      localStorage.setItem("usuario", JSON.stringify(data.items))
+      localStorage.setItem("id_usuario", JSON.stringify(data.id))
 
       navigate('/home')
 

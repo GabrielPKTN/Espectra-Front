@@ -4,12 +4,20 @@ import setaBaixo from "../assets/general_photos/setaBaixo.svg";
 import Button from "./Button";
 import trash from "../assets/general_photos/trash.svg";
 import pen from "../assets/general_photos/pen.svg";
+import { useNavigate } from "react-router-dom";
 
 
 
-export default function CardAtividade() {
+export default function CardAtividade({atividade, id}) {
+    const navigate = useNavigate()
 
-    const [expandido, setExpandido] = useState(false);
+    const [expandido, setExpandido] = useState(false)
+
+    function navegar(path){
+        localStorage.setItem("id_atividade", id)
+
+        navigate(`${path}`)
+    }
 
     return (
         <div
@@ -36,9 +44,23 @@ export default function CardAtividade() {
                 "
             >
 
-                <p className="instrument-sans font-semibold md:text-xl md:font-medium lg:text-2xl">
-                    Descrição da atividade
-                </p>
+                <p
+                className={`
+                    instrument-sans
+                    font-semibold
+                    md:text-xl
+                    md:font-medium
+                    lg:text-2xl
+                    transition-all duration-300
+                    ease-in-out
+
+                    ${
+                    expandido
+                        ? "whitespace-normal break-words"
+                        : "whitespace-nowrap overflow-hidden text-ellipsis"
+                    }
+                `}
+                > {atividade} </p>
 
                 <img
                     src={setaBaixo}
@@ -56,6 +78,7 @@ export default function CardAtividade() {
 
                     <button className="
                         instrument-sans font-bold bg-[var(--bg-secondary-color)] p-2 rounded-full text-white md:text-lg lg:text-xl"
+                        onClick={() => navegar('/tentativa/historico')}
 
                         >
                             Histórico de tentativas

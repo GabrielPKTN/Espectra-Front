@@ -29,17 +29,11 @@ function Rotas() {
       <Route path="/atividades/" element={<TelaAtividades />} />
       <Route path="/atividades/editar" element={<TelaEditarAtividade />} />
       <Route path="/atividades/adicionar" element={<TelaCadastroAtividade />} />
-      <Route path="/tentativa" element={<TelaRealizarTentativa />} />
-      <Route path="/tentativa/historico" element={<HistoricoTentativa />} />
-
+      <Route path="/tentativa/" element={<TelaRealizarTentativa />} />
+      <Route path="/tentativa/historico/:idAtividade" element={<HistoricoTentativa />} />
       <Route path="/cadastro-familiar" element={<TelaCadastroFamiliar />} />
-      <Route path="/perfil" element={<PerfilPsicopedagogo />} />
-      <Route path="/card-apagar" element={<CardExclusao />} />
-
-      <Route
-        path="/atualizarPerfilPsicopedagogo"
-        element={<AtualizarPerfilPsicopedagogo />}
-      />
+      <Route path="/perfil/" element={<PerfilPsicopedagogo />} />
+      <Route path="/atualizarPerfil" element={<AtualizarPerfilPsicopedagogo />} />
     </Routes>
   );
 }

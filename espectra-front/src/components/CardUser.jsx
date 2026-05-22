@@ -11,8 +11,8 @@ export default function CardUser(){
     return(
         <div className="
         hidden 
-        md:flex md:flex-col md:w-[50%] md:gap-10 md:p-4  md:shadow-[10px_0_15px_-3px_rgba(0,0,0,0.3)] rounded-3xl
-        lg:w-[40%]"
+        md:flex md:flex-col md:w-[60%] md:gap-10 md:p-4  md:shadow-[10px_0_15px_-3px_rgba(0,0,0,0.3)] rounded-3xl
+        lg:w-[30%]"
         >
 
         <div className="flex items-center gap-4">
@@ -29,7 +29,12 @@ export default function CardUser(){
 
         <div className="flex flex-col gap-4 pl-2 lg:mt-3">
 
-            <div className="flex gap-3 cursor-pointer">
+            <div className="
+                flex gap-3 cursor-pointer"
+                onClick={() => {
+                    navigate('/home')
+                }}
+                >
 
                 <img src={home} alt="" className="lg:w-8"/>
 
@@ -41,12 +46,12 @@ export default function CardUser(){
                 flex gap-3 cursor-pointer" 
                 
                 onClick={() => {
-                    navigate('/atividades/cadastrar')
+                    navigate('/atividades/adicionar')
                 }} 
                 
                 >
 
-                <img src={add} alt="" className="lg:w-8"/>
+                <img src={add} alt="" className="md:w-7 lg:w-8"/>
 
                 <span className="instrument-sans font-bold text-[var(--bg-primary-color)] text-lg lg:text-2xl">Adicionar atividade</span>
 
