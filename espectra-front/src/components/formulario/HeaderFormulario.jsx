@@ -20,7 +20,7 @@ const Header = ({ title, userImage, userName, logoSource }) => {
           </div>
 
         </div>
-        
+
 
       </div>
       <h1 className="text-white text-3xl font-bold mt-4 instrument-sans lg:text-5xl">

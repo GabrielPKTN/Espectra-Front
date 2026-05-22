@@ -1,8 +1,8 @@
-import OptionResposta from "./OptionResposta";
+import OptionResposta from "../OptionResposta";
 
-function GroupResposta() {
+function GroupResposta(idPortage) {
   return (
-    <div
+    <div key={idPortage} data-key={idPortage}
       className="
         flex
         justify-between
