@@ -1,6 +1,13 @@
 import interrogacao from "../assets/general_photos/interrogacao.svg";
+import ModalMeses from "../pages/ModalValorMeses";
+import { useState } from "react";
 
-export default function OptionPaneMeses(){
+export default function OptionPaneMeses({onChange}){
+
+    const meses = Array.from({ length: 12 }, (_, index) => index + 1)
+
+    const [modal, setModal] = useState(false)
+
     return(
         <div className="flex flex-col gap-3">
                                     
@@ -20,12 +27,33 @@ export default function OptionPaneMeses(){
                         md:text-lg md:w-40 md:h-8
                         lg:h-10 lg:text-xl 
                         "
+                        onChange={(e) => onChange(e.target.value)}
                     >
-                    <option value="">0 Meses</option>
-                    <option value="">1 Mês</option>
+                    {meses.map((mes, index) => (
+                        <option key={index} value={mes}>
+                            {mes} {mes === 1 ? "Mês" : "Meses"}
+                        </option>
+                    ))}
+
                 </select>
-                    <img src={interrogacao} alt="sinal de interrogação" className="size-7 md:size-9" />
+                    <img 
+                        src={interrogacao} 
+                        alt="sinal de interrogação" 
+                        className="size-7 md:size-9"
+                        onClick={() => {
+                            setModal(true)
+                        }}
+                    />
             </div>
+
+            {modal && (
+                <ModalMeses
+                    onCancel={() => setModal(false)}
+                    onConfirm={() => {
+                        setModal(false)
+                    }}
+                />
+            )}
 
         </div>
 
