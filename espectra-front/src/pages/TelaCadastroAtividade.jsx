@@ -7,11 +7,44 @@ import { useState } from "react";
 import CheckboxAtividade from "../components/CheckboxTipoAtividade";
 import OptionPaneMeses from "../components/OptionPaneMeses";
 import HeaderUsuario from "../components/HeaderUsuario";
+import api from "../services/api"
 
 function telaCadastroAtividade() {
     const navigate = useNavigate();
 
     const [opcaoSelecionada, setOpcaoSelecionada] = useState("");
+    
+    const idUsuario = localStorage.getItem('idUsuario')
+    const idPaciente = localStorage.getItem('idPaciente')
+    const idHabilidade = localStorage.getItem('idHabilidade')
+    const [comportamento, setComportamento] = useState("")
+    const [valorMeses, setValorMeses] = useState(0)
+    
+
+
+    async function cadastrarPersonalizada() {
+        try {
+            const response = await api.post(
+                `v1/espectra/atividade/personalizada/`,
+                
+                {
+                    id_ususario: 1,
+                    id_paciente: 1,
+                    comportamento: comportamento,
+                    valor_meses: 1,
+                    id_habilidade: 1
+
+                }
+            )
+
+            const data = response.data
+
+            console.log(data)
+
+        } catch (error) {
+            return []
+        }
+    }
 
     return(
       <div className="overflow-y-hidden w-full h-screen md:h-auto md:min-h-screen md:bg-[var(--light-blue)] md:flex md:flex-col md:items-center md:justify-center lg:justify-start lg:h-auto lg:h-screen">
@@ -49,10 +82,17 @@ function telaCadastroAtividade() {
                                       shadow-[0_0_50px_rgba(0,0,0,0.25)] w-full h-16 rounded-lg bg-[#C9C9C9] opacity-30
                                       md:w-[90%] md:h-40 md:self-center md:mr-8     
                                       "
+                                      onChange={(e) => {
+                                        setComportamento(e.target.value)
+                                      }}
                                       
                                   />
 
-                               <OptionPaneMeses/>
+                               <OptionPaneMeses
+                                    onChange={(e) => {
+                                        setValorMeses(e.target.value)
+                                      }}
+                               />
 
                             </div>
 

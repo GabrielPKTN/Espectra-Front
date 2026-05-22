@@ -1,6 +1,9 @@
 import interrogacao from "../assets/general_photos/interrogacao.svg";
 
 export default function OptionPaneMeses(){
+
+    const meses = Array.from({ length: 13 }, (_, index) => index);
+
     return(
         <div className="flex flex-col gap-3">
                                     
@@ -21,8 +24,12 @@ export default function OptionPaneMeses(){
                         lg:h-10 lg:text-xl 
                         "
                     >
-                    <option value="">0 Meses</option>
-                    <option value="">1 Mês</option>
+                    {meses.map((mes) => (
+                        <option key={mes} value={mes}>
+                            {mes} {mes === 1 ? "Mês" : "Meses"}
+                        </option>
+                    ))}
+
                 </select>
                     <img src={interrogacao} alt="sinal de interrogação" className="size-7 md:size-9" />
             </div>
