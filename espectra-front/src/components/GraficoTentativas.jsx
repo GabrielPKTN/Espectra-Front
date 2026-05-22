@@ -1,24 +1,7 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Cell } from "recharts";
 
-const data = [
-    {
-        data: "20/03/2026",
-        valor: 1,
-        color: "#FF2D2D"
-    },
-    {
-        data: "20/03/2026",
-        valor: 2,
-        color: "#FAE938"
-    },
-    {
-        data: "20/03/2026",
-        valor: 3,
-        color: "#A2E289"
-    }
-]
+function GraficoTentativas({data}){
 
-function GraficoTentativas(){
     return (
         <div className="w-full h-[500px] p-2 rounded-xl">
             {/* ResponsiveContainer -> Faz o gráfico se adequar ao tamanho da div */}

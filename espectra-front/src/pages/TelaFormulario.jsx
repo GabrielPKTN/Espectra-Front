@@ -51,7 +51,8 @@ function TelaFormulario() {
 
             {/* BOTÕES DE AÇÃO */}
             <div className="w-full flex flex-row items-center justify-center gap-4 mt-10">
-              <Button className="w-full sm:w-auto px-10 bg-blue-500 hover:bg-blue-600 text-white">
+              <Button className="w-full sm:w-auto px-10 bg-blue-500 hover:bg-blue-600 text-white"
+              onClick={() => navigate("/adicionar-paciente")}>
                 Cancelar
               </Button>
               <Button className="w-full sm:w-auto px-10 bg-blue-600 hover:bg-blue-700 text-white">
