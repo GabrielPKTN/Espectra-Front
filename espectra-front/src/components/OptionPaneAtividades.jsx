@@ -9,8 +9,8 @@ export default function OptionPaneAtividades({onChange}){
     const [atividadesFalse, setAtividadesFalse] = useState([])
     const [modal, setModal] = useState(false)
 
-    const idPaciente = 1//localStorage.getItem('id_paciente')
-    const idHabilidade =  1//localStorage.getItem('id_habilidade')
+    const idPaciente = Number(localStorage.getItem('id_paciente'))
+    const idHabilidade =  Number(localStorage.getItem('id_habilidade'))
     const token = localStorage.getItem('token')
 
     async function getAtividadesFalse() {
@@ -58,10 +58,13 @@ export default function OptionPaneAtividades({onChange}){
                         md:text-lg md:h-11
                         lg:h-10 lg:text-xl 
                         "
-                        onChange={(e) => onChange(e.target.value)}
+                        onChange={(e) => onChange(Number(e.target.value))}
                     >
-                    {atividadesFalse.map((atividade, index) => (
-                        <option key={index} value={atividade}>
+                    {atividadesFalse.map((atividade) => (
+                        <option 
+                            key={atividade.id_atividade_portage} 
+                            value={atividade.id_atividade_portage}
+                        >
                             {atividade.numero_questao}. {atividade.comportamento}
                         </option>
                     ))}

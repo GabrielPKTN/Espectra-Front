@@ -9,16 +9,16 @@ import OptionPaneMeses from "../components/OptionPaneMeses";
 import HeaderUsuario from "../components/HeaderUsuario";
 import api from "../services/api"
 import { useEffect } from "react";
-import OptioPaneAtividades from "../components/OptionPaneAtividades"
+import OptionPaneAtividades from "../components/OptionPaneAtividades"
 
 function telaCadastroAtividade() {
     const navigate = useNavigate();
 
     const [opcaoSelecionada, setOpcaoSelecionada] = useState("");
     
-    const idUsuario = localStorage.getItem('id_usuario')
-    const idPaciente = 1//localStorage.getItem('id_paciente')
-    const idHabilidade =  1//localStorage.getItem('id_habilidade')
+    const idUsuario = Number(localStorage.getItem('id_usuario'))
+    const idPaciente = Number(localStorage.getItem('id_paciente'))
+    const idHabilidade = Number(localStorage.getItem('id_habilidade'))
     const token = localStorage.getItem('token')
 
     const [comportamento, setComportamento] = useState("")
@@ -27,7 +27,6 @@ function telaCadastroAtividade() {
     
     const [erroComportamento, setErroComportamento] = useState("")
     const [mensagemSucesso, setMensagemSucesso] = useState("")
-
 
     async function cadastrarPersonalizada() {
         try {
@@ -63,16 +62,49 @@ function telaCadastroAtividade() {
         
     }
 
+    async function cadastrarPortage(params) {
+        try {
+            const response = await api.post(
+                `v1/espectra/atividade/portage/`,
+                
+                {
+                    id_usuario: idUsuario,
+                    id_paciente: idPaciente,
+                    id_atividade_portage: valorAtividade
+                },
+                {
+                    headers: {
+                        'x-access-token':  token
+                    }
+                }
+            )
+
+            const data = response.data
+
+            if(data.status_code == 201)
+                setMensagemSucesso("Atividade cadastrada com sucesso!")
+
+                setTimeout(() => {
+                    navigate("/atividades")
+                }, 2000)
+
+        } catch (error) {
+            return false
+        }
+    }
+
 
     async function salvarAtividade() {
-        if(comportamento.trim() === "") {
+       
+        if(opcaoSelecionada === 'personalizada')
+
+             if(comportamento.trim() === "") {
             setErroComportamento("O comportamento é obrigatório")
             return
-        }
-    
-        setErroComportamento("")
+            }
+            
+            setErroComportamento("")
 
-        if(opcaoSelecionada === 'personalizada')
             await cadastrarPersonalizada()
         
         if(opcaoSelecionada === 'portage')
@@ -157,7 +189,7 @@ function telaCadastroAtividade() {
 
                         {opcaoSelecionada === 'portage' && (
                              <div className="flex flex-col gap-5 w-full">
-                                <OptioPaneAtividades
+                                <OptionPaneAtividades
                                     onChange={(valor) => {
                                         setValorAtividade(valor)
                                     }}
