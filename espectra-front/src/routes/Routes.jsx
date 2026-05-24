@@ -33,7 +33,10 @@ function Rotas() {
       <Route path="/tentativa/historico" element={<HistoricoTentativa />} />
       <Route path="/cadastro-familiar" element={<TelaCadastroFamiliar />} />
       <Route path="/perfil/:id" element={<PerfilPsicopedagogo />} />
-      <Routen path="/atualizarPerfilPsicopedagogo" element={<AtualizarPerfilPsicopedagogo />}/>
+      <Route
+        path="/atualizarPerfilPsicopedagogo"
+        element={<AtualizarPerfilPsicopedagogo />}
+      />
     </Routes>
   );
 }
