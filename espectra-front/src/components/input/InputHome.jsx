@@ -1,11 +1,10 @@
 import { Search } from "lucide-react";
 
-function InputHome(
+function InputHome(props) {
 
-    props
-
-) {
-
+    const placeholderTexto = props.tipoUsuario === "Psicopedagogo"
+        ? "Digite o nome do paciente..."
+        : "Digite o nome do familiar...";
 
     return (
         <div className="w-full">
@@ -15,7 +14,7 @@ function InputHome(
                     type="text"
                     value={props.value}
                     className="pl-4 pr-4 h-full w-full font-inclusive-sans rounded-lg focus:outline-none"
-                    placeholder={props.placeholder || "Digite o nome do paciente..."}
+                    placeholder={props.placeholder || placeholderTexto}
 
                     onChange={(event) => {
 

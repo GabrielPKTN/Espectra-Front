@@ -81,7 +81,7 @@ function TelaInicial() {
 
           <Button
             variantClick="basicClick"
-            onClick={() => navigate("/formulario/1/1")}
+            onClick={() => navigate("/cadastro")}
           >
             Comece a usar
           </Button>

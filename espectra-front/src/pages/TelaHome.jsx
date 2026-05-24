@@ -14,9 +14,9 @@ function TelaHome() {
     const [pacientes, setPacientes] = useState([]);
     const [busca, setBusca] = useState("");
 
-    const pacientesFiltrados = pacientes.filter((paciente) =>
+    const pacientesFiltrados = Array.isArray(pacientes) ? pacientes.filter((paciente) =>
         paciente.nome.toLowerCase().includes(busca.toLowerCase()),
-    );
+    ) : [];
 
     const requestData = async () => {
 
@@ -36,11 +36,11 @@ function TelaHome() {
 
             localStorage.setItem("tipo_usuario", rawData.items.tipo_usuario)
 
-            let pacientes = rawData.items.pacientes || []
+            let pacientesDados = rawData.items.pacientes || []
 
-            if (Array.isArray(pacientes)) {
+            if (Array.isArray(pacientesDados)) {
 
-                rawData.items.pacientes = pacientes.map(paciente => ({
+                rawData.items.pacientes = pacientesDados.map(paciente => ({
                     ...paciente, diagnostico_breve: (paciente.diagnostico_breve || []).map(
                         diag => diag.sigla
                     ).join(" ")
@@ -52,12 +52,13 @@ function TelaHome() {
             localStorage.setItem("home", jsonHome)
 
             if (rawData.items.tipo_usuario === 'Psicopedagogo') {
-                setPacientes(rawData.items.pacientes)
+                setPacientes(rawData.items.pacientes || [])
             } else {
-                setPacientes(rawData.items.familiares)
+                setPacientes(rawData.items.familiares || [])
             }
 
         } catch (error) {
+            console.error("Erro ao buscar dados da Home:", error);
             return false
         }
 
@@ -68,6 +69,8 @@ function TelaHome() {
 
     const fotoUsuario = homeDataObject?.items?.foto || null;
     const idUsuario = homeDataObject?.items?.id || null;
+
+    const tipoUsuarioAtual = localStorage.getItem("tipo_usuario") || "";
 
     useEffect(() => {
         requestData()
@@ -82,7 +85,7 @@ function TelaHome() {
         "
             >
                 <div className="w-full flex gap-2 items-center justify-center">
-                    <InputHome busca={setBusca} />
+                    <InputHome busca={setBusca} tipoUsuario={tipoUsuarioAtual}/>
                     <Filter className="text-(--bg-primary-color) size-8" />
                 </div>
                 <ContainerPacientes
@@ -94,6 +97,7 @@ function TelaHome() {
                 <Button
                     variantClick="basicClick"
                     onClick={() => navigate("/adicionar_paciente")}
+                    className="lg:text-center lg:w-64 lg:h-16"
                 >
                     Adicionar paciente
                 </Button>
