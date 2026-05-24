@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { CircleUser } from 'lucide-react';
 import { useState } from "react";
 import axios from "axios";
+import ContainerUserPhoto from "../components/photo-components/ContainerUserPhoto";
 
 function TelaAdicionarPaciente() {
 
@@ -22,8 +23,8 @@ function TelaAdicionarPaciente() {
       setErro(null)
       setPaciente(null)
 
-      //const token = localStorage.getItem("token")
-      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTc3OTI4MjM1NywiZXhwIjoxMDAwMDE3NzkyODIzNTd9.Gg83eaBKGXg2Xa9tNm5rjAxXn9_8mJxj4w2GBG756yk"
+      const token = localStorage.getItem("token")
+      // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTc3OTI4MjM1NywiZXhwIjoxMDAwMDE3NzkyODIzNTd9.Gg83eaBKGXg2Xa9tNm5rjAxXn9_8mJxj4w2GBG756yk"
 
       if (!cpf) {
         setErro("Digite um CPF!")
@@ -92,16 +93,16 @@ function TelaAdicionarPaciente() {
       <div className="flex justify-between items-center lg:mt-2">
         <button onClick={() => navigate("/home")}>
           <ChevronLeft
-            className="primary-color size-10
+            className="primary-color size-10 cursor-pointer
           lg:size-11"/>
         </button>
 
 
         <img src={logotipo} alt="logotipo do app"
           className="size-10 w-auto
-      lg:size-14 lg:w-auto"/>
+      lg:size-12 lg:w-auto"/>
 
-        <CircleUser className="size-12 lg:size-16 primary-color"></CircleUser>
+        <ContainerUserPhoto />
       </div>
 
       {/*div do input*/}
@@ -157,7 +158,7 @@ function TelaAdicionarPaciente() {
 
 
               <h1 className="primary-color font-bold text-2xl instrument-sans
-        md:text-3xl md:mt-4">
+        md:text-3xl md:mt-4 ">
                 {paciente.nome}
               </h1>
 
@@ -185,6 +186,7 @@ function TelaAdicionarPaciente() {
           variantClick="basicClick"
           onClick={adicionarPaciente}
           disabled={!paciente}
+          className="lg:w-52"
         >
           Adicionar paciente
         </Button>
