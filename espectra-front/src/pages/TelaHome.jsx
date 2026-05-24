@@ -18,13 +18,14 @@ function TelaHome() {
 
 
     const pacientesFiltrados = Array.isArray(pacientes) ? pacientes.filter((paciente) => {
+        // Busca por nome
         const confereNome = paciente?.nome?.toLowerCase().includes(busca.toLowerCase());
 
-        const confereGrau = grauSuporte === "" || String(paciente?.grau_suporte) === String(grauSuporte);
+        const confereGrau = grauSuporte === "" ||
+            (paciente?.grau_suporte && String(paciente.grau_suporte).includes(grauSuporte));
 
         return confereNome && confereGrau;
     }) : [];
-
     const requestData = async () => {
 
         const id_usuario = localStorage.getItem("id_usuario")
@@ -60,6 +61,7 @@ function TelaHome() {
 
             if (rawData.items.tipo_usuario === 'Psicopedagogo') {
                 setPacientes(rawData.items.pacientes || [])
+                console.log("MEUS PACIENTES NO FRONT:", rawData.items.pacientes);
             } else {
                 setPacientes(rawData.items.familiares || [])
             }
@@ -125,8 +127,8 @@ function TelaHome() {
                                     <button
                                         onClick={() => { setGrauSuporte(""); setMenuAberto(false); }}
                                         className={`w-full text-left px-4 py-2.5 text-sm font-inclusive-sans transition-colors ${grauSuporte === ""
-                                                ? "bg-(--bg-primary-color) text-white font-semibold"
-                                                : "text-gray-700 hover:bg-gray-50"
+                                            ? "bg-(--bg-primary-color) text-white font-semibold"
+                                            : "text-gray-700 hover:bg-gray-50"
                                             }`}
                                     >
                                         Todos os graus
@@ -135,8 +137,8 @@ function TelaHome() {
                                     <button
                                         onClick={() => { setGrauSuporte("1"); setMenuAberto(false); }}
                                         className={`w-full text-left px-4 py-2.5 text-sm font-inclusive-sans transition-colors cursor-pointer ${grauSuporte === "1"
-                                                ? "bg-(--bg-primary-color) text-white font-semibold"
-                                                : "text-gray-700 hover:bg-gray-50"
+                                            ? "bg-(--bg-primary-color) text-white font-semibold"
+                                            : "text-gray-700 hover:bg-gray-50"
                                             }`}
                                     >
                                         Grau de Suporte 1
@@ -145,8 +147,8 @@ function TelaHome() {
                                     <button
                                         onClick={() => { setGrauSuporte("2"); setMenuAberto(false); }}
                                         className={`w-full text-left px-4 py-2.5 text-sm font-inclusive-sans transition-colors cursor-pointer ${grauSuporte === "2"
-                                                ? "bg-(--bg-primary-color) text-white font-semibold"
-                                                : "text-gray-700 hover:bg-gray-50"
+                                            ? "bg-(--bg-primary-color) text-white font-semibold"
+                                            : "text-gray-700 hover:bg-gray-50"
                                             }`}
                                     >
                                         Grau de Suporte 2
@@ -155,8 +157,8 @@ function TelaHome() {
                                     <button
                                         onClick={() => { setGrauSuporte("3"); setMenuAberto(false); }}
                                         className={`w-full text-left px-4 py-2.5 text-sm font-inclusive-sans transition-colors cursor-pointer ${grauSuporte === "3"
-                                                ? "bg-(--bg-primary-color) text-white font-semibold"
-                                                : "text-gray-700 hover:bg-gray-50"
+                                            ? "bg-(--bg-primary-color) text-white font-semibold"
+                                            : "text-gray-700 hover:bg-gray-50"
                                             }`}
                                     >
                                         Grau de Suporte 3
@@ -166,11 +168,10 @@ function TelaHome() {
                         )}
                     </div>
                 </div>
-                
+
                 <ContainerPacientes
-                    pacientes={
-                        pacientesFiltrados.length > 0 ? pacientesFiltrados : pacientes
-                    }
+                    pacientes={pacientesFiltrados}
+                    tipoUsuario={tipoUsuarioAtual}
                 />
 
                 <Button
@@ -182,7 +183,7 @@ function TelaHome() {
                             navigate("/cadastro-familiar");
                         }
                     }}
-                    className="lg:text-center lg:w-64 lg:h-16"
+                    className="lg:text-center lg:w-64 lg:h-14"
                 >
                     {localStorage.getItem("tipo_usuario") === "Psicopedagogo"
                         ? "Adicionar paciente"
