@@ -98,7 +98,6 @@ function TelaFormulario() {
             </div>
           )}
 
-
           <div className="w-full flex flex-row items-center justify-center gap-4 mt-10">
             <Button className="w-full sm:w-auto px-10 bg-blue-500 hover:bg-blue-600 text-white cursor-pointer" onClick={() => navigate(`/perfil-paciente/${id_paciente}`)}>
               Cancelar

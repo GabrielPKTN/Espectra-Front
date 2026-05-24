@@ -12,7 +12,7 @@ export default function CardUser(){
         <div className="
         hidden 
         md:flex md:flex-col md:w-[60%] md:gap-10 md:p-4  md:shadow-[10px_0_15px_-3px_rgba(0,0,0,0.3)] rounded-3xl
-        lg:w-[40%]"
+        lg:w-[30%]"
         >
 
         <div className="flex items-center gap-4">
