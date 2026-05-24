@@ -13,7 +13,8 @@ import TelaRealizarTentativa from "../pages/TelaRealizarTentativa";
 import HistoricoTentativa from "../pages/TelaHistoricoTentativa";
 import TelaCadastroFamiliar from "../pages/TelaCadastroFamiliar";
 import PerfilPsicopedagogo from "../pages/TelaPerfilPsicopedagogo";
-import AtualizarPerfilPsicopedagogo from "../pages/TelaAtualizarPerfilPsicopedagogo"
+import AtualizarPerfilPsicopedagogo from "../pages/TelaAtualizarPerfilPsicopedagogo";
+import CardExclusao from "../pages/TelaCardExclusao";
 
 function Rotas() {
   return (
@@ -24,16 +25,15 @@ function Rotas() {
       <Route path="/home" element={<TelaHome />} />
       <Route path="/perfil-paciente/:id" element={<TelaPerfilPaciente />} />
       <Route path="/adicionar-paciente" element={<TelaAdicionarPaciente />} />
-      <Route path="/formulario" element={<TelaFormulario />} />
+      <Route path="/formulario/:id/:id_usuario" element={<TelaFormulario />} />
       <Route path="/atividades/" element={<TelaAtividades />} />
       <Route path="/atividades/editar" element={<TelaEditarAtividade />} />
       <Route path="/atividades/adicionar" element={<TelaCadastroAtividade />} />
       <Route path="/tentativa/" element={<TelaRealizarTentativa />} />
-      <Route path="/tentativa/historico/:idAtividade" element={<HistoricoTentativa />} />
+      <Route path="/tentativa/historico" element={<HistoricoTentativa />} />
       <Route path="/cadastro-familiar" element={<TelaCadastroFamiliar />} />
-      <Route path="/perfil" element={<PerfilPsicopedagogo />} />
-      
-      <Route path="/atualizarPerfilPsicopedagogo" element={<AtualizarPerfilPsicopedagogo />} />
+      <Route path="/perfil/:id" element={<PerfilPsicopedagogo />} />
+      <Routen path="/atualizarPerfilPsicopedagogo" element={<AtualizarPerfilPsicopedagogo />}/>
     </Routes>
   );
 }

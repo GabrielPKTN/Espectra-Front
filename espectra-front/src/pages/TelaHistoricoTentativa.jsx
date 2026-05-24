@@ -106,6 +106,8 @@ function HistoricoTentativa() {
     }
 
     useEffect(() => {
+        buscarTentativas(id)
+    }, [])
 
         if (idAtividade){
             buscarTentativas(idAtividade)
