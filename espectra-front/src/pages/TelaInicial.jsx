@@ -15,16 +15,15 @@ function TelaInicial() {
     <div className="w-full h-screen flex flex-col overflow-hidden">
       {/* header */}
       <div className="flex justify-between items-center p-1 md:p-2">
-        {/*
+
         <img
           src={logo}
           alt="logotipo espectra"
           className="p-4 w-30 
                   md:p-5 md:w-36"
         />
-        */}
 
-        <DotLottieReact src="/animations/puzzle.lottie" autoplay className="w-30 md:w-36 lg:w-80 p-0 m-0"/>
+        
 
         {/* NECESSÁRIO COLOCAR OS LINKS DEPOIS */}
         <nav>
@@ -93,10 +92,9 @@ function TelaInicial() {
           </Button>
         </div>
         <div
-          className="md:my-5 
-          xl:mr-4
+          className="
           "
-        >
+        >{/*
           <img
             src={photo_main}
             alt="imagem-prof"
@@ -106,6 +104,9 @@ function TelaInicial() {
             xl:object-cover xl:w-full xl:h-full xl:pt-9
             "
           />
+          */}
+
+          <DotLottieReact src="/animations/puzzle.lottie" autoplay  className=" w-200 "/>
         </div>
       </div>
     </div>
