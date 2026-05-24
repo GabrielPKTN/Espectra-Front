@@ -7,6 +7,7 @@ import { CircleUser } from 'lucide-react';
 import { useState } from "react";
 import axios from "axios";
 import ContainerUserPhoto from "../components/photo-components/ContainerUserPhoto";
+import toast from "react-hot-toast";
 
 function TelaAdicionarPaciente() {
 
@@ -17,6 +18,9 @@ function TelaAdicionarPaciente() {
 
   const navigate = useNavigate()
 
+  const token = localStorage.getItem("token")
+  const idUsuarioLogado = localStorage.getItem("id_usuario")
+
   async function buscarPacientePorCpf() {
     try {
       setLoading(true)
@@ -26,7 +30,7 @@ function TelaAdicionarPaciente() {
       const token = localStorage.getItem("token")
       // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTc3OTI4MjM1NywiZXhwIjoxMDAwMDE3NzkyODIzNTd9.Gg83eaBKGXg2Xa9tNm5rjAxXn9_8mJxj4w2GBG756yk"
 
-      if (!cpf) {
+      if (!cpf.trim()) {
         setErro("Digite um CPF!")
         return
       }
@@ -36,7 +40,7 @@ function TelaAdicionarPaciente() {
         return
       }
 
-      const response = await axios.get(`http://localhost:8080/v1/espectra/paciente/`, {
+      const response = await axios.get(`http://localhost:8080/v1/espectra/paciente`, {
         params: {
           cpf: cpf
         },
@@ -47,9 +51,9 @@ function TelaAdicionarPaciente() {
 
       console.log(response.data)
       setPaciente(response.data.items)
+      toast.success("Paciente encontrado!");
     } catch (error) {
-      console.log(error)
-      setErro("Paciente não encontrado!")
+      console.error(error);
     } finally {
       setLoading(false)
     }
@@ -62,13 +66,11 @@ function TelaAdicionarPaciente() {
     }
 
     try {
-      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTc3OTI4MjM1NywiZXhwIjoxMDAwMDE3NzkyODIzNTd9.Gg83eaBKGXg2Xa9tNm5rjAxXn9_8mJxj4w2GBG756yk"
-      //const token = localStorage.getItem("token")
 
 
-      await axios.post(`http://localhost:8080/v1/espectra/paciente/${paciente.id, paciente.id_usuario}`, {
+      await axios.post(`http://localhost:8080/v1/espectra/paciente/${paciente.id}/${idUsuarioLogado}`, {
         id_paciente: paciente.id,
-        id_usuario: paciente.id_usuario
+        id_usuario: Number(idUsuarioLogado)
       },
         {
           headers: {
@@ -77,10 +79,10 @@ function TelaAdicionarPaciente() {
         }
       )
 
-
+      toast.success("Paciente adicionado com sucesso!");
       navigate("/home")
     } catch (error) {
-      console.log(error)
+      console.error(error)
       setErro("Erro ao adicionar paciente!")
     }
   }
@@ -137,7 +139,7 @@ function TelaAdicionarPaciente() {
 
       {
         erro && (
-          <p className="text-center mt-4 text-red-500">
+          <p className="text-center mt-4 text-bold text-red-500">
             {erro}
           </p>
         )
@@ -177,7 +179,13 @@ function TelaAdicionarPaciente() {
 
         <Button
           variantClick="basicClick"
-          onClick={() => navigate("/formulario")}
+          onClick={() => {
+            if (paciente) {
+              navigate(`/formulario/${paciente.id}/${idUsuarioLogado}`);
+            } else {
+              setErro("Busque um paciente antes de iniciar a avaliação!");
+            }
+          }}
         >
           Iniciar avaliação
         </Button>
