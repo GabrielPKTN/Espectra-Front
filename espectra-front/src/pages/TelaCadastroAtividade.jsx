@@ -8,25 +8,25 @@ import CheckboxAtividade from "../components/CheckboxTipoAtividade";
 import OptionPaneMeses from "../components/OptionPaneMeses";
 import HeaderUsuario from "../components/HeaderUsuario";
 import api from "../services/api"
+import { useEffect } from "react";
+import OptionPaneAtividades from "../components/OptionPaneAtividades"
 
 function telaCadastroAtividade() {
     const navigate = useNavigate();
 
     const [opcaoSelecionada, setOpcaoSelecionada] = useState("");
     
-    const idUsuario = localStorage.getItem('id_usuario')
-    const idPaciente = localStorage.getItem('id_paciente')
-    const idHabilidade = localStorage.getItem('id_habilidade')
-    
+    const idUsuario = Number(localStorage.getItem('id_usuario'))
+    const idPaciente = Number(localStorage.getItem('id_paciente'))
+    const idHabilidade = Number(localStorage.getItem('id_habilidade'))
     const token = localStorage.getItem('token')
 
     const [comportamento, setComportamento] = useState("")
     const [valorMeses, setValorMeses] = useState(0)
+    const [valorAtividade, setValorAtividade] = useState({})
     
     const [erroComportamento, setErroComportamento] = useState("")
     const [mensagemSucesso, setMensagemSucesso] = useState("")
-
-
 
     async function cadastrarPersonalizada() {
         try {
@@ -62,23 +62,49 @@ function telaCadastroAtividade() {
         
     }
 
-    async function cadastrarPortage() {
+    async function cadastrarPortage(params) {
         try {
-            
+            const response = await api.post(
+                `v1/espectra/atividade/portage/`,
+                
+                {
+                    id_usuario: idUsuario,
+                    id_paciente: idPaciente,
+                    id_atividade_portage: valorAtividade
+                },
+                {
+                    headers: {
+                        'x-access-token':  token
+                    }
+                }
+            )
+
+            const data = response.data
+
+            if(data.status_code == 201)
+                setMensagemSucesso("Atividade cadastrada com sucesso!")
+
+                setTimeout(() => {
+                    navigate("/atividades")
+                }, 2000)
+
         } catch (error) {
-            
+            return false
         }
     }
 
+
     async function salvarAtividade() {
-        if(comportamento.trim() === "") {
+       
+        if(opcaoSelecionada === 'personalizada')
+
+             if(comportamento.trim() === "") {
             setErroComportamento("O comportamento é obrigatório")
             return
-        }
-    
-        setErroComportamento("")
+            }
+            
+            setErroComportamento("")
 
-        if(opcaoSelecionada === 'personalizada')
             await cadastrarPersonalizada()
         
         if(opcaoSelecionada === 'portage')
@@ -96,7 +122,7 @@ function telaCadastroAtividade() {
                       className="hidden md:block md:w-40"
                   />
       
-                  <div className="w-full h-screen px-8 flex flex-col md:w-[90%] md:bg-white md:rounded-xl md:h-[50%] md:p-10 md:gap-10 md:shadow-[0_0_50px_rgba(0,0,0,0.25)] lg:h-[80vh] lg:w-[60%]">
+                  <div className="w-full h-screen px-8 flex flex-col md:w-[90%] md:bg-white md:rounded-xl md:h-[75vh] md:p-10 md:gap-10 md:shadow-[0_0_50px_rgba(0,0,0,0.25)] lg:h-[70vh] lg:w-[60%]">
                       
                       <div className="flex justify-center w-full">
                           <OutlinedTitle>
@@ -162,15 +188,12 @@ function telaCadastroAtividade() {
                         )}
 
                         {opcaoSelecionada === 'portage' && (
-                             <div className="flex flex-col gap-5 lg:">
-                                <p className="instrument-sans font-semibold text-lg md:text-2xl">Escolha uma das habilidades ainda não desenvolvidas:</p>
-                                <select 
-                                    name="" 
-                                    id=""
-                                    className="shadow-[0_0_20px_rgba(0,0,0,0.25)] p-2 rounded-lg w-full"
-                                >
-                                    <option value="">1. Observa uma pessoa movimentando-se em seu campo visual.</option>
-                                </select>
+                             <div className="flex flex-col gap-5 w-full">
+                                <OptionPaneAtividades
+                                    onChange={(valor) => {
+                                        setValorAtividade(valor)
+                                    }}
+                                />
                              </div>
                         )}
 

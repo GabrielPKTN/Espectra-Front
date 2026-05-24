@@ -11,8 +11,8 @@ function TelaAtividades(){
     
     const navigate = useNavigate()
 
-    const pacienteId = 1 //localStorage.getItem("idPaciente")
-    const habilidadeId = 1 //localStorage.getItem("idHabilidade")
+    const pacienteId = Number(localStorage.getItem("id_paciente"))
+    const habilidadeId = Number(localStorage.getItem("id_habilidade"))
     const token = localStorage.getItem("token")
     
     const [atividades, setAtividades] = useState([])
