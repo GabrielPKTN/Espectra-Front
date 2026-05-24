@@ -85,7 +85,7 @@ function TelaHome() {
         "
             >
                 <div className="w-full flex gap-2 items-center justify-center">
-                    <InputHome busca={setBusca} tipoUsuario={tipoUsuarioAtual}/>
+                    <InputHome busca={setBusca} tipoUsuario={tipoUsuarioAtual} />
                     <Filter className="text-(--bg-primary-color) size-8" />
                 </div>
                 <ContainerPacientes
@@ -96,10 +96,18 @@ function TelaHome() {
 
                 <Button
                     variantClick="basicClick"
-                    onClick={() => navigate("/adicionar_paciente")}
+                    onClick={() => {
+                        if (tipoUsuarioAtual === "Psicopedagogo") {
+                            navigate("/adicionar-paciente");
+                        } else {
+                            navigate("/cadastro-familiar");
+                        }
+                    }}
                     className="lg:text-center lg:w-64 lg:h-16"
                 >
-                    Adicionar paciente
+                    {localStorage.getItem("tipo_usuario") === "Psicopedagogo"
+                        ? "Adicionar paciente"
+                        : "Adicionar familiar"}
                 </Button>
             </main>
         </div>
