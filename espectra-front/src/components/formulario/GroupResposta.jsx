@@ -1,24 +1,46 @@
 import { useState } from "react";
 import OptionResposta from "../OptionResposta";
 
-function GroupResposta({idPortage, idFormPortage, setRespostas}) {
+function GroupResposta({ idPortage, idFormPortage, setRespostas, respostas }) {
 
   const [opcaoSelecionada, setOpcaoSelecionada] = useState("")
 
-  const clickOption = (nomeOpcao) => {
+  const clickOption = (nomeOpcao, objectHtml) => {
 
     setOpcaoSelecionada(nomeOpcao)
 
+    let pai = objectHtml.parentElement
+    let inputClicado = pai.querySelector('input[type="radio"]')
+
+    let arrayInfoComportamento = inputClicado.name.split("-")
+
+    let id_resposta = Number(arrayInfoComportamento[0])
+    let id_atividade_portage = Number(arrayInfoComportamento[2])
+
+    if (id_atividade_portage > 535 || id_atividade_portage < 1 || id_resposta < 1 || id_resposta > 3) {
+      return false // não existe comportamento portage acima de 535 nem resposta acima de 3
+    }
+
+    let novaResposta = {
+      "id_atividade_portage": id_atividade_portage,
+      "id_resposta": id_resposta
+    }
+
+    const exists = respostas.some(comportamento => comportamento.id_atividade_portage === id_atividade_portage)
+
+    if (exists) {
+
+      let listaFiltrada = respostas.filter(comportamento => comportamento.id_atividade_portage !== id_atividade_portage)
+      setRespostas([...listaFiltrada, novaResposta])
+
+    } else {
+
+      setRespostas([...respostas, novaResposta])
+
+    }
+
   }
 
-  const respostasMarcadas = []
-
-  const setRespostasMarcadas = (object) => {
-
-
-
-  }
-  
   return (
     <div key={idPortage} data-key={idPortage}
       className="
@@ -32,25 +54,25 @@ function GroupResposta({idPortage, idFormPortage, setRespostas}) {
         lg:gap-12
       "
     >
-      <OptionResposta 
-        texto="Sim" 
+      <OptionResposta
+        texto="Sim"
         name={`1-${idFormPortage}`}
         checked={opcaoSelecionada === `1-${idFormPortage}`}
-        onClick={() => clickOption(`1-${idFormPortage}`)}
+        onClick={(e) => clickOption(`1-${idFormPortage}`, e.target)}
       />
 
       <OptionResposta
         texto="Não"
         name={`2-${idFormPortage}`}
         checked={opcaoSelecionada === `2-${idFormPortage}`}
-        onClick={() => clickOption(`2-${idFormPortage}`)}
+        onClick={(e) => clickOption(`2-${idFormPortage}`, e.target)}
       />
 
       <OptionResposta
         texto="Sim, com mediação"
         name={`3-${idFormPortage}`}
         checked={opcaoSelecionada === `3-${idFormPortage}`}
-        onClick={() => clickOption(`3-${idFormPortage}`)}
+        onClick={(e) => clickOption(`3-${idFormPortage}`, e.target)}
       />
 
     </div>

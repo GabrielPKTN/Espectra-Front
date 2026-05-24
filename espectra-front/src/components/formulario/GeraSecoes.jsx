@@ -3,7 +3,7 @@ import GeraComportamento from "./GeraComportamento";
 
 function GeraSecoes(
 
-    { arrayComportamento, setRespostas }
+    { arrayComportamento, setRespostas, respostas }
 
 ) {
 
@@ -51,7 +51,7 @@ function GeraSecoes(
 
             <div className="flex flex-col gap-8">
 
-                <GeraComportamento array={categorias.arraySocializacao} setRespostas={setRespostas} corNumeracao={"A2E289"} />
+                <GeraComportamento array={categorias.arraySocializacao} setRespostas={setRespostas} respostas={respostas} corNumeracao={"A2E289"} />
 
             </div>
 

@@ -45,7 +45,7 @@ function TelaFormulario() {
 
     requestData()
 
-  }, [])
+  }, [respostas])
 
   return (
     <div className="min-h-screen bg-[#3277CF] flex flex-col lg:bg-white">
@@ -62,7 +62,7 @@ function TelaFormulario() {
         <div className="max-w-4xl mx-auto flex flex-col gap-8">
 
           {comportamentos.length > 0 ? (
-            <GeraSecoes arrayComportamento={comportamentos} setRespostas={setRespostas}/>
+            <GeraSecoes arrayComportamento={comportamentos} setRespostas={setRespostas} respostas={respostas} />
           ) : (
             <div className="text-center text-gray-500 py-10 animate-pulse">
               Carregando formulário...
