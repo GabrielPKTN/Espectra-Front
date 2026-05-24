@@ -7,7 +7,7 @@ import Button from "../components/Button";
 function TelaInicial() {
 
   const navigate = useNavigate();
-   
+
   return (
     // div que gurdar tudo na tela.
     <div className="w-full h-screen flex flex-col overflow-hidden">
@@ -81,7 +81,7 @@ function TelaInicial() {
 
           <Button
             variantClick="basicClick"
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/formulario/1/1")}
           >
             Comece a usar
           </Button>

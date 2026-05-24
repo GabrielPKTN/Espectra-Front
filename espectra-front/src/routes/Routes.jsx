@@ -25,7 +25,7 @@ function Rotas() {
       <Route path="/home" element={<TelaHome />} />
       <Route path="/perfil-paciente/:id" element={<TelaPerfilPaciente />} />
       <Route path="/adicionar-paciente" element={<TelaAdicionarPaciente />} />
-      <Route path="/formulario/:id/:id_usuario" element={<TelaFormulario />} />
+      <Route path="/formulario/:id_paciente/:id_usuario" element={<TelaFormulario />} />
       <Route path="/atividades/" element={<TelaAtividades />} />
       <Route path="/atividades/editar" element={<TelaEditarAtividade />} />
       <Route path="/atividades/adicionar" element={<TelaCadastroAtividade />} />
