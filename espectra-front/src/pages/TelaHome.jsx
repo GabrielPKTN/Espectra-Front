@@ -13,10 +13,17 @@ function TelaHome() {
 
     const [pacientes, setPacientes] = useState([]);
     const [busca, setBusca] = useState("");
+    const [grauSuporte, setGrauSuporte] = useState("");
+    const [menuAberto, setMenuAberto] = useState(false);
 
-    const pacientesFiltrados = Array.isArray(pacientes) ? pacientes.filter((paciente) =>
-        paciente.nome.toLowerCase().includes(busca.toLowerCase()),
-    ) : [];
+
+    const pacientesFiltrados = Array.isArray(pacientes) ? pacientes.filter((paciente) => {
+        const confereNome = paciente?.nome?.toLowerCase().includes(busca.toLowerCase());
+
+        const confereGrau = grauSuporte === "" || String(paciente?.grau_suporte) === String(grauSuporte);
+
+        return confereNome && confereGrau;
+    }) : [];
 
     const requestData = async () => {
 
@@ -86,8 +93,80 @@ function TelaHome() {
             >
                 <div className="w-full flex gap-2 items-center justify-center">
                     <InputHome busca={setBusca} tipoUsuario={tipoUsuarioAtual} />
-                    <Filter className="text-(--bg-primary-color) size-8" />
+                    {/* Container do Filtro */}
+                    <div className="relative cursor-pointer">
+
+
+                        <button
+                            type="button"
+                            onClick={() => setMenuAberto(!menuAberto)}
+                            className={`p-1 rounded-xl hover:bg-gray-100 transition-all focus:outline-none flex items-center justify-center ${grauSuporte ? 'bg-green-50 text-green-600' : 'text-(--bg-primary-color)'
+                                }`}
+                            title="Filtrar por Grau de Suporte"
+                        >
+
+                            <Filter className="size-8" />
+                        </button>
+
+                        {menuAberto && (
+                            <>
+                                <div
+                                    className="fixed inset-0 z-10"
+                                    onClick={() => setMenuAberto(false)}
+                                />
+
+                                <div className="absolute right-0 mt-2 w-56 bg-white border-2 border-gray-100 rounded-2xl shadow-xl py-2 z-20 animate-in fade-in slide-in-from-top-1 duration-200">
+                                    <p className="px-4 py-1 text-xs font-bold text-gray-400 uppercase tracking-wider font-inclusive-sans">
+                                        Grau de Suporte
+                                    </p>
+
+                                    <hr className="my-1 border-gray-100" />
+
+                                    <button
+                                        onClick={() => { setGrauSuporte(""); setMenuAberto(false); }}
+                                        className={`w-full text-left px-4 py-2.5 text-sm font-inclusive-sans transition-colors ${grauSuporte === ""
+                                                ? "bg-(--bg-primary-color) text-white font-semibold"
+                                                : "text-gray-700 hover:bg-gray-50"
+                                            }`}
+                                    >
+                                        Todos os graus
+                                    </button>
+
+                                    <button
+                                        onClick={() => { setGrauSuporte("1"); setMenuAberto(false); }}
+                                        className={`w-full text-left px-4 py-2.5 text-sm font-inclusive-sans transition-colors cursor-pointer ${grauSuporte === "1"
+                                                ? "bg-(--bg-primary-color) text-white font-semibold"
+                                                : "text-gray-700 hover:bg-gray-50"
+                                            }`}
+                                    >
+                                        Grau de Suporte 1
+                                    </button>
+
+                                    <button
+                                        onClick={() => { setGrauSuporte("2"); setMenuAberto(false); }}
+                                        className={`w-full text-left px-4 py-2.5 text-sm font-inclusive-sans transition-colors cursor-pointer ${grauSuporte === "2"
+                                                ? "bg-(--bg-primary-color) text-white font-semibold"
+                                                : "text-gray-700 hover:bg-gray-50"
+                                            }`}
+                                    >
+                                        Grau de Suporte 2
+                                    </button>
+
+                                    <button
+                                        onClick={() => { setGrauSuporte("3"); setMenuAberto(false); }}
+                                        className={`w-full text-left px-4 py-2.5 text-sm font-inclusive-sans transition-colors cursor-pointer ${grauSuporte === "3"
+                                                ? "bg-(--bg-primary-color) text-white font-semibold"
+                                                : "text-gray-700 hover:bg-gray-50"
+                                            }`}
+                                    >
+                                        Grau de Suporte 3
+                                    </button>
+                                </div>
+                            </>
+                        )}
+                    </div>
                 </div>
+                
                 <ContainerPacientes
                     pacientes={
                         pacientesFiltrados.length > 0 ? pacientesFiltrados : pacientes
