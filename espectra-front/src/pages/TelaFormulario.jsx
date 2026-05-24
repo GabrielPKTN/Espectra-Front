@@ -41,6 +41,35 @@ function TelaFormulario() {
 
   }
 
+  const atualizaDados = async () => {
+
+    try {
+
+      const url = `/v1/espectra/formulario/${id_paciente}/${id_usuario}`
+
+      const dadosAtualizados = {
+        "formulario": respostas
+      }
+
+      const configHeader = {
+
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': localStorage.getItem('token')
+        }
+
+      }
+
+      const result = await app.put(url, dadosAtualizados, configHeader)
+
+      navigate(`/perfil-paciente/${id_paciente}`)
+
+    } catch (error) {
+      return false
+    }
+
+  }
+
   useEffect(() => {
 
     requestData()
@@ -71,10 +100,10 @@ function TelaFormulario() {
 
 
           <div className="w-full flex flex-row items-center justify-center gap-4 mt-10">
-            <Button className="w-full sm:w-auto px-10 bg-blue-500 hover:bg-blue-600 text-white">
+            <Button className="w-full sm:w-auto px-10 bg-blue-500 hover:bg-blue-600 text-white cursor-pointer" onClick={() => navigate(`/perfil-paciente/${id_paciente}`)}>
               Cancelar
             </Button>
-            <Button className="w-full sm:w-auto px-10 bg-blue-600 hover:bg-blue-700 text-white">
+            <Button className="w-full sm:w-auto px-10 bg-blue-600 hover:bg-blue-700 text-white cursor-pointer" onClick={() => atualizaDados()}>
               Enviar
             </Button>
           </div>

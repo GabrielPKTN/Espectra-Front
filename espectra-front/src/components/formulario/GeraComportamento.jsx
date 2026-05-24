@@ -4,7 +4,7 @@ import GroupResposta from "./GroupResposta";
 function GeraComportamento({ array, corNumeracao, setRespostas, respostas }) {
 
     let arrayComponents = [];
-    console.log(respostas)
+
     for (let comportamento of array) {
 
         arrayComponents.push(
