@@ -3,6 +3,8 @@ import photo_main from "../assets/general_photos/photo_main_xl.svg";
 import NavItem from "../components/NavItem";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../components/Button";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+
 
 function TelaInicial() {
 
@@ -13,12 +15,16 @@ function TelaInicial() {
     <div className="w-full h-screen flex flex-col overflow-hidden">
       {/* header */}
       <div className="flex justify-between items-center p-1 md:p-2">
+        {/*
         <img
           src={logo}
           alt="logotipo espectra"
           className="p-4 w-30 
                   md:p-5 md:w-36"
         />
+        */}
+
+        <DotLottieReact src="/animations/puzzle.lottie" autoplay className="w-30 md:w-36 lg:w-80 p-0 m-0"/>
 
         {/* NECESSÁRIO COLOCAR OS LINKS DEPOIS */}
         <nav>
