@@ -21,7 +21,7 @@ function GeraComportamento({ array, corNumeracao, setRespostas, respostas }) {
                 />
 
                 <div className="w-full mt-6">
-                    <GroupResposta setRespostas={setRespostas} respostas={respostas} idFormPortage={`${comportamento.id_habilidade}-${comportamento.id_atividade_portage}`} opcoes={["Sim", "Não", "Sim, com mediação"]} />
+                    <GroupResposta setRespostas={setRespostas} respostas={respostas} respondida={comportamento.id_resposta} idFormPortage={`${comportamento.id_habilidade}-${comportamento.id_atividade_portage}`} opcoes={["Sim", "Não", "Sim, com mediação"]} />
                 </div>
 
             </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import OptionResposta from "../OptionResposta";
 
-function GroupResposta({ idPortage, idFormPortage, setRespostas, respostas }) {
+function GroupResposta({ idPortage, respondida, idFormPortage, setRespostas, respostas }) {
 
   const [opcaoSelecionada, setOpcaoSelecionada] = useState("")
 
@@ -57,21 +57,21 @@ function GroupResposta({ idPortage, idFormPortage, setRespostas, respostas }) {
       <OptionResposta
         texto="Sim"
         name={`1-${idFormPortage}`}
-        checked={opcaoSelecionada === `1-${idFormPortage}`}
+        checked={respondida === 1 || opcaoSelecionada === `1-${idFormPortage}`}
         onClick={(e) => clickOption(`1-${idFormPortage}`, e.target)}
       />
 
       <OptionResposta
         texto="Não"
         name={`2-${idFormPortage}`}
-        checked={opcaoSelecionada === `2-${idFormPortage}`}
+        checked={respondida === 2 || opcaoSelecionada === `2-${idFormPortage}`}
         onClick={(e) => clickOption(`2-${idFormPortage}`, e.target)}
       />
 
       <OptionResposta
         texto="Sim, com mediação"
         name={`3-${idFormPortage}`}
-        checked={opcaoSelecionada === `3-${idFormPortage}`}
+        checked={respondida === 3 || opcaoSelecionada === `3-${idFormPortage}`}
         onClick={(e) => clickOption(`3-${idFormPortage}`, e.target)}
       />
 
