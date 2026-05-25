@@ -144,7 +144,6 @@ function TelaCadastroFamiliar() {
 
         try {
             setLoading(true)
-            setErro(null)
 
             //const token = localStorage.getItem("token")
             const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTc3OTI4MjM1NywiZXhwIjoxMDAwMDE3NzkyODIzNTd9.Gg83eaBKGXg2Xa9tNm5rjAxXn9_8mJxj4w2GBG756yk"
@@ -198,6 +197,17 @@ function TelaCadastroFamiliar() {
                 setErroGrauSuporte(error.message)
             }
 
+            if (
+                !nomeValidado ||
+                !cpfValidado ||
+                !diagnosticoValidado ||
+                !serieEscolarValidada ||
+                !dataNascimentoValidado ||
+                !grauSuporteValidada
+            ) {
+                return
+            }
+
             const dadosPaciente = {
                 nome: nomeValidado,
                 cpf: cpfValidado,
@@ -218,7 +228,6 @@ function TelaCadastroFamiliar() {
 
         } catch (error) {
             console.log(error)
-            setErro(error.message)
         } finally {
             setLoading(false)
         }
@@ -292,7 +301,13 @@ function TelaCadastroFamiliar() {
 
                             <span className="inclusive-sans text-xl font-semibold text-[var(--dark-blue)]">Série escolar</span>
 
-                            <select name="" id="" value={serieEscolar} onChange={(e) => setSerieEscolar(e.target.value)} className="border rounded-lg h-12 w-full border-[var(--bg-primary-color)]">
+                            <select
+                                name=""
+                                id=""
+                                value={serieEscolar}
+                                onChange={(e) => setSerieEscolar(e.target.value)}
+                                className={`border rounded-lg h-12 w-full border-[var(--bg-primary-color)] ${erroSerieEscolar ? "border-red-500" : "border-[var(--bg-primary-color)]"}`}
+                            >
                                 <option value="">
                                     Selecione
                                 </option>
@@ -393,7 +408,13 @@ function TelaCadastroFamiliar() {
 
                     <div>
                         <span className="inclusive-sans text-xl font-semibold text-[var(--dark-blue)]">Grau suporte</span>
-                        <select name="" id="" value={grauSuporte} onChange={(e) => setGrauSuporte(e.target.value)} className="border rounded-lg h-12 w-full border-[var(--bg-primary-color)]">
+                        <select
+                            name=""
+                            id=""
+                            value={grauSuporte}
+                            onChange={(e) => setGrauSuporte(e.target.value)}
+                            className={`border rounded-lg h-12 w-full border-[var(--bg-primary-color)] ${erroGrauSuporte ? "border-red-500" : "border-[var(--bg-primary-color)]"}`}
+                        >
                             <option value="">
                                 Selecione
                             </option>

@@ -2,6 +2,7 @@ function Button({
   children,
   onClick,
   variantClick = "basicClick",
+  disabled = false,
   className = "",
   type = "button",
 }) {
@@ -16,6 +17,7 @@ function Button({
 
   return (
     <button
+      disabled={disabled}
       type={type}
       onClick={onClick}
       className={`${estiloBase} ${variants[variantClick]} ${className}`}
