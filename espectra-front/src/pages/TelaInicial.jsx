@@ -45,12 +45,12 @@ function TelaInicial() {
 
       {/* main */}
       <div
-        className="flex flex-col items-center justify-between gap-8
+        className="flex flex-col items-center justify-between gap-0
         lg:flex
         xl:flex xl:flex-row xl:h-full"
       >
         <div
-          className="my-10 flex flex-col items-center justify-center gap-4 w-full
+          className="my-10 flex flex-col items-center justify-center gap-5 w-full
             md:my-16 md:gap-8 md:px-12
             lg:gap-16
             xl:gap-16 xl:w-1/2"
@@ -93,7 +93,10 @@ function TelaInicial() {
         </div>
         <div
           className="
+          flex flex-col w-1/2 items-center lg:pr-15 lg:pb-45
           "
+        
+        
         >{/*
           <img
             src={photo_main}
@@ -106,7 +109,7 @@ function TelaInicial() {
           />
           */}
 
-          <DotLottieReact src="/animations/puzzle.lottie" autoplay  className=" w-200 "/>
+          <DotLottieReact src="/animations/puzzle.lottie" autoplay  className=" w-150 md:w-200 lg:w-250 "/>
         </div>
       </div>
     </div>
