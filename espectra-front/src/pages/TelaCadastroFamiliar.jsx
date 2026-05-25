@@ -149,23 +149,54 @@ function TelaCadastroFamiliar() {
             //const token = localStorage.getItem("token")
             const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTc3OTI4MjM1NywiZXhwIjoxMDAwMDE3NzkyODIzNTd9.Gg83eaBKGXg2Xa9tNm5rjAxXn9_8mJxj4w2GBG756yk"
 
-            const nomeValidado = validarNome(nome)
-            setErroNome("")
+            let nomeValidado = ""
+            let cpfValidado = ""
+            let diagnosticoValidado = ""
+            let serieEscolarValidada = ""
+            let dataNascimentoValidado = ""
+            let grauSuporteValidada = ""
 
-            const cpfValidado = validarCpf(cpf)
-            setErroCpf("")
+            try {
+                nomeValidado = validarNome(nome)
+                setErroNome("")
+            } catch (error) {
+                setErroNome(error.message)
+            }
 
-            const diagnosticoValidado = validarDiagnostico(diagnostico)
-            setErroDiagnostico("")
+            try {
+                cpfValidado = validarCpf(cpf)
+                setErroCpf("")
+            } catch (error) {
+                setErroCpf(error.message)
+            }
 
-            const serieEscolarValidada = validarSerieEscolar(serieEscolar)
-            setErroSerieEscolar("")
+            try {
+                diagnosticoValidado = validarDiagnostico(diagnostico)
+                setErroDiagnostico("")
+            } catch (error) {
+                setErroDiagnostico(error.message)
+            }
 
-            const dataNascimentoValidado = validarDataNascimento(dataNascimento)
-            setErroDataNascimento("")
+            try {
+                serieEscolarValidada = validarSerieEscolar(serieEscolar)
+                setErroSerieEscolar("")
+            } catch (error) {
+                setErroSerieEscolar(error.message)
+            }
 
-            const grauSuporteValidada = validarGrauSuporte(grauSuporte)
-            setErroGrauSuporte("")
+            try {
+                dataNascimentoValidado = validarDataNascimento(dataNascimento)
+                setErroDataNascimento("")
+            } catch (error) {
+                setErroDataNascimento(error.message)
+            }
+
+            try {
+                grauSuporteValidada = validarGrauSuporte(grauSuporte)
+                setErroGrauSuporte("")
+            } catch (error) {
+                setErroGrauSuporte(error.message)
+            }
 
             const dadosPaciente = {
                 nome: nomeValidado,
@@ -176,7 +207,7 @@ function TelaCadastroFamiliar() {
                 grauSuporte: grauSuporteValidada
             }
 
-            const response = await axios.post(`http://localhost:8080/v1/espectra/paciente/`,
+            await axios.post(`http://localhost:8080/v1/espectra/paciente/`,
                 dadosPaciente,
 
                 {
@@ -394,8 +425,9 @@ function TelaCadastroFamiliar() {
                 <div className="flex self-center md:gap-10 md:flex md:flex-row-reverse lg:mt-10 lg:mb-10">
                     <Button
                         onClick={cadastrarFamiliar}
+                        disabled={loading}
                     >
-                        Salvar
+                        {loading ? "Salvando..." : "Salvar"}
                     </Button>
                     <button className="hidden md:block md:text-[var(--bg-primary-color)] md:instrument-sans md:text-xl md:w-48 md:h-12 md:rounded-lg md:font-bold md:shadow-2xl">Cancelar</button>
                 </div>
