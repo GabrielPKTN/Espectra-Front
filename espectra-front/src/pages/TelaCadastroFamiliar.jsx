@@ -91,6 +91,22 @@ function TelaCadastroFamiliar() {
         return diagnosticoLimpo
     }
 
+    function validarSerieEscolar(serieEscolar) {
+        if (!serieEscolar) {
+            throw new Error("A série escolar é obrigatória!")
+        }
+
+        return serieEscolar
+    }
+
+    function validarGrauSuporte(grauSuporte) {
+        if (!grauSuporte) {
+            throw new Error("O grau de suporte é obrigatório!")
+        }
+
+        return grauSuporte
+    }
+
     function validarDataNascimento(data) {
         const dataTexto = data ? data.trim() : ""
         const regexData = /^\d{2}\/\d{2}\/\d{4}$/
@@ -143,21 +159,32 @@ function TelaCadastroFamiliar() {
             const diagnosticoValidado = validarDiagnostico(diagnostico)
             setErroDiagnostico("")
 
+            const serieEscolarValidada = validarSerieEscolar(serieEscolar)
+            setErroSerieEscolar("")
+
             const dataNascimentoValidado = validarDataNascimento(dataNascimento)
             setErroDataNascimento("")
+
+            const grauSuporteValidada = validarGrauSuporte(grauSuporte)
+            setErroGrauSuporte("")
 
             const dadosPaciente = {
                 nome: nomeValidado,
                 cpf: cpfValidado,
+                serieEscolar: serieEscolarValidada,
                 diagnostico: diagnosticoValidado,
-                dataNascimento: dataNascimentoValidado
+                dataNascimento: dataNascimentoValidado,
+                grauSuporte: grauSuporteValidada
             }
 
-            const response = await axios.post(`http://localhost:8080/v1/espectra/paciente/`, dadosPaciente, {
-                headers: {
-                    "x-access-token": token
-                }
-            })
+            const response = await axios.post(`http://localhost:8080/v1/espectra/paciente/`,
+                dadosPaciente,
+
+                {
+                    headers: {
+                        "x-access-token": token
+                    }
+                })
 
         } catch (error) {
             console.log(error)
@@ -236,7 +263,9 @@ function TelaCadastroFamiliar() {
                             <span className="inclusive-sans text-xl font-semibold text-[var(--dark-blue)]">Série escolar</span>
 
                             <select name="" id="" className="border rounded-lg h-12 w-full border-[var(--bg-primary-color)]">
-                                <option value=""></option>
+                                <option value="">
+                                    Selecione
+                                </option>
                             </select>
 
                         </div>
@@ -264,11 +293,7 @@ function TelaCadastroFamiliar() {
 
                     <div>
                         <span className="inclusive-sans text-xl font-semibold text-[var(--dark-blue)]">Grau suporte</span>
-                        <InputDefault
-                            value={grauSuporte}
-                            onChange={(e) => setGrauSuporte(e.target.value)}
-                            variantInput={erroGrauSuport ? "errorInput" : "basicInput"}
-                        />
+
                     </div>
 
                 </div>
