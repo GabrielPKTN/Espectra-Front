@@ -83,22 +83,9 @@ function TelaCadastroFamiliar() {
     }
 
     function validarDiagnostico(diagnostico) {
-        const diagnosticoLimpo = diagnostico ? diagnostico.trim() : ""
-        const regexDiagnosticoValido = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/
-
-        if (diagnosticoLimpo.length === 0) {
-            throw new Error("O diagnóstico é obrigatório.")
+        if (!diagnostico) {
+            throw new Error("O diagnóstico é obrigatório!")
         }
-
-        if (diagnosticoLimpo.length > 100) {
-            throw new Error("O diagnóstico não pode conter mais do que 100 caracteres.")
-        }
-
-        if (!regexDiagnosticoValido.test(diagnosticoLimpo)) {
-            throw new Error("O diagnóstico não deve conter números ou caracteres especiais.")
-        }
-
-        return diagnosticoLimpo
     }
 
     function validarSerieEscolar(serieEscolar) {
@@ -240,7 +227,7 @@ function TelaCadastroFamiliar() {
 
             formData.append("nome", nomeValidado)
             formData.append("cpf", cpfValidado)
-            formData.append("diagnostico", JSON.stringify([{ id: 1 }]))
+            formData.append("diagnostico", JSON.stringify([{ id: Number(diagnostico) }]))
             formData.append("data_nascimento", dataFormatada)
             formData.append("id_serie_escolar", serieEscolarValidada)
             formData.append("id_grau_suporte", grauSuporteValidada)
@@ -249,23 +236,31 @@ function TelaCadastroFamiliar() {
                 formData.append("foto", foto)
             }
 
+            console.log("Enviando dados...")
 
             await axios.post(`http://localhost:8080/v1/espectra/paciente/`,
                 formData,
 
                 {
                     headers: {
-                        "x-access-token": token
-                    },
-                    "Content-Type": "multipart/form-data"
+                        "x-access-token": token,
+                        "Content-Type": "multipart/form-data"
+                    }
                 })
+
+            alert("Paciente cadastrado com sucesso!")
 
         } catch (error) {
             console.log(error)
 
             if (error.response) {
-                console.log(error.response.data)
+                console.log(error.response.items)
+                alert(error.response.items.message || "Erro ao cadastrar paciente!")
+            } else {
+                alert("Erro ao conectar com o servidor!")
             }
+
+
         } finally {
             setLoading(false)
         }
@@ -355,21 +350,59 @@ function TelaCadastroFamiliar() {
 
                     <div>
                         <span className="inclusive-sans text-xl font-semibold text-[var(--dark-blue)]">Diagnóstico</span>
-                        <InputDefault
+                        <select
                             value={diagnostico}
                             onChange={(e) => {
                                 setDiagnostico(e.target.value)
                                 setErroDiagnostico("")
                             }}
-                            variantInput={erroDiagnostico ? "errorInput" : "basicInput"}
-                        />
-                        {
-                            erroDiagnostico && (
-                                <p className="text-red-500">
-                                    {erroDiagnostico}
-                                </p>
-                            )
-                        }
+                            className={`border rounded-lg h-12 w-full ${erroDiagnostico
+                                ? "border-red-500"
+                                : "border-[var(--bg-primary-color)]"
+                                }`}
+                        >
+                            <option value="">Selecione</option>
+                            <option value="1">TDAH</option>
+                            <option value="2">TEA</option>
+                            <option value="3">TAG</option>
+                            <option value="4">TAB</option>
+                            <option value="5">TOC</option>
+                            <option value="6">TEPT</option>
+                            <option value="7">TPL</option>
+                            <option value="8">TOD</option>
+                            <option value="9">TDC</option>
+                            <option value="10">TCA</option>
+                            <option value="11">TDA</option>
+                            <option value="12">TPAS</option>
+                            <option value="13">TPN</option>
+                            <option value="14">TPE</option>
+                            <option value="15">TP Esquizo</option>
+                            <option value="16">TPE-Evit</option>
+                            <option value="17">TPD</option>
+                            <option value="18">TP Histri</option>
+                            <option value="19">T Pânico</option>
+                            <option value="20">TAS</option>
+                            <option value="21">Fob. Esp.</option>
+                            <option value="22">Agorafob</option>
+                            <option value="23">T. Depr. M</option>
+                            <option value="24">Distimia</option>
+                            <option value="25">T. Somat</option>
+                            <option value="26">T. Convers</option>
+                            <option value="27">T. Factíc</option>
+                            <option value="28">Anorexia</option>
+                            <option value="29">Bulimia</option>
+                            <option value="30">Insônia</option>
+                            <option value="31">Hipersônia</option>
+                            <option value="32">Narcolep</option>
+                            <option value="33">Apneia</option>
+                            <option value="34">Dislexia</option>
+                            <option value="35">Discalc</option>
+                            <option value="36">Tiques</option>
+                            <option value="37">Tourette</option>
+                            <option value="38">Esquizof</option>
+                            <option value="39">T. Esquizoa</option>
+                            <option value="40">T. Delir</option>
+                        </select>
                     </div>
 
                     <div className="flex gap-2">
@@ -533,6 +566,7 @@ function TelaCadastroFamiliar() {
 
 
                 <div className="flex self-center md:gap-10 md:flex md:flex-row-reverse lg:mt-10 lg:mb-10">
+                    {/* onClick -> voltar para a tela home do fluxo de familiar */}
                     <Button
                         onClick={cadastrarFamiliar}
                         disabled={loading}
@@ -544,7 +578,7 @@ function TelaCadastroFamiliar() {
 
             </div>
 
-        </div>
+        </div >
     )
 }
 
