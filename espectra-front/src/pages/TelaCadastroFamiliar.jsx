@@ -1,19 +1,30 @@
 import InputDefault from "../components/InputDefault"
-import defaultPhoto from "../assets/general_photos/default-photo.png"
+import antonioPhoto from "../assets/general_photos/antonio_photo.png"
 import Button from "../components/Button.jsx"
 import HeaderResponsavel from "../components/HeaderResponsavel.jsx"
-import antonioPhoto from "../assets/general_photos/antonio_photo.png"
+import { CircleUser } from "lucide-react"
 import { useState } from "react"
 import axios from "axios"
 
 
 function TelaCadastroFamiliar() {
     const [nome, setNome] = useState("")
+    const [erroNome, setErroNome] = useState("")
+
     const [cpf, setCpf] = useState("")
+    const [erroCpf, setErroCpf] = useState("")
+
     const [diagnostico, setDiagnostico] = useState("")
+    const [erroDiagnostico, setErroDiagnostico] = useState("")
+
     const [serieEscolar, setSerieEscolar] = useState("")
+    const [erroSerieEscolar, setErroSerieEscolar] = useState("")
+
     const [dataNascimento, setDataNascimento] = useState("")
+    const [erroDataNascimento, setErroDataNascimento] = useState("")
+
     const [grauSuporte, setGrauSuporte] = useState("")
+    const [erroGrauSuporte, setErroGrauSuporte] = useState("")
 
     const [loading, setLoading] = useState(false)
     const [erro, setErro] = useState(null)
@@ -42,19 +53,19 @@ function TelaCadastroFamiliar() {
         const cpfLimpo = cpfTexto.replace(/\D/g, "")
         const regexCaracteresPermitidos = /^[0-9.\-\s]+$/
 
-        if (cpfTexto.length === 0){
+        if (cpfTexto.length === 0) {
             throw new Error("O CPF é obrigatório")
         }
 
-        if(cpfLimpo.length !== 11) {
+        if (cpfLimpo.length !== 11) {
             throw new Error("O CPF deve conter exatamente 11 números.")
         }
 
-        if(!regexCaracteresPermitidos.test(cpfTexto)) {
+        if (!regexCaracteresPermitidos.test(cpfTexto)) {
             throw new Error("O CPF deve conter apenas números, pontos e traços. Remova letras ou símbolos como '@'.")
         }
 
-        if(/^(\d)\1{10}$/.test(cpfLimpo)) {
+        if (/^(\d)\1{10}$/.test(cpfLimpo)) {
             throw new Error("CPF inválido (números repetidos).")
         }
 
@@ -65,18 +76,18 @@ function TelaCadastroFamiliar() {
         const diagnosticoLimpo = diagnostico ? diagnostico.trim() : ""
         const regexDiagnosticoValido = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/
 
-        if(diagnosticoLimpo.length === 0) {
+        if (diagnosticoLimpo.length === 0) {
             throw new Error("O diagnóstico é obrigatório.")
         }
 
-        if(diagnosticoLimpo.length > 100) {
+        if (diagnosticoLimpo.length > 100) {
             throw new Error("O diagnóstico não pode conter mais do que 100 caracteres.")
         }
 
-        if(!regexDiagnosticoValido.test(diagnosticoLimpo)) {
+        if (!regexDiagnosticoValido.test(diagnosticoLimpo)) {
             throw new Error("O diagnóstico não deve conter números ou caracteres especiais.")
         }
-        
+
         return diagnosticoLimpo
     }
 
@@ -85,11 +96,11 @@ function TelaCadastroFamiliar() {
         const regexData = /^\d{2}\/\d{2}\/\d{4}$/
         const diasPorMes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
-        if(dataTexto.length === 0) {
+        if (dataTexto.length === 0) {
             throw new Error("A data de nascimento é obrigatória")
         }
 
-        if(!regexData.test(dataTexto)) {
+        if (!regexData.test(dataTexto)) {
             throw new Error("A data deve estar no formato DD/MM/AAAA.")
         }
 
@@ -98,16 +109,16 @@ function TelaCadastroFamiliar() {
         const mes = parseInt(partes[1], 10)
         const ano = parseInt(partes[2], 10)
 
-        if(mes < 1 || mes > 12) {
+        if (mes < 1 || mes > 12) {
             throw new Error("Mês inválido.")
         }
 
-        const anoBissexto = (ano % 4 === 0 && ano % 100 != 0) || (ano % 400 === 0) 
+        const anoBissexto = (ano % 4 === 0 && ano % 100 != 0) || (ano % 400 === 0)
         if (anoBissexto) {
             diasPorMes[1] = 29
         }
 
-        if(dia < 1 || dia > diasPorMes[mes - 1]) {
+        if (dia < 1 || dia > diasPorMes[mes - 1]) {
             throw new Error(`O mês inserido não possui o dia ${dia}`);
         }
 
@@ -124,17 +135,32 @@ function TelaCadastroFamiliar() {
             const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTc3OTI4MjM1NywiZXhwIjoxMDAwMDE3NzkyODIzNTd9.Gg83eaBKGXg2Xa9tNm5rjAxXn9_8mJxj4w2GBG756yk"
 
             const nomeValidado = validarNome(nome)
-            const cpfValidado = validarCpf(cpf)
-            const diagnosticoValidada = validarDiagnostico(diagnostico)
-            const dataNascimentoValidada = validarDataNascimento(dataNascimento)
+            setErroNome("")
 
-            const response = await axios.post(`http://localhost:8080/v1/espectra/paciente/`, {
+            const cpfValidado = validarCpf(cpf)
+            setErroCpf("")
+
+            const diagnosticoValidado = validarDiagnostico(diagnostico)
+            setErroDiagnostico("")
+
+            const dataNascimentoValidado = validarDataNascimento(dataNascimento)
+            setErroDataNascimento("")
+
+            const dadosPaciente = {
+                nome: nomeValidado,
+                cpf: cpfValidado,
+                diagnostico: diagnosticoValidado,
+                dataNascimento: dataNascimentoValidado
+            }
+
+            const response = await axios.post(`http://localhost:8080/v1/espectra/paciente/`, dadosPaciente, {
                 headers: {
                     "x-access-token": token
                 }
             })
 
         } catch (error) {
+            console.log(error)
             setErro(error.message)
         } finally {
             setLoading(false)
@@ -149,35 +175,58 @@ function TelaCadastroFamiliar() {
                 foto={antonioPhoto}
             />
 
-            <div className="flex flex-col items-center gap-10 lg:gap-0 lg:mt-25">
-                <img src={defaultPhoto} alt="" className="w-25 md:w-35" />
+            <div className="flex flex-col items-center gap-10 lg:gap-0 lg:mt-8">
+                <CircleUser
+                    className="w-[223px] h-[200px] md:h-[170px] md:w-[170px]"
+                    color="#4285F4"
+                ></CircleUser>
 
                 <div className="flex flex-col gap-2 px-10">
 
                     <div>
                         <span className="inclusive-sans text-xl font-semibold text-[var(--dark-blue)]">Nome</span>
                         <InputDefault
-                        //value={}
-                        //onChange={}
-
-                        />
+                            value={nome}
+                            onChange={(e) => setNome(e.target.value)}
+                            variantInput={erroNome ? "errorInput" : "basicInput"}
+                        />                            {
+                            erroNome && (
+                                <p className="text-red-500">
+                                    {erroNome}
+                                </p>
+                            )}
                     </div>
 
                     <div>
                         <span className="inclusive-sans text-xl font-semibold text-[var(--dark-blue)]">CPF</span>
                         <InputDefault
-                        //value={}
-                        //onChange={}
-
+                            value={cpf}
+                            onChange={(e) => setCpf(e.target.value)}
+                            variantInput={erroCpf ? "errorInput" : "basicInput"}
                         />
+                        {
+                            erroCpf && (
+                                <p className="text-red-500">
+                                    {erroCpf}
+                                </p>
+                            )
+                        }
                     </div>
 
                     <div>
                         <span className="inclusive-sans text-xl font-semibold text-[var(--dark-blue)]">Diagnóstico</span>
                         <InputDefault
-                        //value={}
-                        //onChange={}
+                            value={diagnostico}
+                            onChange={(e) => setDiagnostico(e.target.value)}
+                            variantInput={erroDiagnostico ? "errorInput" : "basicInput"}
                         />
+                        {
+                            erroDiagnostico && (
+                                <p className="text-red-500">
+                                    {erroDiagnostico}
+                                </p>
+                            )
+                        }
                     </div>
 
                     <div className="flex gap-2">
@@ -197,11 +246,18 @@ function TelaCadastroFamiliar() {
                             <span className="inclusive-sans text-xl font-semibold text-[var(--dark-blue)]">Nascimento</span>
 
                             <InputDefault
-                                //value={}
-                                //onChange={}
+                                value={dataNascimento}
+                                onChange={(e) => setDataNascimento(e.target.value)}
+                                variantInput={erroDataNascimento ? "errorInput" : "basicInput"}
                                 placeholder={"DD/MM/AAAA"}
                             />
-
+                            {
+                                erroDataNascimento && (
+                                    <p className="text-red-500">
+                                        {erroDataNascimento}
+                                    </p>
+                                )
+                            }
                         </div>
 
                     </div>
@@ -209,17 +265,19 @@ function TelaCadastroFamiliar() {
                     <div>
                         <span className="inclusive-sans text-xl font-semibold text-[var(--dark-blue)]">Grau suporte</span>
                         <InputDefault
-                        //value={}
-                        //onChange={}
-
+                            value={grauSuporte}
+                            onChange={(e) => setGrauSuporte(e.target.value)}
+                            variantInput={erroGrauSuport ? "errorInput" : "basicInput"}
                         />
                     </div>
 
                 </div>
 
 
-                <div className="flex self-center md:gap-10 md:flex md:flex-row-reverse lg:mt-10">
-                    <Button>Salvar</Button>
+                <div className="flex self-center md:gap-10 md:flex md:flex-row-reverse lg:mt-10 lg:mb-10">
+                    <Button
+                        onClick={cadastrarFamiliar}
+                    >Salvar</Button>
                     <button className="hidden md:block md:text-[var(--bg-primary-color)] md:instrument-sans md:text-xl md:w-48 md:h-12 md:rounded-lg md:font-bold md:shadow-2xl">Cancelar</button>
                 </div>
 
