@@ -8,6 +8,9 @@ import axios from "axios"
 
 
 function TelaCadastroFamiliar() {
+    const [foto, setFoto] = useState(null)
+    const [fotoPreview, setFotoPreview] = useState("")
+
     const [nome, setNome] = useState("")
     const [erroNome, setErroNome] = useState("")
 
@@ -17,13 +20,13 @@ function TelaCadastroFamiliar() {
     const [diagnostico, setDiagnostico] = useState("")
     const [erroDiagnostico, setErroDiagnostico] = useState("")
 
-    const [serieEscolar, setSerieEscolar] = useState("")
+    const [idSerieEscolar, setIdSerieEscolar] = useState("")
     const [erroSerieEscolar, setErroSerieEscolar] = useState("")
 
     const [dataNascimento, setDataNascimento] = useState("")
     const [erroDataNascimento, setErroDataNascimento] = useState("")
 
-    const [grauSuporte, setGrauSuporte] = useState("")
+    const [idGrauSuporte, setIdGrauSuporte] = useState("")
     const [erroGrauSuporte, setErroGrauSuporte] = useState("")
 
     const [loading, setLoading] = useState(false)
@@ -69,6 +72,14 @@ function TelaCadastroFamiliar() {
         }
 
         return cpfLimpo
+    }
+
+    function formatarCpf(valor) {
+        return valor
+            .replace(/\D/g, "")
+            .replace(/(\d{3})(\d)/, "$1.$2")
+            .replace(/(\d{3})(\d)/, "$1.$2")
+            .replace(/(\d{3})(\d{1,2})$/, "$1-$2")
     }
 
     function validarDiagnostico(diagnostico) {
@@ -140,6 +151,20 @@ function TelaCadastroFamiliar() {
         return dataTexto
     }
 
+    function formatarData(valor) {
+        return valor
+            .replace(/\D/g, "")
+            .replace(/(\d{2})(\d)/, "$1/$2")
+            .replace(/(\d{2})(\d)/, "$1/$2")
+            .replace(/(\d{4})(\d)/, "$1")
+
+    }
+
+    function dataFormatadaApi(data) {
+        const [dia, mes, ano] = data.split("/")
+        return `${ano}-${mes}-${dia}`
+    }
+
     async function cadastrarFamiliar() {
 
         try {
@@ -177,7 +202,7 @@ function TelaCadastroFamiliar() {
             }
 
             try {
-                serieEscolarValidada = validarSerieEscolar(serieEscolar)
+                serieEscolarValidada = validarSerieEscolar(idSerieEscolar)
                 setErroSerieEscolar("")
             } catch (error) {
                 setErroSerieEscolar(error.message)
@@ -191,7 +216,7 @@ function TelaCadastroFamiliar() {
             }
 
             try {
-                grauSuporteValidada = validarGrauSuporte(grauSuporte)
+                grauSuporteValidada = validarGrauSuporte(idGrauSuporte)
                 setErroGrauSuporte("")
             } catch (error) {
                 setErroGrauSuporte(error.message)
@@ -208,26 +233,39 @@ function TelaCadastroFamiliar() {
                 return
             }
 
-            const dadosPaciente = {
-                nome: nomeValidado,
-                cpf: cpfValidado,
-                serieEscolar: serieEscolarValidada,
-                diagnostico: diagnosticoValidado,
-                dataNascimento: dataNascimentoValidado,
-                grauSuporte: grauSuporteValidada
+            const dataFormatada = dataFormatadaApi(dataNascimentoValidado)
+
+            const formData = new FormData()
+
+
+            formData.append("nome", nomeValidado)
+            formData.append("cpf", cpfValidado)
+            formData.append("diagnostico", JSON.stringify([{ id: 1 }]))
+            formData.append("data_nascimento", dataFormatada)
+            formData.append("id_serie_escolar", serieEscolarValidada)
+            formData.append("id_grau_suporte", grauSuporteValidada)
+
+            if (foto) {
+                formData.append("foto", foto)
             }
 
+
             await axios.post(`http://localhost:8080/v1/espectra/paciente/`,
-                dadosPaciente,
+                formData,
 
                 {
                     headers: {
                         "x-access-token": token
-                    }
+                    },
+                    "Content-Type": "multipart/form-data"
                 })
 
         } catch (error) {
             console.log(error)
+
+            if (error.response) {
+                console.log(error.response.data)
+            }
         } finally {
             setLoading(false)
         }
@@ -242,10 +280,38 @@ function TelaCadastroFamiliar() {
             />
 
             <div className="flex flex-col items-center gap-10 lg:gap-0 lg:mt-8">
-                <CircleUser
-                    className="w-[223px] h-[200px] md:h-[170px] md:w-[170px]"
-                    color="#4285F4"
-                ></CircleUser>
+                <label className="cursor-pointer">
+
+                    {
+                        fotoPreview ? (
+                            <img
+                                src={fotoPreview}
+                                alt="Foto do paciente"
+                                className="w-[223px] h-[200px] md:h-[170px] md:w-[170px] rounded-full object-cover border-4 border-[#4285F4]"
+                            />
+                        ) : (
+                            <CircleUser
+                                className="w-[223px] h-[200px] md:h-[170px] md:w-[170px]"
+                                color="#4285F4"
+                            />
+                        )
+                    }
+
+                    <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => {
+                            const arquivo = e.target.files[0]
+
+                            if (arquivo) {
+                                setFoto(arquivo)
+                                setFotoPreview(URL.createObjectURL(arquivo))
+                            }
+                        }}
+                    />
+
+                </label>
 
                 <div className="flex flex-col gap-2 px-10">
 
@@ -253,7 +319,10 @@ function TelaCadastroFamiliar() {
                         <span className="inclusive-sans text-xl font-semibold text-[var(--dark-blue)]">Nome</span>
                         <InputDefault
                             value={nome}
-                            onChange={(e) => setNome(e.target.value)}
+                            onChange={(e) => {
+                                setNome(e.target.value)
+                                setErroNome("")
+                            }}
                             variantInput={erroNome ? "errorInput" : "basicInput"}
                         />                            {
                             erroNome && (
@@ -267,7 +336,12 @@ function TelaCadastroFamiliar() {
                         <span className="inclusive-sans text-xl font-semibold text-[var(--dark-blue)]">CPF</span>
                         <InputDefault
                             value={cpf}
-                            onChange={(e) => setCpf(e.target.value)}
+                            onChange={(e) => {
+                                const cpfFormatado = formatarCpf(e.target.value)
+
+                                setCpf(cpfFormatado)
+                                setErroCpf("")
+                            }}
                             variantInput={erroCpf ? "errorInput" : "basicInput"}
                         />
                         {
@@ -283,7 +357,10 @@ function TelaCadastroFamiliar() {
                         <span className="inclusive-sans text-xl font-semibold text-[var(--dark-blue)]">Diagnóstico</span>
                         <InputDefault
                             value={diagnostico}
-                            onChange={(e) => setDiagnostico(e.target.value)}
+                            onChange={(e) => {
+                                setDiagnostico(e.target.value)
+                                setErroDiagnostico("")
+                            }}
                             variantInput={erroDiagnostico ? "errorInput" : "basicInput"}
                         />
                         {
@@ -304,75 +381,79 @@ function TelaCadastroFamiliar() {
                             <select
                                 name=""
                                 id=""
-                                value={serieEscolar}
-                                onChange={(e) => setSerieEscolar(e.target.value)}
-                                className={`border rounded-lg h-12 w-full border-[var(--bg-primary-color)] ${erroSerieEscolar ? "border-red-500" : "border-[var(--bg-primary-color)]"}`}
+                                value={idSerieEscolar}
+                                onChange={(e) => {
+                                    setIdSerieEscolar(e.target.value)
+                                    setErroSerieEscolar("")
+                                }}
+
+                                className={`border rounded-lg h-12 w-full ${erroSerieEscolar ? "border-red-500" : "border-[var(--bg-primary-color)]"}`}
                             >
                                 <option value="">
                                     Selecione
                                 </option>
 
-                                <option value="MATERNAL">
+                                <option value="1">
                                     MATERNAL
                                 </option>
 
-                                <option value="JARDIM I">
+                                <option value="2">
                                     JARDIM I
                                 </option>
 
-                                <option value="JARDIM II">
+                                <option value="3">
                                     JARDIM II
                                 </option>
 
-                                <option value="1º ANO">
+                                <option value="4">
                                     1º ANO
                                 </option>
 
-                                <option value="2º ANO">
+                                <option value="5">
                                     2º ANO
                                 </option>
 
-                                <option value="3º ANO">
+                                <option value="6">
                                     3º ANO
                                 </option>
 
-                                <option value="4º ANO">
+                                <option value="7">
                                     4º ANO
                                 </option>
 
-                                <option value="5º ANO">
+                                <option value="8">
                                     5º ANO
                                 </option>
 
-                                <option value="6º ANO">
+                                <option value="9">
                                     6º ANO
                                 </option>
 
-                                <option value="7º ANO">
+                                <option value="10">
                                     7º ANO
                                 </option>
 
-                                <option value="8º ANO">
+                                <option value="11">
                                     8º ANO
                                 </option>
 
-                                <option value="9º ANO">
+                                <option value="12">
                                     9º ANO
                                 </option>
 
-                                <option value="1º MÉDIO">
+                                <option value="13">
                                     1º MÉDIO
                                 </option>
 
-                                <option value="2º MÉDIO">
+                                <option value="14">
                                     2º MÉDIO
                                 </option>
 
-                                <option value="3º MÉDIO">
+                                <option value="15">
                                     3º MÉDIO
                                 </option>
 
-                                <option value="CONCLUIDO">
+                                <option value="16">
                                     CONCLUIDO
                                 </option>
                             </select>
@@ -391,7 +472,12 @@ function TelaCadastroFamiliar() {
 
                             <InputDefault
                                 value={dataNascimento}
-                                onChange={(e) => setDataNascimento(e.target.value)}
+                                onChange={(e) => {
+                                    const dataFormatada = formatarData(e.target.value)
+
+                                    setDataNascimento(dataFormatada)
+                                    setErroDataNascimento("")
+                                }}
                                 variantInput={erroDataNascimento ? "errorInput" : "basicInput"}
                                 placeholder={"DD/MM/AAAA"}
                             />
@@ -411,23 +497,26 @@ function TelaCadastroFamiliar() {
                         <select
                             name=""
                             id=""
-                            value={grauSuporte}
-                            onChange={(e) => setGrauSuporte(e.target.value)}
-                            className={`border rounded-lg h-12 w-full border-[var(--bg-primary-color)] ${erroGrauSuporte ? "border-red-500" : "border-[var(--bg-primary-color)]"}`}
+                            value={idGrauSuporte}
+                            onChange={(e) => {
+                                setIdGrauSuporte(e.target.value)
+                                setErroGrauSuporte("")
+                            }}
+                            className={`border rounded-lg h-12 w-full ${erroGrauSuporte ? "border-red-500" : "border-[var(--bg-primary-color)]"}`}
                         >
                             <option value="">
                                 Selecione
                             </option>
 
-                            <option value="grau1">
+                            <option value="1">
                                 GRAU 1
                             </option>
 
-                            <option value="grau2">
+                            <option value="2">
                                 GRAU 2
                             </option>
 
-                            <option value="grau3">
+                            <option value="3">
                                 GRAU 3
                             </option>
                         </select>
