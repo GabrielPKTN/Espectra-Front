@@ -27,7 +27,6 @@ function TelaCadastroFamiliar() {
     const [erroGrauSuporte, setErroGrauSuporte] = useState("")
 
     const [loading, setLoading] = useState(false)
-    const [erro, setErro] = useState(null)
 
     function validarNome(nome) {
         const nomeLimpo = nome ? nome.trim() : ""
@@ -262,12 +261,82 @@ function TelaCadastroFamiliar() {
 
                             <span className="inclusive-sans text-xl font-semibold text-[var(--dark-blue)]">Série escolar</span>
 
-                            <select name="" id="" className="border rounded-lg h-12 w-full border-[var(--bg-primary-color)]">
+                            <select name="" id="" value={serieEscolar} onChange={(e) => setSerieEscolar(e.target.value)} className="border rounded-lg h-12 w-full border-[var(--bg-primary-color)]">
                                 <option value="">
                                     Selecione
                                 </option>
-                            </select>
 
+                                <option value="MATERNAL">
+                                    MATERNAL
+                                </option>
+
+                                <option value="JARDIM I">
+                                    JARDIM I
+                                </option>
+
+                                <option value="JARDIM II">
+                                    JARDIM II
+                                </option>
+
+                                <option value="1º ANO">
+                                    1º ANO
+                                </option>
+
+                                <option value="2º ANO">
+                                    2º ANO
+                                </option>
+
+                                <option value="3º ANO">
+                                    3º ANO
+                                </option>
+
+                                <option value="4º ANO">
+                                    4º ANO
+                                </option>
+
+                                <option value="5º ANO">
+                                    5º ANO
+                                </option>
+
+                                <option value="6º ANO">
+                                    6º ANO
+                                </option>
+
+                                <option value="7º ANO">
+                                    7º ANO
+                                </option>
+
+                                <option value="8º ANO">
+                                    8º ANO
+                                </option>
+
+                                <option value="9º ANO">
+                                    9º ANO
+                                </option>
+
+                                <option value="1º MÉDIO">
+                                    1º MÉDIO
+                                </option>
+
+                                <option value="2º MÉDIO">
+                                    2º MÉDIO
+                                </option>
+
+                                <option value="3º MÉDIO">
+                                    3º MÉDIO
+                                </option>
+
+                                <option value="CONCLUIDO">
+                                    CONCLUIDO
+                                </option>
+                            </select>
+                            {
+                                erroSerieEscolar && (
+                                    <p className="text-red-500">
+                                        {erroSerieEscolar}
+                                    </p>
+                                )
+                            }
                         </div>
 
                         <div className="w-[50%]">
@@ -293,7 +362,30 @@ function TelaCadastroFamiliar() {
 
                     <div>
                         <span className="inclusive-sans text-xl font-semibold text-[var(--dark-blue)]">Grau suporte</span>
+                        <select name="" id="" value={grauSuporte} onChange={(e) => setGrauSuporte(e.target.value)} className="border rounded-lg h-12 w-full border-[var(--bg-primary-color)]">
+                            <option value="">
+                                Selecione
+                            </option>
 
+                            <option value="grau1">
+                                GRAU 1
+                            </option>
+
+                            <option value="grau2">
+                                GRAU 2
+                            </option>
+
+                            <option value="grau3">
+                                GRAU 3
+                            </option>
+                        </select>
+                        {
+                            erroGrauSuporte && (
+                                <p className="text-red-500">
+                                    {erroGrauSuporte}
+                                </p>
+                            )
+                        }
                     </div>
 
                 </div>
@@ -302,7 +394,9 @@ function TelaCadastroFamiliar() {
                 <div className="flex self-center md:gap-10 md:flex md:flex-row-reverse lg:mt-10 lg:mb-10">
                     <Button
                         onClick={cadastrarFamiliar}
-                    >Salvar</Button>
+                    >
+                        Salvar
+                    </Button>
                     <button className="hidden md:block md:text-[var(--bg-primary-color)] md:instrument-sans md:text-xl md:w-48 md:h-12 md:rounded-lg md:font-bold md:shadow-2xl">Cancelar</button>
                 </div>
 
