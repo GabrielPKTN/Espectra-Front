@@ -35,7 +35,9 @@ function TelaAdicionarPaciente() {
       }
 
       if (!token) {
-        setErro("Token não encontrado!");
+        console.error("Token não encontrado no localStorage.");
+        toast.error("A sessão expirou. Faça login novamente!");
+        navigate("/login");
         return;
       }
 
@@ -202,7 +204,9 @@ function TelaAdicionarPaciente() {
           variantClick="basicClick"
           onClick={() => {
             if (paciente) {
-              navigate(`/formulario/${paciente.id}/${idUsuarioLogado}`);
+              const idPacienteValido = paciente.id || paciente.id_paciente;
+
+              navigate(`/formulario/${idPacienteValido}/${idUsuarioLogado}`);
             } else {
               setErro("Busque um paciente antes de iniciar a avaliação!");
             }
@@ -215,7 +219,7 @@ function TelaAdicionarPaciente() {
           variantClick="basicClick"
           onClick={adicionarPaciente}
           disabled={!paciente}
-          className="lg:w-52"
+          className="lg:w-56"
         >
           Adicionar paciente
         </Button>
