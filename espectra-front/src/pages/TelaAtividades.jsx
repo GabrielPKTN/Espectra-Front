@@ -11,8 +11,8 @@ function TelaAtividades(){
     
     const navigate = useNavigate()
 
-    const pacienteId = 1 //localStorage.getItem("idPaciente")
-    const habilidadeId = 1 //localStorage.getItem("idHabilidade")
+    const pacienteId = Number(localStorage.getItem("id_paciente"))
+    const habilidadeId = Number(localStorage.getItem("id_habilidade"))
     const token = localStorage.getItem("token")
     
     const [atividades, setAtividades] = useState([])
@@ -95,7 +95,7 @@ function TelaAtividades(){
                             Atividades Em andamento:
                     </h2>
 
-                    <div className="flex flex-col w-full overflow-y-auto max-h-[40vh] gap-3 lg:grid lg:grid-cols-2 ">
+                    <div className="flex flex-col w-full overflow-y-auto max-h-[30vh] gap-3 lg:grid lg:grid-cols-2 ">
                             {atividadesAndamento.map((item) => (
                                 <CardAtividade
                                     key={item.id_atividade}
@@ -138,7 +138,7 @@ function TelaAtividades(){
                     </h2>
                 
                     
-                    <div className="flex flex-col overflow-y-auto max-h-[40vh] w-full gap-3 lg:grid lg:grid-cols-2 ">
+                    <div className="flex flex-col overflow-y-auto max-h-[30vh] w-full gap-3 lg:grid lg:grid-cols-2 ">
                             {atividadesConcluidas.map((item) => (
                                         <CardAtividadeAdquirida
                                             key={item.id_atividade}

@@ -14,7 +14,7 @@ export default function CardAtividade({atividade, id}) {
     const [expandido, setExpandido] = useState(false)
 
     function navegar(path){
-        localStorage.setItem("idAtividade", id)
+        localStorage.setItem("id_atividade", id)
 
         navigate(`${path}`)
     }

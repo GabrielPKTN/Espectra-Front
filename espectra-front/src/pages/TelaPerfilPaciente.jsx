@@ -19,133 +19,226 @@ import { useEffect, useState } from "react";
 import api from "../services/api";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 import { toast } from "react-hot-toast";
+import Swal from 'sweetalert2';
 
 function TelaPerfilPaciente() {
-  const [paciente, setPaciente] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const {id} = useParams();
+  const [paciente, setPaciente] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const { id, id_usuario } = useParams();
   const navigate = useNavigate();
 
+  const [tipoUsuario, setTipoUsuario] = useState(null);
 
-  useEffect(()=> {
-
+  //função para consumir os dados do paciente
+  useEffect(() => {
     async function carregarDadosPaciente() {
-      try{
+      try {
         const token = localStorage.getItem("token");
+
         const response = await api.get(`/v1/espectra/paciente/${id}`, {
           headers: {
-           "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTc3OTE5Njc1NSwiZXhwIjoxMDAwMDE3NzkxOTY3NTV9.ndalelKb8yyym5wgNfMa94CTco6os-hFlI3UXupiNGY"
-          }
+            "x-access-token": token,
+          },
         });
 
-        if(response.data.items){
-          setPaciente(response.data.items)
+        if (response.data.items) {
+          setPaciente(response.data.items);
         }
-      }catch(error){
-        console.error("Erro ao buscar dados do paciente: ", error)
-      }finally{
-        setLoading(false)
+      } catch (error) {
+        console.error("Erro ao buscar dados do paciente: ", error);
+      } finally {
+        setLoading(false);
       }
     }
 
-    if(id){
+    if (id) {
       carregarDadosPaciente();
     }
   }, [id]);
 
-  async function removerPaciente() {
-    const confirmar = window.confirm("Tem certeza que deseja remover esse paciente?")
-
-    if(!confirmar) return;
+  //função para coletar os dados do usuario, para que seja possivel apagar/editar dados do paciente
+  async function getUsuarioById() {
+    const token = localStorage.getItem("token");
 
     try {
+      const response = await api.get(`/v1/espectra/usuario/${id_usuario}`, {
+        headers: {
+          "x-access-token": token,
+        },
+      });
 
-        const token = localStorage.getItem("token");
-    
-        const usuarioDecodificado = jwtDecode(token);
-    
-        const idUsuario = usuarioDecodificado.userID;
-    
-        await api.delete(`/v1/espectra/paciente/${id}/${idUsuario}`, {
-          headers: {
-            "x-access-token": token
-          }
-        });
-
-        toast.success("Paciente removido com sucesso!")
-
-        navigate("/home");
-    } catch (error){
-        console.error(error);
-
-        toast.error("Erro ao remover paciente")
+      return response.data;
+    } catch (error) {
+      console.error("Usuário não encontrado!");
+      return null;
     }
-}
+  }
 
+  //remover um paciente
+  async function removerPaciente() {
+    const dadosUsuario = await getUsuarioById();
 
+    if (!dadosUsuario) {
+      toast.error("Não foi possivel validar o usuário antes da exclusão.");
+      return;
+    }
 
-  
+    const mensagemConfirmaçao =
+      tipoUsuario === 2
+        ? "Tem certeza que deseja apagar esse familiar?"
+        : "Tem certeza que deseja remover esse paciente?";
+
+    const confirmar = await Swal.fire({
+    title: 'Atenção!',
+    text: mensagemConfirmacao,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#e31b1b',
+    cancelButtonColor: '#4285f4',
+    confirmButtonText: 'Apagar',
+    cancelButtonText: 'Cancelar'
+  });
+
+    if (!confirmar.isConfirmed) return;
+
+    try {
+      const idUsuarioParaDeletar = dadosUsuario.id;
+
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        toast.error("Usuário não autenticado.");
+        return;
+      }
+
+      const response = await api.delete(
+        `/v1/espectra/paciente/${id}/${idUsuarioParaDeletar}`,
+        {
+          headers: {
+            "x-access-token": token,
+          },
+        },
+      );
+
+      if (response.status === 200) {
+        toast.success("Paciente removido com sucesso!");
+        navigate(-1);
+      } else {
+        toast.error("Houve um erro ao remover este paciente!");
+      }
+    } catch (error) {
+      console.error("Erro ao apagar paciente: ", error);
+      const mensagemErro =
+        error.response?.data?.message || "Erro ao remover paciente";
+      toast.error(mensagemErro);
+    }
+  }
+
+  useEffect(() => {
+    const tipoSalvo = localStorage.getItem("tipo_usuario");
+
+    if (tipoSalvo) {
+      setTipoUsuario(Number(tipoSalvo));
+    }
+  }, []);
+
+  const textoButton =
+    tipoUsuario === 2 ? "Apagar familiar" : "Remover paciente";
+
+  //editar o formulário portage
+  async function editarFormulario() {
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await api.get(
+        `/v1/espectra/formulario/${id}/${id_usuario}`,
+        {
+          headers: {
+            "x-access-token": token,
+          },
+        },
+      );
+
+      const formulario = response.data;
+      navigate(`/formulario/${id}/${id_usuario}`, {
+        state: {
+          formulario,
+        },
+      });
+    } catch (error) {
+      console.error(
+        "Não foi possivel carregar o formulário do paciente!",
+        error,
+      );
+      toast.error("Não foi possivel carregar o formulário deste paciente!");
+    }
+  }
+
   // função que faz o gráfico ficar maior na tela de computador, considerando o tamanho a partir de 768px.
-  const estiloHabilidade = (nomeHabilidade) =>{
+  const estiloHabilidade = (nomeHabilidade) => {
     const nomeFormatado = nomeHabilidade.toLowerCase().trim();
-    if(nomeFormatado.includes("socializa")){
-        return {cor: "#a2e289", classe: "cor-socializacao"}
+    if (nomeFormatado.includes("socializa")) {
+      return { cor: "#a2e289", classe: "cor-socializacao" };
     }
     if (nomeFormatado.includes("cogni")) {
-        return { cor: "#71afff", classe: "cor-cognicao" };
-      }
-    if (nomeFormatado.includes("cuidado") || nomeFormatado.includes("auto")) {
-        return { cor: "#d293f0", classe: "cor-autocuidado" };
-      }
-    if (nomeFormatado.includes("lingua")) {
-        return { cor: "#ffc87b", classe: "cor-linguagem" };
-      }
-    if (nomeFormatado.includes("motor") || nomeFormatado.includes("desenvolv")) {
-        return { cor: "#c8c8c8", classe: "cor-devmotor" };
-      }
-      return { cor: "#cccccc", classe: "cor-padrao" }; // Fallback
-    };
-
-    const formatarDadosGrafico = () => {
-        if(!paciente || !paciente.grafico) return[];
-
-        return paciente.grafico.map((hab) => {
-            const estilo = estiloHabilidade(hab.nome);
-
-            const valorIdade = Math.round(hab.idade_meses / 12) || hab.idade_meses
-
-            return {
-                id: hab.id,
-                nome: hab.nome,
-                idade: valorIdade, 
-                cor: estilo.cor,
-                classe: estilo.classe,
-              };
-        })
+      return { cor: "#71afff", classe: "cor-cognicao" };
     }
+    if (nomeFormatado.includes("cuidado") || nomeFormatado.includes("auto")) {
+      return { cor: "#d293f0", classe: "cor-autocuidado" };
+    }
+    if (nomeFormatado.includes("lingua")) {
+      return { cor: "#ffc87b", classe: "cor-linguagem" };
+    }
+    if (
+      nomeFormatado.includes("motor") ||
+      nomeFormatado.includes("desenvolv")
+    ) {
+      return { cor: "#c8c8c8", classe: "cor-devmotor" };
+    }
+    return { cor: "#cccccc", classe: "cor-padrao" }; // Fallback
+  };
 
-    const dadosGrafico = formatarDadosGrafico();
+  const formatarDadosGrafico = () => {
+    if (!paciente || !paciente.grafico) return [];
 
+    return paciente.grafico.map((hab) => {
+      const estilo = estiloHabilidade(hab.nome);
 
-    const [isDesktop, setIsDesktop] = useState(false);
+      const valorIdade = Math.round(hab.idade_meses / 12);
 
-    useEffect(() => {
-      const media = window.matchMedia("(min-width: 768px)");
-      setIsDesktop(media.matches);
+      const idadeFormatada = Number(valorIdade.toFixed(1));
 
-      const listener = (e) => setIsDesktop(e.matches);
-      media.addEventListener("change", listener);
+      return {
+        id: hab.id,
+        nome: hab.nome,
+        idade: idadeFormatada,
+        cor: estilo.cor,
+        classe: estilo.classe,
+      };
+    });
+  };
 
-      return () => media.removeEventListener("change", listener)
-    }, []);
+  const dadosGrafico = formatarDadosGrafico();
 
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 768px)");
+    setIsDesktop(media.matches);
+
+    const listener = (e) => setIsDesktop(e.matches);
+    media.addEventListener("change", listener);
+
+    return () => media.removeEventListener("change", listener);
+  }, []);
 
   if (loading) {
     return (
       <div className="flex h-screen w-screen items-center justify-center bg-[#dfedff]">
-        <p className="text-xl font-bold primary-color animate-pulse">Carregando dados do paciente...</p>
+        <p className="text-xl font-bold primary-color animate-pulse">
+          Carregando dados do paciente...
+        </p>
       </div>
     );
   }
@@ -153,23 +246,30 @@ function TelaPerfilPaciente() {
   if (!paciente) {
     return (
       <div className="flex h-screen w-screen items-center justify-center bg-[#dfedff]">
-        <p className="text-xl font-bold text-red-500">Paciente não encontrado.</p>
+        <p className="text-xl font-bold text-red-500">
+          Paciente não encontrado.
+        </p>
       </div>
     );
   }
 
-  console.log(paciente)
-  const primeiroResponsavel =  paciente.responsavel[0]
-  const listaDiagnosticos = paciente.diagnostico
-  ?.map((d) => `${d.nome_completo} (${d.sigla})`)
-  .join(", ");
+  const primeiroResponsavel = paciente?.responsavel?.[0];
+
+  const telefoneResponsavel = primeiroResponsavel?.telefone || "Não informado";
+
+  const listaDiagnosticos =
+    paciente.diagnostico
+      ?.map((d) => `${d.nome_completo} (${d.sigla})`)
+      .join(", ") || "Não informado";
 
   return (
     <div className="lg:bg-[#dfedff] flex flex-col justify-between gap-2 lg:h-auto lg:overflow-hidden">
       {/*HEADER*/}
       <div className="flex flex-row justify-between p-2 m-2 lg:m-0.5">
-
-        <ChevronLeft className="primary-color size-8 lg:size-10 cursor-pointer" onClick={()=> navigate(-1)}/> 
+        <ChevronLeft
+          className="primary-color size-8 lg:size-10 cursor-pointer"
+          onClick={() => navigate(-1)}
+        />
         <CircleUser className="primary-color size-10 lg:size-12"></CircleUser>
       </div>
 
@@ -186,11 +286,14 @@ function TelaPerfilPaciente() {
           {/*Nome e foto do paciente.*/}
           <div className="flex flex-col items-center gap-3 lg:mt-4">
             {paciente.foto ? (
-                <img src={paciente.foto} alt={paciente.nome} className="size-24 lg:size-24 rounded-full object-cover border-2 border-blue-500" />
+              <img
+                src={paciente.foto}
+                alt={paciente.nome}
+                className="size-24 lg:size-24 rounded-full object-cover border-2 border-blue-500"
+              />
             ) : (
-                <CircleUser className="primary-color size-24 lg:size-24"></CircleUser>
+              <CircleUser className="primary-color size-24 lg:size-24"></CircleUser>
             )}
-            
 
             <h1
               className="primary-color font-bold instrument-sans uppercase text-xl
@@ -206,7 +309,10 @@ function TelaPerfilPaciente() {
               md:text-lg md:px-10
               lg:mt-6 lg:text-[18px] lg:px-30"
           >
-           {paciente.nome} nasceu em {paciente.data_nascimento}, tem {paciente.idade} anos, está na {paciente.serie_escolar} e possui diagnóstico de {listaDiagnosticos} com grau de suporte {paciente.grau_suporte}
+            {paciente.nome} nasceu em {paciente.data_nascimento}, tem{" "}
+            {paciente.idade} anos, está na {paciente.serie_escolar} e possui
+            diagnóstico de {listaDiagnosticos} com grau de suporte{" "}
+            {paciente.grau_suporte}
           </p>
 
           <div
@@ -215,7 +321,7 @@ function TelaPerfilPaciente() {
               lg:text-[20px] lg:p-4"
           >
             <p className="primary-color">Telefone do responsável:</p>
-            <p className="text-gray-700">{primeiroResponsavel.telefone}</p>
+            <p className="text-gray-700">{telefoneResponsavel}</p>
           </div>
 
           <div className="flex flex-col w-screen lg:grid lg:grid-cols-2 lg:gap-x-10 lg:w-full">
@@ -240,7 +346,11 @@ function TelaPerfilPaciente() {
                     }}
                   >
                     <XAxis dataKey="nome" tick={false} />
-                    <YAxis hide domain={[0, 'dataMax + 2']} allowDataOverflow={false} />
+                    <YAxis
+                      hide
+                      domain={[0, "dataMax + 2"]}
+                      allowDataOverflow={false}
+                    />
                     <Tooltip cursor={{ fill: "transparent" }} />
 
                     <Bar dataKey="idade" barSize={isDesktop ? 65 : 44}>
@@ -276,13 +386,13 @@ function TelaPerfilPaciente() {
 
               {dadosGrafico.map((hab, index) => (
                 <ButtonHabilidade
-                    key={index}
-                    color={hab.classe}
-                    colorHover={`${hab.classe}-hover`}
-                    type="button"
-                    onClick={() => navigate(`/atividade/${id}/${hab.id}`)}
+                  key={index}
+                  color={hab.classe}
+                  colorHover={`${hab.classe}-hover`}
+                  type="button"
+                  onClick={() => navigate(`/atividade/${id}/${hab.id}`)}
                 >
-                    {hab.nome}
+                  {hab.nome}
                 </ButtonHabilidade>
               ))}
             </div>
@@ -293,7 +403,7 @@ function TelaPerfilPaciente() {
         lg:w-175 lg:m-8 lg:mt-8"
           >
             <Button
-            
+              onClick={editarFormulario}
               variantClick="basicClick"
               type="button"
               className="w-full p-3"
@@ -302,12 +412,12 @@ function TelaPerfilPaciente() {
             </Button>
 
             <Button
-            onClick={removerPaciente}
+              onClick={removerPaciente}
               variantClick="deleteButton"
               type="button"
               className="w-full"
             >
-              Remover paciente
+              {textoButton}
             </Button>
           </div>
         </div>
