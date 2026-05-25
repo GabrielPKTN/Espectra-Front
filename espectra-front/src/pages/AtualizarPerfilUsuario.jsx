@@ -2,14 +2,22 @@ import fotoPsicopedagogo from "../assets/general_photos/fotoPsicopedagogo.png";
 import logo from "../assets/logotipos/logo.png";
 import InputDefault from "../components/InputDefault";
 import Button from "../components/Button";
-import { ChevronLeft } from "lucide-react";
-import { BadgePlus } from "lucide-react";
-import { useState } from "react";
-import { data, useNavigate } from "react-router-dom";
+import { ChevronLeft, CircleUser } from "lucide-react";
+import { Plus } from "lucide-react";
+import { useEffect, useState } from "react";
+import { data, useNavigate, useParams } from "react-router-dom";
+import app from "../services/api.js"
 
-function AtualizarPerfilPsicopedagogo() {
+function AtualizarPerfilUsuario() {
 
     const navigate = useNavigate()
+
+    const { id_usuario } = useParams()
+
+    const [usuario, setUsuario] = useState([])
+
+    const [foto, setFoto] = useState("")
+    const [arquivoFoto, setArquivoFoto] = useState(null)
 
     const [nome, setNome] = useState("")
     const [erroNome, setErroNome] = useState("")
@@ -22,6 +30,97 @@ function AtualizarPerfilPsicopedagogo() {
 
     const [nascimento, setNascimento] = useState("")
     const [erroNascimento, setErroNascimento] = useState("")
+
+    const requestData = async () => {
+
+        try {
+
+            const url = `/v1/espectra/usuario/${id_usuario}`
+
+            const configHeader = {
+
+                headers: {
+                    'x-access-token': localStorage.getItem('token')
+                }
+
+            }
+
+            const result = await app.get(url, configHeader)
+
+            let reqUsuario = [result.data.items]
+
+            setUsuario(reqUsuario)
+
+        } catch (error) {
+            return false
+        }
+
+    }
+
+    const updateUsuario = async () => {
+
+        try {
+
+            const url = `/v1/espectra/usuario/${id_usuario}`
+
+            const configHeader = {
+
+                headers: {
+
+                    'x-access-token': localStorage.getItem('token'),
+                    'Content-Type': 'MULTIPART/FORM-DATA'
+
+                }
+
+            }
+
+            const formData = new FormData()
+
+            let dataFormatada = nascimento.split("/")
+            dataFormatada = `${dataFormatada[2]}-${dataFormatada[1]}-${dataFormatada[0]}`
+
+            if (arquivoFoto) {
+                formData.append('foto', arquivoFoto)
+            }
+
+            formData.append('nome', nome)
+            formData.append('email', email)
+            formData.append('data_nascimento', dataFormatada)
+            formData.append('telefone', telefone)
+
+            const result = await app.put(url, formData, configHeader)
+
+            navigate(`/perfil/${id_usuario}`)
+
+        } catch (error) {
+            return false
+        }
+
+    }
+
+    useEffect(() => {
+        requestData()
+    }, [])
+
+    useEffect(() => {
+
+        setNome(usuario[0]?.nome || "")
+        setEmail(usuario[0]?.email || "")
+        setTelefone(usuario[0]?.telefone || "")
+
+        let data;
+
+        if (usuario[0]?.data_nascimento) {
+
+            data = usuario[0].data_nascimento.split("-")
+            data = `${data[2]}/${data[1]}/${data[0]}`
+
+        }
+
+        setNascimento(data || "")
+        setFoto(usuario[0]?.foto || "")
+
+    }, [usuario])
 
     function alteracoesSalvas() {
         alert("Suas alterações foram salvas com sucesso!")
@@ -111,7 +210,7 @@ function AtualizarPerfilPsicopedagogo() {
         setErroTelefone("")
     }
 
-    function mascaraDataNascimento(e){
+    function mascaraDataNascimento(e) {
         const valorInserido = e.target.value
 
         let dataLimpa = valorInserido.replace(/\D/g, "")
@@ -122,52 +221,52 @@ function AtualizarPerfilPsicopedagogo() {
         return dataLimpa
     }
 
-    function validarDataNascimento(e){
+    function validarDataNascimento(e) {
         const dataComMascara = mascaraDataNascimento(e)
 
         setNascimento(dataComMascara)
 
         const dataLimpa = dataComMascara.replace(/\D/g, "")
 
-        if(!dataLimpa){
+        if (!dataLimpa) {
             setErroNascimento("Informe sua data de nascimento!")
             return
         }
 
-        if(dataLimpa.length < 8){
+        if (dataLimpa.length < 8) {
             setErroNascimento("Digite uma data válida!")
             return
         }
 
-        const dia = parseInt(dataLimpa.substring(0,2))
-        const mes = parseInt(dataLimpa.substring(2,4))
-        const ano = parseInt(dataLimpa.substring(4,8))
+        const dia = parseInt(dataLimpa.substring(0, 2))
+        const mes = parseInt(dataLimpa.substring(2, 4))
+        const ano = parseInt(dataLimpa.substring(4, 8))
 
         const dataAtual = new Date()
         const anoAtual = dataAtual.getFullYear()
 
-        if(dia < 1 || dia > 31){
+        if (dia < 1 || dia > 31) {
             setErroNascimento("Dia Inválido")
             return
         }
 
-        if(mes < 1 || mes > 12){
+        if (mes < 1 || mes > 12) {
             setErroNascimento("Mês inválido!")
             return
         }
 
-        if(ano < 1900 || ano > anoAtual){
+        if (ano < 1900 || ano > anoAtual) {
             setErroNascimento("Ano inválido!")
             return
         }
 
         const dataValida = new Date(ano, mes - 1, dia)
 
-        if(
+        if (
             dataValida.getDate() !== dia ||
             dataValida.getMonth() !== mes - 1 ||
             dataValida.getFullYear() !== ano
-        ){
+        ) {
             setErroNascimento("Data inválida!")
             return
         }
@@ -175,41 +274,90 @@ function AtualizarPerfilPsicopedagogo() {
         setErroNascimento("")
     }
 
+    function preview({ target }) {
+
+        if (!target.files || target.files.length === 0) return
+
+        let rawPic = target.files[0]
+        setArquivoFoto(rawPic)
+
+        setFoto(`${URL.createObjectURL(target.files[0])}`)
+
+
+    }
+
+    function clickInput() {
+        document.getElementById('preview-input').click()
+    }
+
     return (
         <>
             {/* Div do Header */}
             <div
-                className="flex justify-between items-center h-[130px] md:h-[115px] lg:h-[146px] px-4 bg-[#3277CF]"
+                className="flex justify-between items-center h-32.5 md:h-28 lg:h-36.5 px-4 bg-[#3277CF]"
             >
                 <ChevronLeft
-                    className="-mt-14 -ml-2 w-[31px] h-[31px] md:h-[50px] md:w-[50px] lg:w-[50px] lg:h-[50px] cursor-pointer transform-gpu transform-all duration-300 ease-in-out hover:scale-110"
+                    className="w-7.5 md:w-12 lg:w-12 h-auto cursor-pointer transform-gpu transform-all duration-300 ease-in-out hover:scale-110 relative z-10"
                     color="#F9F9F9"
-                    onClick={() => navigate("/")}
+                    onClick={() => navigate(-1)}
                 />
 
-                <img
-                    src={logo}
-                    alt="Logo Espectra"
-                    onClick="" //onClick -> Volta para a tela Home do Psicopedagogo
-                    className="w-[48px] h-[32px] -mt-14 cursor-pointer transform-gpu transform-all duration-300 ease-in-out hover:scale-110"
-                />
+                <div className="cursor-pointer w-25 relative z-10" onClick={() => navigate("/home")}>
+                    <img
+                        src={logo}
+                        alt="Logo Espectra"
+                        className=" w-full h-full transform-gpu transform-all"
+                    />
+                </div>
+
             </div>
 
             {/* Div da foto do psicopedagogo */}
-            <div className="flex justify-center -mt-18 z-10 relative md:-mt-22 lg:-mt-24">
-                <div className="relative">
-                    <img
-                        src={fotoPsicopedagogo}
-                        alt="Foto do psicopedagogo"
-                        onClick=""
-                        className="w-[148px] h-[148px] border-[#3277CF] border-4 rounded-full object-contain md:w-[180px] md:h-[180px] lg:w-[200px] lg:h-[200px]"
-                    />
+            <div className="flex justify-center -mt-18 z-5 relative md:-mt-22 lg:-mt-24">
 
-                    <BadgePlus
-                        className="absolute bottom-2 right-2 w-[30px] h-[30px] bg-[#3277CF] rounded-full shadow-md cursor-pointer transition-all duration-300 hover:scale-110 md:w-[40px] md:h-[40px]"
-                        color="#FFFFFF"
-                    />
-                </div>
+                {(foto || usuario[0]?.foto) ? (
+
+                    <div className="relative">
+
+                        <img
+                            id="preview-image"
+                            src={foto || usuario[0]?.foto}
+                            alt="Foto do psicopedagogo"
+                            className="w-[148px] h-[148px] border-[#3277CF] border-4 rounded-full object-cover md:w-[180px] md:h-[180px] lg:w-[200px] lg:h-[200px]"
+                        />
+
+                        <input id="preview-input" onChange={preview} className="w-0" type="file" accept="image/*"></input>
+
+                        <Plus
+                            className="absolute bottom-2 right-2 w-[30px] h-[30px] bg-[#3277CF] rounded-full shadow-md cursor-pointer transition-all duration-300 hover:scale-110 md:w-[40px] md:h-[40px]"
+                            color="#FFFFFF"
+                            onClick={() => clickInput()}
+                        />
+
+                    </div>
+
+                ) : (
+
+                    <div className="relative">
+
+                        <CircleUser
+                            id="preview-image"
+                            alt="Foto do psicopedagogo"
+                            className="w-[148px] h-[148px] bg-white text-(--bg-primary-color) rounded-full object-cover md:w-[180px] md:h-[180px] lg:w-[200px] lg:h-[200px]"
+                        />
+
+                        <input id="preview-input" onChange={preview} className="w-0" type="file" accept="image/*"></input>
+
+                        <Plus
+                            className="absolute bottom-2 right-2 w-[30px] h-[30px] bg-[#3277CF] rounded-full shadow-md cursor-pointer transition-all duration-300 hover:scale-110 md:w-[40px] md:h-[40px]"
+                            color="#FFFFFF"
+                            onClick={() => clickInput()}
+                        />
+
+                    </div>
+                )}
+
+
             </div>
 
             {/* Div que guarda os inputs do Psicopedagogo */}
@@ -312,7 +460,7 @@ function AtualizarPerfilPsicopedagogo() {
                     <Button
                         variantClick="editButton"
                         className="text-[#3277CF] cursor-pointer transform-gpu transform-all duration-300 ease-in-out hover:scale-110 md:w-[300px]"
-                        onClick={alteracoesSalvas}
+                        onClick={() => updateUsuario()}
                     >
                         Salvar alterações
                     </Button>
@@ -322,4 +470,4 @@ function AtualizarPerfilPsicopedagogo() {
     )
 }
 
-export default AtualizarPerfilPsicopedagogo;
+export default AtualizarPerfilUsuario;
