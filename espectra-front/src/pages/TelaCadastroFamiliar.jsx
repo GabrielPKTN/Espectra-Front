@@ -573,12 +573,13 @@ function TelaCadastroFamiliar() {
                 <div className="flex self-center md:gap-10 md:flex md:flex-row-reverse lg:mt-10 lg:mb-10">
                     {/* onClick -> voltar para a tela home do fluxo de familiar */}
                     <Button
+                        type="button"
                         onClick={cadastrarFamiliar}
                         disabled={loading}
                     >
                         {loading ? "Salvando..." : "Salvar"}
                     </Button>
-                    <Button className="hidden md:block md:text-[var(--bg-primary-color)] md:instrument-sans md:text-xl md:w-48 md:h-12 md:rounded-lg md:font-bold md:shadow-2xl">Cancelar</Button>
+                    <Button className="hidden md:block md:text-[var(--bg-primary-color)] bg-white md:instrument-sans md:text-xl md:w-48 md:h-12 md:rounded-lg md:font-bold md:shadow-2xl">Cancelar</Button>
                 </div>
 
             </div>
