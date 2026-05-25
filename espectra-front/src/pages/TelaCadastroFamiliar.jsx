@@ -86,6 +86,8 @@ function TelaCadastroFamiliar() {
         if (!diagnostico) {
             throw new Error("O diagnóstico é obrigatório!")
         }
+
+        return diagnostico
     }
 
     function validarSerieEscolar(serieEscolar) {
@@ -232,6 +234,9 @@ function TelaCadastroFamiliar() {
             formData.append("id_serie_escolar", serieEscolarValidada)
             formData.append("id_grau_suporte", grauSuporteValidada)
 
+            //Adicionar o id do Responsável guardado no local storage.
+            formData.append("id_responsavel", 2)
+
             if (foto) {
                 formData.append("foto", foto)
             }
@@ -254,8 +259,8 @@ function TelaCadastroFamiliar() {
             console.log(error)
 
             if (error.response) {
-                console.log(error.response.items)
-                alert(error.response.items.message || "Erro ao cadastrar paciente!")
+                console.log(error.response.data)
+                alert(error.response.data.message || "Erro ao cadastrar paciente!")
             } else {
                 alert("Erro ao conectar com o servidor!")
             }
@@ -573,12 +578,12 @@ function TelaCadastroFamiliar() {
                     >
                         {loading ? "Salvando..." : "Salvar"}
                     </Button>
-                    <button className="hidden md:block md:text-[var(--bg-primary-color)] md:instrument-sans md:text-xl md:w-48 md:h-12 md:rounded-lg md:font-bold md:shadow-2xl">Cancelar</button>
+                    <Button className="hidden md:block md:text-[var(--bg-primary-color)] md:instrument-sans md:text-xl md:w-48 md:h-12 md:rounded-lg md:font-bold md:shadow-2xl">Cancelar</Button>
                 </div>
 
             </div>
 
-        </div >
+        </div>
     )
 }
 
