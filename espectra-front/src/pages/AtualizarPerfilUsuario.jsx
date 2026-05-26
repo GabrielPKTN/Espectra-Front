@@ -1,12 +1,12 @@
-import fotoPsicopedagogo from "../assets/general_photos/fotoPsicopedagogo.png";
-import logo from "../assets/logotipos/logo.png";
+import Logotipo from "../components/logotipo.jsx";
+import BotaoVoltar from "../components/BotaoVoltar.jsx";
 import InputDefault from "../components/InputDefault";
 import Button from "../components/Button";
-import { ChevronLeft, CircleUser } from "lucide-react";
+import { ChevronLeft, CircleUser } from "lucide-react"; // nao usaremos mais. Componentizado => lembrar de remover
 import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { data, useNavigate, useParams } from "react-router-dom";
-import app from "../services/api.js"
+import api from "../services/api.js"
 
 function AtualizarPerfilUsuario() {
 
@@ -45,7 +45,7 @@ function AtualizarPerfilUsuario() {
 
             }
 
-            const result = await app.get(url, configHeader)
+            const result = await api.get(url, configHeader)
 
             let reqUsuario = [result.data.items]
 
@@ -88,7 +88,7 @@ function AtualizarPerfilUsuario() {
             formData.append('data_nascimento', dataFormatada)
             formData.append('telefone', telefone)
 
-            const result = await app.put(url, formData, configHeader)
+            const result = await api.put(url, formData, configHeader)
 
             navigate(`/perfil/${id_usuario}`)
 
@@ -294,21 +294,12 @@ function AtualizarPerfilUsuario() {
         <>
             {/* Div do Header */}
             <div
-                className="flex justify-between items-center h-32.5 md:h-28 lg:h-36.5 px-4 bg-[#3277CF]"
+                className="flex justify-between items-center h-32.5 md:h-40 lg:h-36.5 px-4 bg-[#3277CF]"
             >
-                <ChevronLeft
-                    className="w-7.5 md:w-12 lg:w-12 h-auto cursor-pointer transform-gpu transform-all duration-300 ease-in-out hover:scale-110 relative z-10"
-                    color="#F9F9F9"
+                <BotaoVoltar
                     onClick={() => navigate(-1)}
+                    color="whiteColor"
                 />
-
-                <div className="cursor-pointer w-25 relative z-10" onClick={() => navigate("/home")}>
-                    <img
-                        src={logo}
-                        alt="Logo Espectra"
-                        className=" w-full h-full transform-gpu transform-all"
-                    />
-                </div>
 
             </div>
 
@@ -323,13 +314,13 @@ function AtualizarPerfilUsuario() {
                             id="preview-image"
                             src={foto || usuario[0]?.foto}
                             alt="Foto do psicopedagogo"
-                            className="w-[148px] h-[148px] border-[#3277CF] border-4 rounded-full object-cover md:w-[180px] md:h-[180px] lg:w-[200px] lg:h-[200px]"
+                            className="w-auto h-32  border-[#3277CF] border-4 rounded-full object-cover md:w-auto md:h-42 lg:w-auto lg:h-45"
                         />
 
                         <input id="preview-input" onChange={preview} className="w-0" type="file" accept="image/*"></input>
 
                         <Plus
-                            className="absolute bottom-2 right-2 w-[30px] h-[30px] bg-[#3277CF] rounded-full shadow-md cursor-pointer transition-all duration-300 hover:scale-110 md:w-[40px] md:h-[40px]"
+                            className="absolute bottom-2 right-2 w-auto h-32  bg-[#3277CF] rounded-full shadow-md cursor-pointer transition-all duration-300 hover:scale-110  md:w-auto md:h-12 lg:w-auto lg:h-11"
                             color="#FFFFFF"
                             onClick={() => clickInput()}
                         />
@@ -343,13 +334,13 @@ function AtualizarPerfilUsuario() {
                         <CircleUser
                             id="preview-image"
                             alt="Foto do psicopedagogo"
-                            className="w-[148px] h-[148px] bg-white text-(--bg-primary-color) rounded-full object-cover md:w-[180px] md:h-[180px] lg:w-[200px] lg:h-[200px]"
+                            className=" w-auto h-32 bg-white text-(--bg-primary-color) rounded-full object-cover md:w-auto md:h-42 lg:w-auto lg:h-45"
                         />
 
                         <input id="preview-input" onChange={preview} className="w-0" type="file" accept="image/*"></input>
 
                         <Plus
-                            className="absolute bottom-2 right-2 w-[30px] h-[30px] bg-[#3277CF] rounded-full shadow-md cursor-pointer transition-all duration-300 hover:scale-110 md:w-[40px] md:h-[40px]"
+                            className="absolute bottom-5 right-2 w-auto h-8 bg-[#3277CF] border-2 border-white rounded-full shadow-md cursor-pointer transition-all duration-300 hover:scale-110 md:w-auto md:h-12 lg:w-auto lg:h-11"
                             color="#FFFFFF"
                             onClick={() => clickInput()}
                         />
@@ -361,7 +352,7 @@ function AtualizarPerfilUsuario() {
             </div>
 
             {/* Div que guarda os inputs do Psicopedagogo */}
-            <div className="flex flex-col justify-center items-center gap-4 mt-4 w-full md:mt-20">
+            <div className="flex flex-col justify-center items-center gap-4 mt-4 w-full md:mt-14 lg:mt-4">
                 <div className="flex flex-col gap-2">
                     <label className="text-left text-[#3277CF] text-[18px] font-semibold">
                         Nome
@@ -372,7 +363,7 @@ function AtualizarPerfilUsuario() {
                         variantInput={erroNome ? "errorInput" : "basicInput"}
                         value={nome}
                         onChange={validarNome}
-                        className="!w-[300px] md:!w-[500px] lg:!w-[550px]"
+                        className=""
                     />
                     {
                         erroNome && (
