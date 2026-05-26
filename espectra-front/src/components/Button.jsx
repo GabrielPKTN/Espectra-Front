@@ -2,6 +2,7 @@ function Button({
   children,
   onClick,
   variantClick = "basicClick",
+  disabled = false,
   className = "",
   type = "button",
 }) {
@@ -17,9 +18,10 @@ function Button({
 
   return (
     <button
+      disabled={disabled}
       type={type}
       onClick={onClick}
-      className={`${estiloBase} ${variants[variantClick]} ${className}`}
+      className={`${estiloBase} ${variants[variantClick]} ${className} ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
     >
       {children}
     </button>
