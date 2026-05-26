@@ -7,6 +7,7 @@ import axios from "axios"
 import { jsx } from "react/jsx-runtime";
 import { data, useNavigate } from "react-router-dom";
 import api from "../services/api"
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 
 function TelaLogin() {
@@ -66,13 +67,17 @@ function TelaLogin() {
           className="w-auto h-32 lg:h-28
                 "
         />
-
+        {/* 
         <img
           src={authentication}
           alt="photo login"
           className="hidden 
                 lg:block lg:w-auto lg:h-128"
         />
+        */}
+        <DotLottieReact src="/animations/Cadastro.lottie" autoplay loop className="hidden lg:block lg:w-150 lg::w-200 lg:w-250 "/>
+        
+
       </div>
 
       <div

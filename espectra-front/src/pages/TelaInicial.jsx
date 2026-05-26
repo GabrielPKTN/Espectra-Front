@@ -3,6 +3,8 @@ import photo_main from "../assets/general_photos/photo_main_xl.svg";
 import NavItem from "../components/NavItem";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../components/Button";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+
 
 function TelaInicial() {
 
@@ -13,12 +15,15 @@ function TelaInicial() {
     <div className="w-full h-screen flex flex-col overflow-hidden">
       {/* header */}
       <div className="flex justify-between items-center p-1 md:p-2">
+
         <img
           src={logo}
           alt="logotipo espectra"
           className="p-4 w-30 
                   md:p-5 md:w-36"
         />
+
+        
 
         {/* NECESSÁRIO COLOCAR OS LINKS DEPOIS */}
         <nav>
@@ -40,12 +45,12 @@ function TelaInicial() {
 
       {/* main */}
       <div
-        className="flex flex-col items-center justify-between gap-8
+        className="flex flex-col items-center justify-between gap-0
         lg:flex
         xl:flex xl:flex-row xl:h-full"
       >
         <div
-          className="my-10 flex flex-col items-center justify-center gap-4 w-full
+          className="my-10 flex flex-col items-center justify-center gap-5 w-full
             md:my-16 md:gap-8 md:px-12
             lg:gap-16
             xl:gap-16 xl:w-1/2"
@@ -87,10 +92,12 @@ function TelaInicial() {
           </Button>
         </div>
         <div
-          className="md:my-5 
-          xl:mr-4
+          className="
+          flex flex-col w-1/2 items-center lg:pr-15 lg:pb-45
           "
-        >
+        
+        
+        >{/*
           <img
             src={photo_main}
             alt="imagem-prof"
@@ -100,6 +107,9 @@ function TelaInicial() {
             xl:object-cover xl:w-full xl:h-full xl:pt-9
             "
           />
+          */}
+
+          <DotLottieReact src="/animations/puzzle.lottie" autoplay  className=" w-150 md:w-200 lg:w-250 "/>
         </div>
       </div>
     </div>

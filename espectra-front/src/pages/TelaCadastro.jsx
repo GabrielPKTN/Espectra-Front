@@ -10,6 +10,7 @@ import access_control from "../assets/general_photos/access_control.png";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { toast } from "react-hot-toast";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 function TelaCadastro() {
   const navigate = useNavigate();
@@ -272,18 +273,22 @@ function TelaCadastro() {
           className="w-auto h-32 lg:h-28
         "
         />
-
+        {/* 
         <img
           src={access_control}
           alt="photo login"
           className="hidden 
         lg:block lg:w-auto lg:h-128"
         />
+        */}
+      
+      <DotLottieReact src="/animations/Login.lottie" autoplay className="hidden lg:block lg:w-150 lg::w-200 lg:w-250"/>
+    
       </div>
 
       <div
         className="bg-white w-screen h-auto rounded-ss-4xl flex flex-col items-center
-      lg:w-full lg:rounded-l-4xl lg:shadow-xl"
+        lg:w-full lg:h-full lg:justify-center lg:rounded-l-4xl lg:shadow-xl"
       >
         <h1
           className="primary-color instrument-sans dark-blue font-bold text-2xl p-6
