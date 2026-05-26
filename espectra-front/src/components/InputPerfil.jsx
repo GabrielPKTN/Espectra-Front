@@ -12,8 +12,8 @@ function InputPerfil({
                 {label}
             </label>
 
-            <input 
-                type={type} 
+            <input
+                type={type}
                 value={value}
                 readOnly
                 className={`bg-[#F1F1F1] text-center rounded-lg px-4 outline-none ${inputClassName}`}
