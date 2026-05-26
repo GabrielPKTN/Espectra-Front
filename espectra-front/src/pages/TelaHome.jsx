@@ -96,7 +96,7 @@ function TelaHome() {
       <ContainerHeader foto={fotoUsuario} id={idUsuario} />
       <main
         className="
-        gap-2 flex flex-col justify-center items-center grow md:gap-8
+        gap-2 flex flex-col justify-center items-center grow md:gap-6
         "
       >
         <div className="w-full flex gap-2 items-center justify-center">

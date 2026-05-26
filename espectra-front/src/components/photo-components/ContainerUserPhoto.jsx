@@ -8,7 +8,7 @@ function ContainerUserPhoto(props) {
     if (props.foto == null) {
 
         return <div className={`
-        shrink-0 rounded-[50%] mx-2 size-10 overflow-hidden cursor-pointer md:size-16
+        shrink-0 rounded-[50%] mx-2 size-12 overflow-hidden cursor-pointer md:size-14
         `}>
             <CircleUser onClick={() => navigate(`/perfil/${props.id}`)} className="object-cover w-full h-full text-(--bg-primary-color)" />
         </div>

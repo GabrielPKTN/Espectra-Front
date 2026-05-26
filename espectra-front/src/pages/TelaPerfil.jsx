@@ -1,14 +1,11 @@
-import fotoPsicopedagogo from "../assets/general_photos/fotoPsicopedagogo.png";
-import logo from "../assets/logotipos/logo.png";
+import Logotipo from "../components/logotipo.jsx";
 import InputPerfil from "../components/InputPerfil";
 import InputSenha from "../components/InputSenha";
 import Button from "../components/Button";
 import Card from "../components/Card";
-import { ChevronLeft } from "lucide-react";
+import BotaoVoltar from "../components/BotaoVoltar.jsx";
 import { CircleUser } from "lucide-react";
 import { CircleX } from "lucide-react";
-import { LockKeyhole } from "lucide-react";
-import { LockKeyholeOpen } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import app from "../services/api.js"
@@ -117,38 +114,29 @@ function PerfilUsuario() {
         <>
             {/* Div do Header */}
             <div
-                className="flex justify-between items-center h-32.5 md:h-28 lg:h-36.5 px-4 bg-[#3277CF]"
+                className="flex justify-between items-center w-full h-32.5 md:h-40 lg:h-36.5 px-4 bg-[#3277CF]"
             >
-                <ChevronLeft
-                    className="w-7.5 md:w-12 lg:w-12 h-auto cursor-pointer transform-gpu transform-all duration-300 ease-in-out hover:scale-110 relative z-10"
-                    color="#F9F9F9"
+                <BotaoVoltar
                     onClick={() => navigate(-1)}
+                    color="whiteColor"
                 />
-
-                <div className="cursor-pointer w-25 relative z-10" onClick={() => navigate("/home")}>
-                    <img
-                        src={logo}
-                        alt="Logo Espectra"
-                        className=" w-full h-full transform-gpu transform-all"
-                    />
-                </div>
 
             </div>
 
             {/* Div da foto do psicopedagogo */}
-            <div className="flex justify-center z-5 relative md:-mt-22 lg:-mt-24">
+            <div className="flex justify-center -mt-18 md:-mt-22 lg:-mt-24">
 
                 {usuario[0]?.foto ? (
 
                     <img
                         src={usuario[0].foto}
                         alt="Foto do psicopedagogo"
-                        className="w-37 h-37 border-4 border-[#3277CF] rounded-full object-cover md:w-45 md:h-45 lg:w-50 lg:h-50"
+                        className="w-auto h-32 border-4 border-[#3277CF] rounded-full object-cover md:w-auto md:h-42 lg:w-auto lg:h-45"
                     />
 
                 ) : (
 
-                    <CircleUser className=" bg-white w-37 h-37 rounded-full object-contain md:w-45 md:h-45 lg:w-50 lg:h-50 text-(--bg-primary-color)" />
+                    <CircleUser className=" bg-white w-auto h-32 rounded-full object-contain md:w-auto md:h-42 lg:w-auto lg:h-45 text-(--bg-primary-color)" />
 
                 )}
 
@@ -156,11 +144,11 @@ function PerfilUsuario() {
             </div>
 
             {/* Div do Nome do Psicopedagogo */}
-            <div className="flex grow justify-center items-center w-full mt-2">
+            <div className="flex grow justify-center items-center w-full mt-2 md:mt-8">
 
                 {usuario[0]?.nome ? (
 
-                    <h1 className="text-[#3277CF] text-[28px] md:text-[44px] font-inclusive-sans font-bold uppercase">
+                    <h1 className="text-[#3277CF] text-[28px] md:text-[44px] inclusive-sans font-bold uppercase">
                         {usuario[0].nome}
                     </h1>
 
@@ -175,121 +163,120 @@ function PerfilUsuario() {
             </div>
 
             {/* Div que guarda os dados do Psicopedagogo */}
-            <div className="flex flex-col justify-center items-center gap-4 mt-4 w-full lg:grid lg:grid-cols-2 lg:gap-x-8 lg:gap-y-6">
+            <div className="flex flex-col justify-center items-center gap-4 mt-4 w-full lg:gap-12">
 
-                {usuario[0]?.nome ? (
+                {/*NOME E DATA NASCIMENTO*/}
+                <div className="lg:flex lg:flex-row lg:gap-14">
+                    {usuario[0]?.nome ? (
 
-                    <div className="flex justify-center w-full md:w-[]">
-                        <InputPerfil
-                            label="Nome"
-                            value={usuario[0].nome}
-                            inputClassName="w-full md:text-[22px] md:h-[55px] md:w-[360px] lg:h-[55px] lg:w-[450px]"
-                        />
+                        <div className="flex justify-center w-full">
+                            <InputPerfil
+                                label="Nome"
+                                value={usuario[0].nome}
+                            />
 
-                    </div>
-
-                ) : (
-
-                    <div className="flex justify-center w-full md:w-1/2">
-                        <InputPerfil
-                            label="Nome"
-                            value="?"
-                            inputClassName="h-1/2 w-1/2 md:text-[22px] md:h-[55px] md:w-[360px] lg:h-[55px] lg:w-[450px]"
-                        />
-
-                    </div>
-
-                )}
-
-
-                {/* Div que guarda Label e Input de Data de Nascimento */}
-                <div className="flex justify-center w-full">
-
-                    {usuario[0]?.data_nascimento ? (
-
-                        <InputPerfil
-                            label="Data de Nascimento"
-                            value={formatarData(usuario[0].data_nascimento)}
-                            inputClassName="h-[40px] w-[300px] md:text-[22px] md:h-[55px] md:w-[360px] lg:h-[55px] lg:w-[450px]"
-                        />
+                        </div>
 
                     ) : (
 
-                        <div className="flex justify-center w-full md:w-[]">
+                        <div className="flex justify-center w-full md:w-1/2">
+                            <InputPerfil
+                                label="Nome"
+                                value="?"
+                            />
+
+                        </div>
+
+                    )}
+
+
+                    {/* Div que guarda Label e Input de Data de Nascimento */}
+                    <div className="flex justify-center w-full">
+
+                        {usuario[0]?.data_nascimento ? (
 
                             <InputPerfil
                                 label="Data de Nascimento"
-                                value="?"
-                                inputClassName="h-[40px] w-[300px] md:text-[22px] md:h-[55px] md:w-[360px] lg:h-[55px] lg:w-[450px]"
+                                value={formatarData(usuario[0].data_nascimento)}
                             />
 
-                        </div>
+                        ) : (
 
-                    )}
+                            <div className="flex justify-center w-full md:w-[]">
 
+                                <InputPerfil
+                                    label="Data de Nascimento"
+                                    value="?"
+                                />
+
+                            </div>
+
+                        )}
+
+                    </div>
                 </div>
+                
+                {/*EMAIL E TELEFONE*/}
+                <div className="lg:flex lg:flex-row lg:gap-14">
 
-                {/* Div que guarda Label e Input de Email */}
-                <div className="flex justify-center w-full">
+                    {/* Div que guarda Label e Input de Email */}
+                    <div className="flex justify-center w-full">
 
-                    {usuario[0]?.email ? (
-
-                        <InputPerfil
-                            label="E-mail"
-                            value={usuario[0].email}
-                            inputClassName="h-[40px] w-[300px] md:text-[22px] md:h-[55px] md:w-[360px] lg:h-[55px] lg:w-[450px]"
-                        />
-
-                    ) : (
-
-                        <div className="flex justify-center w-full md:w-[]">
+                        {usuario[0]?.email ? (
 
                             <InputPerfil
                                 label="E-mail"
-                                value="?"
-                                inputClassName="h-[40px] w-[300px] md:text-[22px] md:h-[55px] md:w-[360px] lg:h-[55px] lg:w-[450px]"
+                                value={usuario[0].email}
+
                             />
 
-                        </div>
+                        ) : (
 
-                    )}
+                            <div className="flex justify-center w-full md:w-[]">
 
+                                <InputPerfil
+                                    label="E-mail"
+                                    value="?"
+                                />
 
-                </div>
+                            </div>
 
-                {/* Div que guarda Label e Input de Telefone */}
-                <div className="flex justify-center w-full">
+                        )}
+                    </div>
 
-                    {usuario[0]?.telefone ? (
+                    {/* Div que guarda Label e Input de Telefone */}
+                    <div className="flex justify-center w-full">
 
-                        <InputPerfil
-                            label="Telefone"
-                            value={formatarTelefone(usuario[0].telefone).formatInternational()}
-                            inputClassName="h-[40px] w-[300px] md:text-[22px] md:h-[55px] md:w-[360px] lg:h-[55px] lg:w-[450px]"
-                        />
-
-                    ) : (
-
-                        <div className="flex justify-center w-full md:w-[]">
+                        {usuario[0]?.telefone ? (
 
                             <InputPerfil
                                 label="Telefone"
-                                value="?"
-                                inputClassName="h-[40px] w-[300px] md:text-[22px] md:h-[55px] md:w-[360px] lg:h-[55px] lg:w-[450px]"
+                                value={formatarTelefone(usuario[0].telefone).formatInternational()}
                             />
 
-                        </div>
+                        ) : (
 
-                    )}
+                            <div className="flex justify-center w-full md:w-[]">
 
-                </div>
+                                <InputPerfil
+                                    label="Telefone"
+                                    value="?"
+                                />
+
+                            </div>
+
+                        )}
+
+                    </div>
+                </div>  
+
             </div>
 
             {/* Div dos botões */}
-            <div className="flex flex-col justify-center items-center w-full mt-4 md:mt-10 lg:flex-row lg:gap-6">
+            <div className="flex flex-col justify-center items-center w-full mt-14 gap-4 md:mt-16 lg:flex-row lg:gap-6 lg:mt-26">
                 <Button
                     variantClick="editButton"
-                    className="w-[170px] text-[#3277CF] md:h-[62px] md:w-[320px] lg: cursor-pointer transform-gpu transform-all duration-300 ease-in-out hover:scale-110"
+                    className=" md:h-14 cursor-pointer lg:w-60"
                     color="#FFFFFF"
                     onClick={() => navigate(`/perfil/atualizar/${id_usuario}`)}
                 >
@@ -299,7 +286,7 @@ function PerfilUsuario() {
                 <Button
                     variantClick="basicClick"
                     onClick={() => setAbrirModal(true)}
-                    className="mt-2 w-[170px] mb-5 md:h-[62px] md:w-[320px] md:mt-6 cursor-pointer transform-gpu transform-all duration-300 ease-in-out hover:scale-110"
+                    className="md:h-14 cursor-pointer lg:w-60"
                 >
                     Excluir conta
                 </Button>
