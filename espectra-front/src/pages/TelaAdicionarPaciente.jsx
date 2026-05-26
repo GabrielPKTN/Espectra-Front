@@ -100,7 +100,7 @@ function TelaAdicionarPaciente() {
       );
 
       toast.success("Paciente adicionado com sucesso!");
-      navigate("/home");
+      
     } catch (error) {
       console.error(error);
       setErro("Erro ao adicionar paciente!");
@@ -205,7 +205,7 @@ function TelaAdicionarPaciente() {
           onClick={() => {
             if (paciente) {
               const idPacienteValido = paciente.id || paciente.id_paciente;
-
+              adicionarPaciente();
               navigate(`/formulario/${idPacienteValido}/${idUsuarioLogado}`);
             } else {
               setErro("Busque um paciente antes de iniciar a avaliação!");
@@ -217,7 +217,11 @@ function TelaAdicionarPaciente() {
 
         <Button
           variantClick="basicClick"
-          onClick={adicionarPaciente}
+          onClick={async () => {
+            adicionarPaciente()
+            navigate("/home");
+          }
+          }
           disabled={!paciente}
           className="lg:w-56"
         >
