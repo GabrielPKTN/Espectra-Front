@@ -13,7 +13,7 @@ function Button({
     basicClick:
       "bg-[var(--bg-primary-color)] text-white hover:bg-[var(--bg-secondary-color)]",
     deleteButton: "bg-red-500 text-white hover:bg-red-600",
-    editButton: "bg-[#FFFFFF] text-[#3277CF] hover:bg-gray-100"
+    editButton: "bg-[#FFFFFF] text-[#3277CF] hover:bg-gray-100 shadow-[5px_10px_20px_rgba(0,0,0,0.5)]"
   };
 
   return (

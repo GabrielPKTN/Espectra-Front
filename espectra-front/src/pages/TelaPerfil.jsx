@@ -8,8 +8,9 @@ import { CircleUser } from "lucide-react";
 import { CircleX } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import app from "../services/api.js";
+import api from "../services/api.js";
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
+import toast from "react-hot-toast";
 
 function PerfilUsuario() {
 
@@ -24,6 +25,8 @@ function PerfilUsuario() {
 
     const { id_usuario } = useParams()
 
+    const token = localStorage.getItem('token')
+
     const requestData = async () => {
 
         try {
@@ -33,12 +36,12 @@ function PerfilUsuario() {
             const configHeader = {
 
                 headers: {
-                    'x-access-token': localStorage.getItem('token')
+                    'x-access-token': token
                 }
 
             }
 
-            const result = await app.get(url, configHeader)
+            const result = await api.get(url, configHeader)
 
             let reqUsuario = [result.data.items]
 
@@ -70,8 +73,6 @@ function PerfilUsuario() {
 
         try {
 
-            localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjMsImlhdCI6MTc3OTY1MDQxNywiZXhwIjoxMDAwMDE3Nzk2NTA0MTd9.qIKgl8RuppPt-ctEy3rP0xxcbd5Mc7oJzlNll7POtTA")
-
             const url = `/v1/espectra/usuario/`
 
             idUsuario = Number(idUsuario)
@@ -79,7 +80,7 @@ function PerfilUsuario() {
             const configHeader = {
                 headers: {
                     'Content-Type': 'application/json',
-                    'x-access-token': localStorage.getItem('token')
+                    'x-access-token': token
                 },
                 // O corpo da requisição DELETE deve ir explicitamente na propriedade 'data'
                 data: {
@@ -88,7 +89,7 @@ function PerfilUsuario() {
                 }
             };
 
-            const result = await app.delete(url, configHeader)
+            const result = await api.delete(url, configHeader)
 
             navigate("/")
 
@@ -99,7 +100,7 @@ function PerfilUsuario() {
     }
 
     function confirmaExclusao() {
-        alert("Sua conta foi excluída com sucesso!")
+        toast.success("Sua conta foi excluída com sucesso!")
     }
 
     function fechar() {
@@ -131,7 +132,7 @@ function PerfilUsuario() {
                     <img
                         src={usuario[0].foto}
                         alt="Foto do psicopedagogo"
-                        className="w-auto h-32 border-4 border-[#3277CF] rounded-full object-cover md:w-auto md:h-42 lg:w-auto lg:h-45"
+                        className="w-32 h-32 border-4 border-[#3277CF] rounded-full object-cover md:w-42 md:h-42 lg:w-45 lg:h-45"
                     />
 
                 ) : (
@@ -215,7 +216,7 @@ function PerfilUsuario() {
 
                     </div>
                 </div>
-                
+
                 {/*EMAIL E TELEFONE*/}
                 <div className="lg:flex lg:flex-row lg:gap-14">
 
@@ -268,7 +269,7 @@ function PerfilUsuario() {
                         )}
 
                     </div>
-                </div>  
+                </div>
 
             </div>
 

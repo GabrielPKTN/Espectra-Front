@@ -7,6 +7,7 @@ import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { data, useNavigate, useParams } from "react-router-dom";
 import api from "../services/api.js"
+import toast from "react-hot-toast";
 
 function AtualizarPerfilUsuario() {
 
@@ -31,6 +32,8 @@ function AtualizarPerfilUsuario() {
     const [nascimento, setNascimento] = useState("")
     const [erroNascimento, setErroNascimento] = useState("")
 
+    const token = localStorage.getItem('token')
+
     const requestData = async () => {
 
         try {
@@ -40,7 +43,7 @@ function AtualizarPerfilUsuario() {
             const configHeader = {
 
                 headers: {
-                    'x-access-token': localStorage.getItem('token')
+                    'x-access-token': token
                 }
 
             }
@@ -67,7 +70,7 @@ function AtualizarPerfilUsuario() {
 
                 headers: {
 
-                    'x-access-token': localStorage.getItem('token'),
+                    'x-access-token': token,
                     'Content-Type': 'MULTIPART/FORM-DATA'
 
                 }
@@ -123,7 +126,7 @@ function AtualizarPerfilUsuario() {
     }, [usuario])
 
     function alteracoesSalvas() {
-        alert("Suas alterações foram salvas com sucesso!")
+        toast.success("Suas alterações foram salvas com sucesso!")
 
         navigate("/")
     }
@@ -279,7 +282,7 @@ function AtualizarPerfilUsuario() {
 
         setFoto(`${URL.createObjectURL(target.files[0])}`)
 
-
+        target.value = ""
     }
 
     function clickInput() {
@@ -310,13 +313,13 @@ function AtualizarPerfilUsuario() {
                             id="preview-image"
                             src={foto || usuario[0]?.foto}
                             alt="Foto do psicopedagogo"
-                            className="w-auto h-32  border-[#3277CF] border-4 rounded-full object-cover md:w-auto md:h-42 lg:w-auto lg:h-45"
+                            className="w-32 h-32  border-[#3277CF] border-4 rounded-full object-cover md:w-42 md:h-42 lg:w-45 lg:h-45"
                         />
 
                         <input id="preview-input" onChange={preview} className="w-0" type="file" accept="image/*"></input>
 
                         <Plus
-                            className="absolute bottom-2 right-2 w-auto h-32  bg-[#3277CF] rounded-full shadow-md cursor-pointer transition-all duration-300 hover:scale-110  md:w-auto md:h-12 lg:w-auto lg:h-11"
+                            className="absolute bottom-2 right-2 w-auto h-8 mb-4 bg-[#3277CF] rounded-full shadow-md cursor-pointer transition-all duration-300 hover:scale-110  md:w-auto md:h-12 lg:w-auto lg:h-11"
                             color="#FFFFFF"
                             onClick={() => clickInput()}
                         />
@@ -348,7 +351,7 @@ function AtualizarPerfilUsuario() {
             </div>
 
             {/* Div que guarda os inputs do Psicopedagogo */}
-            <div className="flex flex-col justify-center items-center gap-4 mt-4 w-full md:mt-14 lg:mt-4">
+            <div className="flex flex-col justify-center items-center gap-4 mt-4 w-full md:mt-14 lg:mt-16">
                 <div className="flex flex-col gap-2">
                     <label className="text-left text-[#3277CF] text-[18px] font-semibold">
                         Nome
@@ -435,18 +438,18 @@ function AtualizarPerfilUsuario() {
                     </div>
                 </div>
 
-                <div className="flex flex-col justify-center items-center gap-4 md:mt-15 lg:flex-row lg:gap-6">
+                <div className="flex flex-col justify-center items-center gap-4 mt-15 md:mt-15 lg:flex-row lg:gap-6">
                     <Button
-                        variantClick="editButton"
-                        className="text-[#3277CF] cursor-pointer transform-gpu transform-all duration-300 ease-in-out hover:scale-110 md:w-[300px]"
-                        onClick=""// Navigate para a tela de redefinir senha 
+                        variantClick="basicClick"
+                        className="text-[#3277CF] cursor-pointer md:w-70"
+                        onClick={() => { }}
                     >
                         Editar senha
                     </Button>
 
                     <Button
-                        variantClick="editButton"
-                        className="text-[#3277CF] cursor-pointer transform-gpu transform-all duration-300 ease-in-out hover:scale-110 md:w-[300px]"
+                        variantClick="basicClick"
+                        className="text-[#3277CF] cursor-pointer md:w-70"
                         onClick={() => updateUsuario()}
                     >
                         Salvar alterações
