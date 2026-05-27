@@ -170,44 +170,40 @@ function AtualizarPerfilUsuario() {
             setErroEmail("Digite um email válido!")
             return
         }
+
+        setErroEmail("");
     }
 
     function mascaraTelefone(e) {
-        const valorInserido = e.target.value
+        let formato = e.target.value.replace(/\D/g, "");
 
-        let telefoneLimpo = valorInserido.replace(/\D/g, "")
-
-        if (telefoneLimpo.length <= 10) {
-            telefoneLimpo = telefoneLimpo.replace(/ˆ(\d{2})(\d)/g, "($1) $2")
-            telefoneLimpo = telefoneLimpo.replace(/(\d{2})(\d)/g, "($1) $2")
+        if (formato.length <= 10) {
+            formato = formato.replace(/^(\d{2})(\d)/g, "($1) $2");
+            formato = formato.replace(/(\d{4})(\d)/, "$1-$2");
         } else {
-            telefoneLimpo = telefoneLimpo.replace(/^(\d{2})(\d)/g, "($1) $2");
-            telefoneLimpo = telefoneLimpo.replace(/(\d{5})(\d)/, "$1-$2")
+            formato = formato.replace(/^(\d{2})(\d)/g, "($1) $2");
+            formato = formato.replace(/(\d{5})(\d)/, "$1-$2");
         }
 
-        return telefoneLimpo
+        return formato;
     }
 
     function validarNumeroTelefone(e) {
-        const telefoneComMascara = mascaraTelefone(e)
 
-        setTelefone(telefoneComMascara)
+        const mascaraUI = mascaraTelefone(e);
 
-        const telefoneLimpo = telefoneComMascara.replace(/\D/g, "")
+        const telefoneInserido = e.target.value.replace(/\D/g, "");
+        const formatoTelefone = /^[1-9]{2}(?:[1-8]|9)[0-9]{7,8}$/;
 
-        if (!telefoneLimpo) {
-            setErroTelefone("Informe o seu número de telefone!")
-            return
+        setTelefone(mascaraUI)
+
+        if (telefoneInserido.trim() === "") {
+            setErroTelefone("Informe seu número de telefone");
+        } else if (!formatoTelefone.test(telefoneInserido)) {
+            setErroTelefone("Digite um número válido!");
+        } else {
+            setErroTelefone("");
         }
-
-        const formatoTelefone = /^[1-9]{2}(?:[1-8]|9)[0-9]{7,8}$/
-
-        if (!formatoTelefone.test(telefoneLimpo)) {
-            setErroTelefone("Digite um número válido!")
-            return
-        }
-
-        setErroTelefone("")
     }
 
     function mascaraDataNascimento(e) {

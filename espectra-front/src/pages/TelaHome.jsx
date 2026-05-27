@@ -2,7 +2,7 @@ import InputHome from "../components/input/InputHome.jsx";
 import ContainerHeader from "../components/ContainerHeader";
 import ContainerPacientes from "../components/ContainerPacientes.jsx";
 import Button from "../components/Button.jsx";
-import app from "../services/api.js";
+import api from "../services/api.js";
 import { Filter } from "lucide-react";
 import { useEffect, useState, useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -43,7 +43,7 @@ function TelaHome() {
         return;
       }
 
-      const result = await app.get(`/v1/espectra/usuario/home/${id_usuario}`, {
+      const result = await api.get(`/v1/espectra/usuario/home/${id_usuario}`, {
         headers: {
           "x-access-token": token,
         },

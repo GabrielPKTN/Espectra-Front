@@ -8,8 +8,8 @@ import { CircleUser } from "lucide-react";
 import { CircleX } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import app from "../services/api.js"
-import { parsePhoneNumberFromString } from 'libphonenumber-js'
+import app from "../services/api.js";
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 function PerfilUsuario() {
 

@@ -218,7 +218,7 @@ function TelaAdicionarPaciente() {
         <Button
           variantClick="basicClick"
           onClick={async () => {
-            adicionarPaciente()
+            await adicionarPaciente()
             navigate("/home");
           }
           }
