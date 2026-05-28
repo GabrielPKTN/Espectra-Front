@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function HeaderResponsavel({ nome, foto }) {
     const navigate = useNavigate();
-
     const imagemUsuario = typeof foto === "string";
     const iconePadrao = foto;
 

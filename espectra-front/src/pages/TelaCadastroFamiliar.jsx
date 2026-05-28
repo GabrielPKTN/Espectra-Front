@@ -7,13 +7,14 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import toast from "react-hot-toast"
 import api from "../services/api.js"
+import { useNavigate } from "react-router-dom"
 
 function TelaCadastroFamiliar() {
-    const token = localStorage.getItem("token")
+
+    const navigate = useNavigate();
 
     const [foto, setFoto] = useState(null)
     const [fotoPreview, setFotoPreview] = useState("")
-
 
     // VALIDAÇÕES DE CAMPOS.
     const [nome, setNome] = useState("")
@@ -184,74 +185,32 @@ function TelaCadastroFamiliar() {
     async function cadastrarFamiliar() {
 
         try {
-            setLoading(true)
+            setLoading(true);
 
+            setErroNome("");
+            setErroCpf("");
+            setErroDiagnostico("");
+            setErroSerieEscolar("");
+            setErroDataNascimento("");
+            setErroGrauSuporte("");
 
+            const token = localStorage.getItem("token")
 
-            let nomeValidado = ""
-            let cpfValidado = ""
-            let diagnosticoValidado = ""
-            let serieEscolarValidada = ""
-            let dataNascimentoValidado = ""
-            let grauSuporteValidada = ""
-
-            try {
-                nomeValidado = validarNome(nome)
-                setErroNome("")
-            } catch (error) {
-                setErroNome(error.message)
-            }
-
-            try {
-                cpfValidado = validarCpf(cpf)
-                setErroCpf("")
-            } catch (error) {
-                setErroCpf(error.message)
-            }
-
-            try {
-                diagnosticoValidado = validarDiagnostico(diagnostico)
-                setErroDiagnostico("")
-            } catch (error) {
-                setErroDiagnostico(error.message)
-            }
-
-            try {
-                serieEscolarValidada = validarSerieEscolar(idSerieEscolar)
-                setErroSerieEscolar("")
-            } catch (error) {
-                setErroSerieEscolar(error.message)
-            }
-
-            try {
-                dataNascimentoValidado = validarDataNascimento(dataNascimento)
-                setErroDataNascimento("")
-            } catch (error) {
-                setErroDataNascimento(error.message)
-            }
-
-            try {
-                grauSuporteValidada = validarGrauSuporte(idGrauSuporte)
-                setErroGrauSuporte("")
-            } catch (error) {
-                setErroGrauSuporte(error.message)
-            }
-
-            if (
-                !nomeValidado ||
-                !cpfValidado ||
-                !diagnosticoValidado ||
-                !serieEscolarValidada ||
-                !dataNascimentoValidado ||
-                !grauSuporteValidada
-            ) {
+            if (!token) {
+                toast.error("Sua sessão foi expirada, faça login novamente!")
+                navigate("/login")
                 return
             }
 
-            const dataFormatada = dataFormatadaApi(dataNascimentoValidado)
+            const nomeValidade = validarNome(nome);
+            const cpfValidado = validarCpf(cpf);
+            const diagnosticoValidado = validarDiagnostico(diagnostico);
+            const serieEscolarValidada = validarSerieEscolar(idSerieEscolar)
+            const dataNascimentoValidado = validarDataNascimento(dataNascimento)
+            const grauSuporteValidada = validarGrauSuporte(idGrauSuporte)
 
-            const formData = new FormData()
-
+            const dataFormatada = dataFormatadaApi(dataNascimentoValidada);
+            const formData = new FormData();
 
             formData.append("nome", nomeValidado)
             formData.append("cpf", cpfValidado)
@@ -259,9 +218,8 @@ function TelaCadastroFamiliar() {
             formData.append("data_nascimento", dataFormatada)
             formData.append("id_serie_escolar", serieEscolarValidada)
             formData.append("id_grau_suporte", grauSuporteValidada)
-
-            //Adicionar o id do Responsável guardado no local storage.
             formData.append("id_responsavel", 2)
+
 
             if (foto) {
                 formData.append("foto", foto)
@@ -269,29 +227,35 @@ function TelaCadastroFamiliar() {
 
             console.log("Enviando dados...")
 
-            await api.post(`/v1/espectra/paciente/`,
-                formData,
-
+            await api.post(`/v1/espectra/paciente/`, formData,
                 {
                     headers: {
                         "x-access-token": token,
                         "Content-Type": "multipart/form-data"
                     }
-                })
+                });
 
-            alert("Paciente cadastrado com sucesso!")
+            toast.success("Paciente cadastrado com sucesso!")
+
 
         } catch (error) {
-            console.log(error)
+            console.error(error);
 
             if (error.response) {
-                console.log(error.response.data)
-                alert(error.response.data.message || "Erro ao cadastrar paciente!")
+                toast.error(error.response.data.message || "Erro ao cadastrar paciente!")
+            } else if (error.message) {
+                const mensagem = error.message
+
+                if (msg.includes("nome")) setErroNome(msg);
+                else if (msg.includes("CPF")) setErroCpf(msg);
+                else if (msg.includes("diagnóstico")) setErroDiagnostico(msg);
+                else if (msg.includes("série")) setErroSerieEscolar(msg);
+                else if (msg.includes("nascimento") || msg.includes("Mês") || msg.includes("inserido")) setErroDataNascimento(msg);
+                else if (msg.includes("suporte")) setErroGrauSuporte(msg);
+                else toast.error(msg);
             } else {
-                alert("Erro ao conectar com o servidor!")
+                toast.error("Erro ao conectar ao servidor!")
             }
-
-
         } finally {
             setLoading(false)
         }
