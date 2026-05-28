@@ -37,7 +37,7 @@ export default function HeaderResponsavel({ nome, foto }) {
                 </div>
 
                 {imagemUsuario ? (
-                    <img src={foto} alt="" className="border-2 border-(--bg-primary-color) rounded-full w-12 h-12 lg:w-16 lg:h-16" />
+                    <img src={foto} alt="" className="border-2 border-(--bg-primary-color) rounded-full w-12 h-12 lg:w-16 lg:h-16 object-cover" />
                 ) : (
                     <iconePadrao className="w-12 h-12 lg:w-18" />
                 )}

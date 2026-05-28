@@ -42,15 +42,16 @@ function TelaCadastroFamiliar() {
     // PEGAR A FOTO E O NOME DO USUÁRIO
     useEffect(() => {
         const idUsuario = localStorage.getItem('id_usuario');
+        const token = localStorage.getItem('token');
 
-        if (idUsuario) {
+        if (idUsuario && token) {
             try {
                 api.get(`/v1/espectra/usuario/${idUsuario}`, {
                     headers: { "x-access-token": token }
                 }).then(response => {
                     setUsuario({
-                        nome: response.data.items.nome || "Usuário",
-                        foto: response.data.items.foto || CircleUser
+                        nome: response.data.items?.nome || "Usuário",
+                        foto: response.data.items?.foto || CircleUser
                     })
                 })
             } catch (error) {
@@ -202,11 +203,11 @@ function TelaCadastroFamiliar() {
                 return
             }
 
-            const nomeValidade = validarNome(nome);
+            const nomeValidado = validarNome(nome);
             const cpfValidado = validarCpf(cpf);
             const diagnosticoValidado = validarDiagnostico(diagnostico);
             const serieEscolarValidada = validarSerieEscolar(idSerieEscolar)
-            const dataNascimentoValidado = validarDataNascimento(dataNascimento)
+            const dataNascimentoValidada = validarDataNascimento(dataNascimento)
             const grauSuporteValidada = validarGrauSuporte(idGrauSuporte)
 
             const dataFormatada = dataFormatadaApi(dataNascimentoValidada);
@@ -236,6 +237,7 @@ function TelaCadastroFamiliar() {
                 });
 
             toast.success("Paciente cadastrado com sucesso!")
+            navigate("/home")
 
 
         } catch (error) {
@@ -246,13 +248,13 @@ function TelaCadastroFamiliar() {
             } else if (error.message) {
                 const mensagem = error.message
 
-                if (msg.includes("nome")) setErroNome(msg);
-                else if (msg.includes("CPF")) setErroCpf(msg);
-                else if (msg.includes("diagnóstico")) setErroDiagnostico(msg);
-                else if (msg.includes("série")) setErroSerieEscolar(msg);
-                else if (msg.includes("nascimento") || msg.includes("Mês") || msg.includes("inserido")) setErroDataNascimento(msg);
-                else if (msg.includes("suporte")) setErroGrauSuporte(msg);
-                else toast.error(msg);
+                if (mensagem.includes("nome")) setErroNome(mensagem);
+                else if (mensagem.includes("CPF")) setErroCpf(mensagem);
+                else if (mensagem.includes("diagnóstico")) setErroDiagnostico(mensagem);
+                else if (mensagem.includes("série")) setErroSerieEscolar(mensagem);
+                else if (mensagem.includes("nascimento") || mensagem.includes("Mês") || mensagem.includes("inserido")) setErroDataNascimento(mensagem);
+                else if (mensagem.includes("suporte")) setErroGrauSuporte(mensagem);
+                else toast.error(mensagem);
             } else {
                 toast.error("Erro ao conectar ao servidor!")
             }
