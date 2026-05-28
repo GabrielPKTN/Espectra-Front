@@ -118,7 +118,7 @@ function PerfilUsuario() {
                 className="flex justify-between items-center w-full h-32.5 md:h-40 lg:h-36.5 px-4 bg-[#3277CF]"
             >
                 <BotaoVoltar
-                    onClick={() => navigate(-1)}
+                    onClick={() => navigate("/home")}
                     color="whiteColor"
                 />
 

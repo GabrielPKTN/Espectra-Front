@@ -208,10 +208,10 @@ function TelaHome() {
             : "Adicionar familiar"}
         </Button>
 
-        <div className="flex flex-row items-center gap-4">
+        <div className="flex flex-row items-center gap-4 m-4">
           <button
             onClick={() => navigate("/")}
-            className="flex gap-4"
+            className="flex gap-4 cursor-pointer"
           >
             <p className="primary-color instrument-sans font-semibold text-2xl">Sair</p>
             <LogOut className="primary-color size-8" />

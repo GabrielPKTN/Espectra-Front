@@ -16,7 +16,7 @@ function ContainerUserPhoto(props) {
     } else {
 
         return <div onClick={() => navigate(`/perfil/${props.id}`)} className={`
-        border border-(--bg-primary-color) rounded-[50%] size-10 overflow-hidden cursor-pointer md:size-16
+        border border-(--bg-primary-color) rounded-[50%] size-12 overflow-hidden cursor-pointer md:size-16
         `}>
             <img src={props.foto} alt="user photo" className="object-cover w-full h-full" />
         </div>

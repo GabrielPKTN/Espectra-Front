@@ -3,14 +3,19 @@ import antonioPhoto from "../assets/general_photos/antonio_photo.png"
 import Button from "../components/Button.jsx"
 import HeaderResponsavel from "../components/HeaderResponsavel.jsx"
 import { CircleUser } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
-
+import toast from "react-hot-toast"
+import api from "../services/api.js"
 
 function TelaCadastroFamiliar() {
+    const token = localStorage.getItem("token")
+
     const [foto, setFoto] = useState(null)
     const [fotoPreview, setFotoPreview] = useState("")
 
+
+    // VALIDAÇÕES DE CAMPOS.
     const [nome, setNome] = useState("")
     const [erroNome, setErroNome] = useState("")
 
@@ -30,6 +35,28 @@ function TelaCadastroFamiliar() {
     const [erroGrauSuporte, setErroGrauSuporte] = useState("")
 
     const [loading, setLoading] = useState(false)
+
+    const [usuario, setUsuario] = useState({ nome: '', foto: '' });
+
+    // PEGAR A FOTO E O NOME DO USUÁRIO
+    useEffect(() => {
+        const idUsuario = localStorage.getItem('id_usuario');
+
+        if (idUsuario) {
+            try {
+                api.get(`/v1/espectra/usuario/${idUsuario}`, {
+                    headers: { "x-access-token": token }
+                }).then(response => {
+                    setUsuario({
+                        nome: response.data.items.nome || "Usuário",
+                        foto: response.data.items.foto || CircleUser
+                    })
+                })
+            } catch (error) {
+                console.error("Erro ao processar dados do usuário", error)
+            }
+        }
+    }, [])
 
     function validarNome(nome) {
         const nomeLimpo = nome ? nome.trim() : ""
@@ -159,8 +186,7 @@ function TelaCadastroFamiliar() {
         try {
             setLoading(true)
 
-            //const token = localStorage.getItem("token")
-            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTc3OTI4MjM1NywiZXhwIjoxMDAwMDE3NzkyODIzNTd9.Gg83eaBKGXg2Xa9tNm5rjAxXn9_8mJxj4w2GBG756yk"
+
 
             let nomeValidado = ""
             let cpfValidado = ""
@@ -243,7 +269,7 @@ function TelaCadastroFamiliar() {
 
             console.log("Enviando dados...")
 
-            await axios.post(`http://localhost:8080/v1/espectra/paciente/`,
+            await api.post(`/v1/espectra/paciente/`,
                 formData,
 
                 {
@@ -271,12 +297,13 @@ function TelaCadastroFamiliar() {
         }
     }
 
+
     return (
         <div className="flex flex-col h-screen w-full gap-5">
 
             <HeaderResponsavel
-                nome="Antônio"
-                foto={antonioPhoto}
+                nome={usuario.nome}
+                foto={usuario.foto}
             />
 
             <div className="flex flex-col items-center gap-10 lg:gap-0 lg:mt-8">
@@ -287,11 +314,11 @@ function TelaCadastroFamiliar() {
                             <img
                                 src={fotoPreview}
                                 alt="Foto do paciente"
-                                className="w-[223px] h-[200px] md:h-[170px] md:w-[170px] rounded-full object-cover border-4 border-[#4285F4]"
+                                className="size-40 md:size-36 rounded-full object-cover border-4 border-[#4285F4]"
                             />
                         ) : (
                             <CircleUser
-                                className="w-[223px] h-[200px] md:h-[170px] md:w-[170px]"
+                                className="size-40 md:size-36"
                                 color="#4285F4"
                             />
                         )
