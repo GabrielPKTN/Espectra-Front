@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom"
 
 function CardPaciente(props) {
 
+    console.log(props)
+
     const navigate = useNavigate()
 
     return <div key={props.id} data-key={props.id} className="
@@ -19,13 +21,17 @@ function CardPaciente(props) {
                 <LabelInfoCard info={`${props.idade} ANOS`} ></LabelInfoCard>
                 <LabelInfoCard info={props.cpf} ></LabelInfoCard>
                 <LabelInfoCard info={props.serie_escolar} ></LabelInfoCard>
-                <LabelInfoCard info={props.diagnostico_breve} ></LabelInfoCard>
+                <LabelInfoCard info={Array.isArray(props.diagnostico_breve)
+                    ? props.diagnostico_breve
+                        .map(diag => diag.sigla)
+                        .join(", ")
+                    : props.diagnostico_breve} ></LabelInfoCard>
                 <LabelInfoCard info={props.grau_suporte} ></LabelInfoCard>
             </div>
         </div>
-        <div onClick={(() => navigate(`/perfil-paciente/${targetClick(event.target)}`))} className="cursor-pointer absolute w-full h-full left-0 right-0 top-0 bottom-0 rounded-3xl z-2"></div>      
+        <div onClick={(() => navigate(`/perfil-paciente/${targetClick(event.target)}`))} className="cursor-pointer absolute w-full h-full left-0 right-0 top-0 bottom-0 rounded-3xl z-2"></div>
     </div>
-    
+
 }
 
 const targetClick = (cardClicado) => {
@@ -33,6 +39,6 @@ const targetClick = (cardClicado) => {
     const pai = cardClicado.parentElement
     return pai.dataset.key
 
-} 
+}
 
 export default CardPaciente

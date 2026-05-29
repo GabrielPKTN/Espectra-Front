@@ -5,6 +5,7 @@ import ContainerUserPhoto from "./photo-components/ContainerUserPhoto";
 import Logotipo from "./logotipo";
 import BotaoVoltar from "./BotaoVoltar"
 import { useNavigate } from "react-router-dom";
+import { CircleUser } from "lucide-react";
 
 export default function HeaderResponsavel({ nome, foto }) {
     const navigate = useNavigate();
@@ -39,7 +40,7 @@ export default function HeaderResponsavel({ nome, foto }) {
                 {imagemUsuario ? (
                     <img src={foto} alt="" className="border-2 border-(--bg-primary-color) rounded-full w-12 h-12 lg:w-16 lg:h-16 object-cover" />
                 ) : (
-                    <iconePadrao className="w-12 h-12 lg:w-18" />
+                    <CircleUser className="w-12 h-12 lg:w-18" />
                 )}
 
 

@@ -51,7 +51,7 @@ function TelaCadastroFamiliar() {
                 }).then(response => {
                     setUsuario({
                         nome: response.data.items?.nome || "Usuário",
-                        foto: response.data.items?.foto || CircleUser
+                        foto: response.data.items?.foto
                     })
                 })
             } catch (error) {
@@ -209,6 +209,7 @@ function TelaCadastroFamiliar() {
             const serieEscolarValidada = validarSerieEscolar(idSerieEscolar)
             const dataNascimentoValidada = validarDataNascimento(dataNascimento)
             const grauSuporteValidada = validarGrauSuporte(idGrauSuporte)
+            const idUsuario = localStorage.getItem("id_usuario")
 
             const dataFormatada = dataFormatadaApi(dataNascimentoValidada);
             const formData = new FormData();
@@ -219,7 +220,7 @@ function TelaCadastroFamiliar() {
             formData.append("data_nascimento", dataFormatada)
             formData.append("id_serie_escolar", serieEscolarValidada)
             formData.append("id_grau_suporte", grauSuporteValidada)
-            formData.append("id_responsavel", 2)
+            formData.append("id_responsavel", idUsuario)
 
 
             if (foto) {
