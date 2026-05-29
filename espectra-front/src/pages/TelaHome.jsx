@@ -192,34 +192,41 @@ function TelaHome() {
           tipoUsuario={tipoUsuarioAtual}
         />
 
-        <Button
-          variantClick="basicClick"
-          onClick={() => {
-            if (tipoUsuarioAtual === "Psicopedagogo") {
-              navigate("/adicionar-paciente");
-            } else {
-              navigate("/cadastro-familiar");
-            }
-          }}
-          className="lg:text-center lg:w-64 lg:h-14"
-        >
-          {localStorage.getItem("tipo_usuario") === "Psicopedagogo"
-            ? "Adicionar paciente"
-            : "Adicionar familiar"}
-        </Button>
 
-        <div className="flex flex-row items-center gap-4 m-4">
-          <button
-            onClick={() => navigate("/")}
-            className="flex gap-4 cursor-pointer"
-          >
-            <p className="primary-color instrument-sans font-semibold text-2xl">Sair</p>
-            <LogOut className="primary-color size-8" />
-          </button>
-
-        </div>
 
       </main>
+
+      <footer>
+        <div className="flex flex-col items-center justify-center gap-4 mt-2">
+
+          <Button
+            variantClick="basicClick"
+            onClick={() => {
+              if (tipoUsuarioAtual === "Psicopedagogo") {
+                navigate("/adicionar-paciente");
+              } else {
+                navigate("/cadastro-familiar");
+              }
+            }}
+            className="lg:text-center lg:w-64 lg:h-14"
+          >
+            {localStorage.getItem("tipo_usuario") === "Psicopedagogo"
+              ? "Adicionar paciente"
+              : "Adicionar familiar"}
+          </Button>
+
+          <div className="flex flex-row items-center gap-4 m-2 mt-4">
+            <button
+              onClick={() => navigate("/")}
+              className="flex gap-2 cursor-pointer"
+            >
+              <p className="primary-color instrument-sans font-semibold text-2xl">Sair</p>
+              <LogOut className="primary-color size-8" />
+            </button>
+
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

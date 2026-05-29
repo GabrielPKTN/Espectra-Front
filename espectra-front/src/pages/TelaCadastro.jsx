@@ -281,9 +281,9 @@ function TelaCadastro() {
         lg:block lg:w-auto lg:h-128"
         />
         */}
-      
-      <DotLottieReact src="/animations/Login.lottie" autoplay className="hidden lg:block lg:w-150 lg::w-200 lg:w-250"/>
-    
+
+        <DotLottieReact src="/animations/Login.lottie" autoplay className="hidden lg:block lg:w-150 lg::w-200 lg:w-250" />
+
       </div>
 
       <div
@@ -409,6 +409,7 @@ function TelaCadastro() {
                 name="nascimento do usuário"
                 limiteCaracteres={10}
                 placeholder="DD/MM/AAAA"
+                className="text-center"
               />
               {inputsTocados.dataNascimento && erroData && (
                 <p className="text-red-500 text-sm p-1">{erroData}</p>

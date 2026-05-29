@@ -17,9 +17,8 @@ export default function HeaderResponsavel({ nome, foto }) {
     return (
         <header className="flex items-center justify-between p-6 lg:bg-(--bg-primary-color)">
 
-            <BotaoVoltar color="blueColor" className="hidden md:block lg:hidden" />
+            <BotaoVoltar color="blueColor" className="hidden md:block lg:hidden" type="button" />
             <img src={logo} alt="" className="w-auto size-8 flex items-center md:size-10 md:w-auto md:hidden lg:block lg:w-20 lg:h-auto" />
-            {/* <img src={backArrow} alt="" className="hidden md:block md:lg:hidden" /> */}
 
 
             <div className="flex items-center gap-4">

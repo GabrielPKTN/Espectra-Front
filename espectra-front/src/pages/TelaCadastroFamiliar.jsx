@@ -2,7 +2,7 @@ import InputDefault from "../components/InputDefault"
 import antonioPhoto from "../assets/general_photos/antonio_photo.png"
 import Button from "../components/Button.jsx"
 import HeaderResponsavel from "../components/HeaderResponsavel.jsx"
-import { CircleUser } from "lucide-react"
+import { CircleUser, Plus } from "lucide-react"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import toast from "react-hot-toast"
@@ -35,29 +35,78 @@ function TelaCadastroFamiliar() {
     const [idGrauSuporte, setIdGrauSuporte] = useState("")
     const [erroGrauSuporte, setErroGrauSuporte] = useState("")
 
+    const [diagnosticos, setDiagnosticos] = useState([])
+
     const [loading, setLoading] = useState(false)
 
     const [usuario, setUsuario] = useState({ nome: '', foto: '' });
+
+    // DIAGNOSTICOS
+    useEffect(() => {
+        async function buscarDiagnosticos() {
+            try {
+                const token = localStorage.getItem("token")
+
+                const response = await api.get("/v1/espectra/diagnostico",
+                    {
+                        headers: {
+                            "x-access-token": token
+                        }
+                    }
+                )
+
+                setDiagnosticos(response.data.items || [])
+            } catch (error) {
+                console.error("Erro ao buscar diagnosticos:", error)
+                toast.error("Erro ao carregar diagnósticos")
+            }
+        }
+
+        buscarDiagnosticos()
+    }, [])
 
     // PEGAR A FOTO E O NOME DO USUÁRIO
     useEffect(() => {
         const idUsuario = localStorage.getItem('id_usuario');
         const token = localStorage.getItem('token');
 
-        if (idUsuario && token) {
-            try {
-                api.get(`/v1/espectra/usuario/${idUsuario}`, {
-                    headers: { "x-access-token": token }
-                }).then(response => {
-                    setUsuario({
-                        nome: response.data.items?.nome || "Usuário",
-                        foto: response.data.items?.foto
-                    })
+        if (!idUsuario || !token) return;
+
+        api.get(`/v1/espectra/usuario/${idUsuario}`, {
+            headers: { "x-access-token": token }
+        })
+            .then(response => {
+                setUsuario({
+                    nome: response.data.items?.nome || "Usuário",
+                    foto: response.data.items?.foto
                 })
-            } catch (error) {
-                console.error("Erro ao processar dados do usuário", error)
-            }
-        }
+            })
+            .catch(error => {
+                console.error("Erro usuário:", error);
+
+                if (error.response?.status === 401) {
+                    toast.error("Sessão expirada");
+
+                    localStorage.clear();
+                    navigate("/login");
+                }
+            });
+
+
+        // if (idUsuario && token) {
+        //     try {
+        //         api.get(`/v1/espectra/usuario/${idUsuario}`, {
+        //             headers: { "x-access-token": token }
+        //         }).then(response => {
+        //             setUsuario({
+        //                 nome: response.data.items?.nome || "Usuário",
+        //                 foto: response.data.items?.foto
+        //             })
+        //         })
+        //     } catch (error) {
+        //         console.error("Erro ao processar dados do usuário", error)
+        //     }
+        // }
     }, [])
 
     function validarNome(nome) {
@@ -281,13 +330,27 @@ function TelaCadastroFamiliar() {
                             <img
                                 src={fotoPreview}
                                 alt="Foto do paciente"
-                                className="size-40 md:size-36 rounded-full object-cover border-4 border-[#4285F4]"
+                                className="size-38 md:size-36 rounded-full object-cover border-4 border-[#4285F4]"
                             />
                         ) : (
-                            <CircleUser
-                                className="size-40 md:size-36"
-                                color="#4285F4"
-                            />
+
+
+                            <div className="relative cursor-pointer">
+
+                                <CircleUser
+                                    id="preview-image"
+                                    alt="Foto do psicopedagogo"
+                                    className=" w-auto h-32 bg-white text-(--bg-primary-color) rounded-full object-cover md:size-36"
+                                />
+
+                                <Plus
+                                    className="absolute bottom-1 right-1.5 w-auto h-8 bg-[#3277CF] border-2 border-white rounded-full shadow-md cursor-pointer transition-all duration-300 hover:scale-110 md:size-10 lg:right-2.5"
+                                    color="#FFFFFF"
+                                />
+
+                            </div>
+
+
                         )
                     }
 
@@ -310,7 +373,7 @@ function TelaCadastroFamiliar() {
                 <div className="flex flex-col gap-2 px-10">
 
                     <div>
-                        <span className="inclusive-sans text-xl font-semibold text-[var(--dark-blue)]">Nome</span>
+                        <span className="inclusive-sans text-xl font-semibold text-(--dark-blue)">Nome</span>
                         <InputDefault
                             value={nome}
                             onChange={(e) => {
@@ -327,7 +390,7 @@ function TelaCadastroFamiliar() {
                     </div>
 
                     <div>
-                        <span className="inclusive-sans text-xl font-semibold text-[var(--dark-blue)]">CPF</span>
+                        <span className="inclusive-sans text-xl font-semibold text-(--dark-blue)">CPF</span>
                         <InputDefault
                             value={cpf}
                             onChange={(e) => {
@@ -348,67 +411,38 @@ function TelaCadastroFamiliar() {
                     </div>
 
                     <div>
-                        <span className="inclusive-sans text-xl font-semibold text-[var(--dark-blue)]">Diagnóstico</span>
+                        <span className="inclusive-sans text-xl font-semibold text-(--dark-blue)">Diagnóstico</span>
                         <select
                             value={diagnostico}
                             onChange={(e) => {
                                 setDiagnostico(e.target.value)
                                 setErroDiagnostico("")
                             }}
-                            className={`border rounded-lg h-12 w-full ${erroDiagnostico
+                            className={`border rounded-xl h-12 lg:h-10 w-full ${erroDiagnostico
                                 ? "border-red-500"
-                                : "border-[var(--bg-primary-color)]"
+                                : "border-(--bg-primary-color)"
                                 }`}
                         >
-                            <option value="">Selecione</option>
-                            <option value="1">TDAH</option>
-                            <option value="2">TEA</option>
-                            <option value="3">TAG</option>
-                            <option value="4">TAB</option>
-                            <option value="5">TOC</option>
-                            <option value="6">TEPT</option>
-                            <option value="7">TPL</option>
-                            <option value="8">TOD</option>
-                            <option value="9">TDC</option>
-                            <option value="10">TCA</option>
-                            <option value="11">TDA</option>
-                            <option value="12">TPAS</option>
-                            <option value="13">TPN</option>
-                            <option value="14">TPE</option>
-                            <option value="15">TP Esquizo</option>
-                            <option value="16">TPE-Evit</option>
-                            <option value="17">TPD</option>
-                            <option value="18">TP Histri</option>
-                            <option value="19">T Pânico</option>
-                            <option value="20">TAS</option>
-                            <option value="21">Fob. Esp.</option>
-                            <option value="22">Agorafob</option>
-                            <option value="23">T. Depr. M</option>
-                            <option value="24">Distimia</option>
-                            <option value="25">T. Somat</option>
-                            <option value="26">T. Convers</option>
-                            <option value="27">T. Factíc</option>
-                            <option value="28">Anorexia</option>
-                            <option value="29">Bulimia</option>
-                            <option value="30">Insônia</option>
-                            <option value="31">Hipersônia</option>
-                            <option value="32">Narcolep</option>
-                            <option value="33">Apneia</option>
-                            <option value="34">Dislexia</option>
-                            <option value="35">Discalc</option>
-                            <option value="36">Tiques</option>
-                            <option value="37">Tourette</option>
-                            <option value="38">Esquizof</option>
-                            <option value="39">T. Esquizoa</option>
-                            <option value="40">T. Delir</option>
+                            <option value="">
+                                Selecione
+                            </option>
+                            {
+                                diagnosticos.map((diag) => (
+                                    <option
+                                        key={diag.id}
+                                        value={diag.id}>
+                                        {diag.nome_completo_transtorno}
+                                    </option>
+                                ))
+                            }
                         </select>
                     </div>
 
-                    <div className="flex gap-2">
+                    <div className="grid grid-cols-2 gap-2 w-full">
 
-                        <div className="flex flex-col items-start w-[50%]">
+                        <div className="flex flex-col">
 
-                            <span className="inclusive-sans text-xl font-semibold text-[var(--dark-blue)]">Série escolar</span>
+                            <span className="inclusive-sans text-xl font-semibold text-(--dark-blue)">Série escolar</span>
 
                             <select
                                 name=""
@@ -419,7 +453,7 @@ function TelaCadastroFamiliar() {
                                     setErroSerieEscolar("")
                                 }}
 
-                                className={`border rounded-lg h-12 w-full ${erroSerieEscolar ? "border-red-500" : "border-[var(--bg-primary-color)]"}`}
+                                className={`border rounded-xl h-12 lg:h-10 w-full ${erroSerieEscolar ? "border-red-500" : "border-[var(--bg-primary-color)]"}`}
                             >
                                 <option value="">
                                     Selecione
@@ -498,9 +532,9 @@ function TelaCadastroFamiliar() {
                             }
                         </div>
 
-                        <div className="w-[50%]">
+                        <div className="flex flex-col">
 
-                            <span className="inclusive-sans text-xl font-semibold text-[var(--dark-blue)]">Nascimento</span>
+                            <span className="inclusive-sans text-xl font-semibold text-(--dark-blue)">Nascimento</span>
 
                             <InputDefault
                                 value={dataNascimento}
@@ -512,6 +546,7 @@ function TelaCadastroFamiliar() {
                                 }}
                                 variantInput={erroDataNascimento ? "errorInput" : "basicInput"}
                                 placeholder={"DD/MM/AAAA"}
+                                className="text-center h-12 lg:h-10"
                             />
                             {
                                 erroDataNascimento && (
@@ -525,7 +560,7 @@ function TelaCadastroFamiliar() {
                     </div>
 
                     <div>
-                        <span className="inclusive-sans text-xl font-semibold text-[var(--dark-blue)]">Grau suporte</span>
+                        <span className="inclusive-sans text-xl font-semibold text-(--dark-blue)">Grau suporte</span>
                         <select
                             name=""
                             id=""
@@ -534,7 +569,7 @@ function TelaCadastroFamiliar() {
                                 setIdGrauSuporte(e.target.value)
                                 setErroGrauSuporte("")
                             }}
-                            className={`border rounded-lg h-12 w-full ${erroGrauSuporte ? "border-red-500" : "border-[var(--bg-primary-color)]"}`}
+                            className={`border rounded-xl h-12 lg:h-10 w-full ${erroGrauSuporte ? "border-red-500" : "border-(--bg-primary-color)"}`}
                         >
                             <option value="">
                                 Selecione
@@ -573,7 +608,11 @@ function TelaCadastroFamiliar() {
                     >
                         {loading ? "Salvando..." : "Salvar"}
                     </Button>
-                    <Button className="hidden md:block md:text-[var(--bg-primary-color)] bg-white md:instrument-sans md:text-xl md:w-48 md:h-12 md:rounded-lg md:font-bold md:shadow-2xl">Cancelar</Button>
+                    <Button
+                        onClick={() => navigate(-1)}
+                        className="hidden md:block md:text-(--bg-primary-color) bg-white md:instrument-sans md:text-xl md:w-48 md:h-12 md:rounded-lg md:font-bold md:shadow-2xl hover:bg-gray-100 ">
+                        Cancelar
+                    </Button>
                 </div>
 
             </div>
