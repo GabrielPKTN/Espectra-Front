@@ -2,7 +2,7 @@ import InputDefault from "../components/InputDefault"
 import antonioPhoto from "../assets/general_photos/antonio_photo.png"
 import Button from "../components/Button.jsx"
 import HeaderResponsavel from "../components/HeaderResponsavel.jsx"
-import { CircleUser, Plus } from "lucide-react"
+import { CircleUser, Plus, X } from "lucide-react"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import toast from "react-hot-toast"
@@ -24,6 +24,8 @@ function TelaCadastroFamiliar() {
     const [erroCpf, setErroCpf] = useState("")
 
     const [diagnostico, setDiagnostico] = useState("")
+    const [diagnosticos, setDiagnosticos] = useState([])
+    const [diagnosticosSelecionados, setDiagnosticosSelecionados] = useState([])
     const [erroDiagnostico, setErroDiagnostico] = useState("")
 
     const [idSerieEscolar, setIdSerieEscolar] = useState("")
@@ -35,7 +37,7 @@ function TelaCadastroFamiliar() {
     const [idGrauSuporte, setIdGrauSuporte] = useState("")
     const [erroGrauSuporte, setErroGrauSuporte] = useState("")
 
-    const [diagnosticos, setDiagnosticos] = useState([])
+
 
     const [loading, setLoading] = useState(false)
 
@@ -160,12 +162,12 @@ function TelaCadastroFamiliar() {
             .replace(/(\d{3})(\d{1,2})$/, "$1-$2")
     }
 
-    function validarDiagnostico(diagnostico) {
-        if (!diagnostico) {
+    function validarDiagnostico(diagnosticosArray) {
+        if (!diagnosticosArray || diagnosticosArray.length === 0) {
             throw new Error("O diagnóstico é obrigatório!")
         }
 
-        return diagnostico
+        return Array.isArray(diagnosticosArray) ? diagnosticosArray : [diagnosticosArray]
     }
 
     function validarSerieEscolar(serieEscolar) {
@@ -230,6 +232,21 @@ function TelaCadastroFamiliar() {
     function dataFormatadaApi(data) {
         const [dia, mes, ano] = data.split("/")
         return `${ano}-${mes}-${dia}`
+    }
+
+    const selecionarDiagnoticos = (id) => {
+        if (!id) return
+
+        const itemEncontrado = diagnosticos.find(d => String(d.id) === String(id))
+
+        if (itemEncontrado && !diagnosticosSelecionados.some(d => d.id === itemEncontrado.id)) {
+            setDiagnosticosSelecionados([...diagnosticosSelecionados, itemEncontrado])
+            setErroDiagnostico("");
+        }
+    }
+
+    const removerDiagnostico = (id) => {
+        setDiagnosticosSelecionados(diagnosticosSelecionados.filter(d => d.id !== id))
     }
 
     async function cadastrarFamiliar() {
@@ -416,7 +433,7 @@ function TelaCadastroFamiliar() {
                             value={diagnostico}
                             onChange={(e) => {
                                 setDiagnostico(e.target.value)
-                                setErroDiagnostico("")
+                                selecionarDiagnoticos(e.target.value)
                             }}
                             className={`border rounded-xl h-12 lg:h-10 w-full ${erroDiagnostico
                                 ? "border-red-500"
@@ -436,6 +453,20 @@ function TelaCadastroFamiliar() {
                                 ))
                             }
                         </select>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 mt-2">
+                        {diagnosticosSelecionados.map((diag => (
+                            <div key={diag.id} className="flex items-center gap-2 bg-[#6b98e1] text-white px-3 py-1.5 rounded-full text-sm font-medium shadow-sm animate-fade-in">
+                                <span>{diag.sigla || diag.nome_completo_transtorno}</span>
+                                <button type="button"
+                                    onClick={() => removerDiagnostico(diag.id)}
+                                    className="hover:bg-[#3965ab] rounded-full p-0.5 transition-colors focus:outline-none">
+                                    <X size={14} />
+                                </button>
+                            </div>
+                        )))
+                        }
                     </div>
 
                     <div className="grid grid-cols-2 gap-2 w-full">
@@ -599,7 +630,7 @@ function TelaCadastroFamiliar() {
                 </div>
 
 
-                <div className="flex self-center md:gap-10 md:flex md:flex-row-reverse lg:mt-10 lg:mb-10">
+                <div className="flex flex-col gap-4 self-center md:gap-10 md:flex md:flex-row-reverse lg:mt-10 lg:mb-10">
                     {/* onClick -> voltar para a tela home do fluxo de familiar */}
                     <Button
                         type="button"
@@ -610,7 +641,9 @@ function TelaCadastroFamiliar() {
                     </Button>
                     <Button
                         onClick={() => navigate(-1)}
-                        className="hidden md:block md:text-(--bg-primary-color) bg-white md:instrument-sans md:text-xl md:w-48 md:h-12 md:rounded-lg md:font-bold md:shadow-2xl hover:bg-gray-100 ">
+                        variantClick="editButton"
+                        className="text-(--primary-color) bg-white instrument-sans text-xl w-48 h-12 rounded-lg font-bold shadow-2xl hover:bg-gray-100"
+                    >
                         Cancelar
                     </Button>
                 </div>
