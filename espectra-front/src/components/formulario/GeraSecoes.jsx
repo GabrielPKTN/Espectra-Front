@@ -68,7 +68,7 @@ function GeraSecoes(
 
             <div className="flex flex-col gap-8">
 
-                <GeraComportamento array={categorias.arrayLinguagem} corNumeracao={"FFC87B"} />
+                <GeraComportamento array={categorias.arrayLinguagem} setRespostas={setRespostas} respostas={respostas} corNumeracao={"FFC87B"} />
 
             </div>
 
@@ -85,7 +85,7 @@ function GeraSecoes(
 
             <div className="flex flex-col gap-8">
 
-                <GeraComportamento array={categorias.arrayCognicao} corNumeracao={"71AFFF"} />
+                <GeraComportamento array={categorias.arrayCognicao} setRespostas={setRespostas} respostas={respostas} corNumeracao={"71AFFF"} />
 
             </div>
 
@@ -102,7 +102,7 @@ function GeraSecoes(
 
             <div className="flex flex-col gap-8">
 
-                <GeraComportamento array={categorias.arrayAutoCuidados} corNumeracao={"CC9DFF"} />
+                <GeraComportamento array={categorias.arrayAutoCuidados} setRespostas={setRespostas} respostas={respostas} corNumeracao={"CC9DFF"} />
 
             </div>
 
@@ -119,7 +119,7 @@ function GeraSecoes(
 
             <div className="flex flex-col gap-8">
 
-                <GeraComportamento array={categorias.arrayDesMotor} corNumeracao={"C8C8C8"} />
+                <GeraComportamento array={categorias.arrayDesMotor} setRespostas={setRespostas} respostas={respostas} corNumeracao={"C8C8C8"} />
 
             </div>
 

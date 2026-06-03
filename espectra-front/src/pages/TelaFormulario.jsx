@@ -43,6 +43,8 @@ function TelaFormulario() {
     try {
       const url = `/v1/espectra/formulario/${id_paciente}/${id_usuario}`;
 
+      console.log("Estado de respostas atual que será enviado:", respostas);
+
       const dadosAtualizados = {
         formulario: respostas,
       };
