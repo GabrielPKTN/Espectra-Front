@@ -243,6 +243,8 @@ function TelaCadastroFamiliar() {
             setDiagnosticosSelecionados([...diagnosticosSelecionados, itemEncontrado])
             setErroDiagnostico("");
         }
+
+        setDiagnostico("");
     }
 
     const removerDiagnostico = (id) => {
@@ -271,7 +273,7 @@ function TelaCadastroFamiliar() {
 
             const nomeValidado = validarNome(nome);
             const cpfValidado = validarCpf(cpf);
-            const diagnosticoValidado = validarDiagnostico(diagnostico);
+            const diagnosticoValidado = validarDiagnostico(diagnosticosSelecionados);
             const serieEscolarValidada = validarSerieEscolar(idSerieEscolar)
             const dataNascimentoValidada = validarDataNascimento(dataNascimento)
             const grauSuporteValidada = validarGrauSuporte(idGrauSuporte)
@@ -282,7 +284,12 @@ function TelaCadastroFamiliar() {
 
             formData.append("nome", nomeValidado)
             formData.append("cpf", cpfValidado)
-            formData.append("diagnostico", JSON.stringify([{ id: Number(diagnostico) }]))
+
+            const diagnosticosFormatados = diagnosticoValidado.map(diag => ({
+                id: Number(diag.id)
+            }))
+
+            formData.append("diagnostico", JSON.stringify(diagnosticosFormatados))
             formData.append("data_nascimento", dataFormatada)
             formData.append("id_serie_escolar", serieEscolarValidada)
             formData.append("id_grau_suporte", grauSuporteValidada)

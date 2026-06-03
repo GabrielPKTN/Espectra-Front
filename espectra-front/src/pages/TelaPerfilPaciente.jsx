@@ -21,14 +21,21 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import Swal from 'sweetalert2';
+import ContainerUserPhoto from "../components/photo-components/ContainerUserPhoto";
+import BotaoVoltar from "../components/BotaoVoltar";
 
 function TelaPerfilPaciente() {
   const [paciente, setPaciente] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { id, id_usuario } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const [tipoUsuario, setTipoUsuario] = useState(null);
+
+  const homeDataString = localStorage.getItem("home");
+  const homeDataObject = homeDataString ? JSON.parse(homeDataString) : null;
+  const fotoUsuarioLogado = homeDataObject?.items?.foto || null;
+  const idUsuarioLogado = homeDataObject?.items?.id || null;
 
   //função para consumir os dados do paciente
   useEffect(() => {
@@ -61,14 +68,22 @@ function TelaPerfilPaciente() {
   async function getUsuarioById() {
     const token = localStorage.getItem("token");
 
+    const idUsuarioLogado = localStorage.getItem("id_usuario");
+
+    if (!idUsuarioLogado) {
+      console.error("id do usuario nao encontrado no localStorage")
+      return null
+    }
+
     try {
-      const response = await api.get(`/v1/espectra/usuario/${id_usuario}`, {
+      const response = await api.get(`/v1/espectra/usuario/${idUsuarioLogado}`, {
         headers: {
           "x-access-token": token,
         },
       });
 
-      return response.data;
+      return response.data.items;
+
     } catch (error) {
       console.error("Usuário não encontrado!");
       return null;
@@ -84,21 +99,21 @@ function TelaPerfilPaciente() {
       return;
     }
 
-    const mensagemConfirmaçao =
+    const mensagemConfirmacao =
       tipoUsuario === 2
         ? "Tem certeza que deseja apagar esse familiar?"
         : "Tem certeza que deseja remover esse paciente?";
 
     const confirmar = await Swal.fire({
-    title: 'Atenção!',
-    text: mensagemConfirmacao,
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#e31b1b',
-    cancelButtonColor: '#4285f4',
-    confirmButtonText: 'Apagar',
-    cancelButtonText: 'Cancelar'
-  });
+      title: 'Atenção!',
+      text: mensagemConfirmacao,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#e31b1b',
+      cancelButtonColor: '#4285f4',
+      confirmButtonText: 'Apagar',
+      cancelButtonText: 'Cancelar',
+    });
 
     if (!confirmar.isConfirmed) return;
 
@@ -149,10 +164,11 @@ function TelaPerfilPaciente() {
   //editar o formulário portage
   async function editarFormulario() {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token")
+      const idUsuarioLogado = localStorage.getItem("id_usuario");
 
       const response = await api.get(
-        `/v1/espectra/formulario/${id}/${id_usuario}`,
+        `/v1/espectra/formulario/${id}/${idUsuarioLogado}`,
         {
           headers: {
             "x-access-token": token,
@@ -161,7 +177,7 @@ function TelaPerfilPaciente() {
       );
 
       const formulario = response.data;
-      navigate(`/formulario/${id}/${id_usuario}`, {
+      navigate(`/formulario/${id}/${idUsuarioLogado}`, {
         state: {
           formulario,
         },
@@ -266,11 +282,8 @@ function TelaPerfilPaciente() {
     <div className="lg:bg-[#dfedff] flex flex-col justify-between gap-2 lg:h-auto lg:overflow-hidden">
       {/*HEADER*/}
       <div className="flex flex-row justify-between p-2 m-2 lg:m-0.5">
-        <ChevronLeft
-          className="primary-color size-8 lg:size-10 cursor-pointer"
-          onClick={() => navigate(-1)}
-        />
-        <CircleUser className="primary-color size-10 lg:size-12"></CircleUser>
+        <BotaoVoltar color="blueColor" onClick={() => navigate("/home")} />
+        <ContainerUserPhoto foto={fotoUsuarioLogado} id={idUsuarioLogado} />
       </div>
 
       <div
@@ -390,7 +403,14 @@ function TelaPerfilPaciente() {
                   color={hab.classe}
                   colorHover={`${hab.classe}-hover`}
                   type="button"
-                  onClick={() => navigate(`/atividade/${id}/${hab.id}`)}
+                  onClick={() => {
+                    localStorage.setItem("id_paciente", id)
+                    localStorage.setItem("id_habilidade", hab.id)
+                    localStorage.setItem("nome_habilidade", hab.nome)
+                    localStorage.setItem("cor_habilidade", hab.cor)
+
+                    navigate("/atividades");
+                  }}
                 >
                   {hab.nome}
                 </ButtonHabilidade>

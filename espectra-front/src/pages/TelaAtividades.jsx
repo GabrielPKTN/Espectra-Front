@@ -7,14 +7,17 @@ import axios from "axios"
 import { useEffect, useState } from "react";
 import api from "../services/api"
 
-function TelaAtividades(){
-    
+function TelaAtividades() {
+
     const navigate = useNavigate()
 
     const pacienteId = Number(localStorage.getItem("id_paciente"))
     const habilidadeId = Number(localStorage.getItem("id_habilidade"))
+    const nomeHabilidade = localStorage.getItem("nome_habilidade")
+    const corHabilidade = localStorage.getItem("cor_habilidade")
+
     const token = localStorage.getItem("token")
-    
+
     const [atividades, setAtividades] = useState([])
     const [mensagemErroCadastradas, setErroCadastradas] = useState("");
     const [mensagemErroConcluidas, setErroConcluidas] = useState("");
@@ -22,13 +25,13 @@ function TelaAtividades(){
     async function getAtividades() {
         try {
             const response = await api.get(
-                `/v1/espectra/atividade/${pacienteId}/${habilidadeId}`,{ 
-                    headers: {
-                        'x-access-token': token
-                    }
+                `/v1/espectra/atividade/${pacienteId}/${habilidadeId}`, {
+                headers: {
+                    'x-access-token': token
+                }
             })
 
-           
+
             return response.data.items || []
 
         } catch (error) {
@@ -36,7 +39,7 @@ function TelaAtividades(){
         }
     }
 
-    
+
     useEffect(() => {
         async function carregar() {
             const atividades = await getAtividades()
@@ -63,52 +66,53 @@ function TelaAtividades(){
             setErroCadastradas("")
         }
     }, [atividadesConcluidas])
-    
 
-    return(
+
+    return (
         <div className="flex md:gap-5">
 
-            <CardUser/>
+            <CardUser />
 
             <div className="h-screen w-full flex flex-col px-4 md:w-[65%] md:py-8 gap-6 lg:gap-10">
-            
+
                 <div>
-                    <HeaderUsuario/>
-    
-                    
+                    <HeaderUsuario />
+
+
                     <h1 className="
-                        justify-self-center instrument-sans font-bold text-2xl text-[#89C771] 
+                        justify-self-center instrument-sans font-bold text-2xl
                         md:text-3xl
                         lg:text-5xl"
-                        >
-                            Socialização
+                        style={{ color: corHabilidade }}
+                    >
+                        {nomeHabilidade}
                     </h1>
                 </div>
-               
-    
+
+
                 <div className="flex flex-col justify-items-center items-center gap-5 md:mt-4 lg:items-start">
                     <h2 className="
                         instrument-sans font-bold text-lg 
                         md:text-2xl
                         lg:text-3xl"
-                        >
-                            Atividades Em andamento:
+                    >
+                        Atividades Em andamento:
                     </h2>
 
                     <div className="flex flex-col w-full overflow-y-auto max-h-[30vh] gap-3 lg:grid lg:grid-cols-2 ">
-                            {atividadesAndamento.map((item) => (
-                                <CardAtividade
-                                    key={item.id_atividade}
-                                    atividade={item.comportamento}
-                                    id={item.id_atividade}
-                                    questao={item.numero_questao}
-                                />
-                                
-                            ))}
+                        {atividadesAndamento.map((item) => (
+                            <CardAtividade
+                                key={item.id_atividade}
+                                atividade={item.comportamento}
+                                id={item.id_atividade}
+                                questao={item.numero_questao}
+                            />
 
-                            {
-                                mensagemErroCadastradas && (
-                                    <p className="
+                        ))}
+
+                        {
+                            mensagemErroCadastradas && (
+                                <p className="
                                     text-red-500
                                     instrument-sans
                                     text-md
@@ -118,38 +122,38 @@ function TelaAtividades(){
                                     mt-2
                                     self-center
                                   "
-                                  >
+                                >
                                     {mensagemErroCadastradas}
-                                  </p>
-                                )
-                            }
+                                </p>
+                            )
+                        }
                     </div>
-    
-                  
+
+
                 </div>
-    
+
                 <div className="flex flex-col justify-items-center items-center gap-5 lg:items-start">
                     <h2 className="
                         instrument-sans font-bold text-lg 
                         md:text-2xl
                         lg:text-3xl"
-                        >
-                            Habilidades adquiridas:
+                    >
+                        Habilidades adquiridas:
                     </h2>
-                
-                    
-                    <div className="flex flex-col overflow-y-auto max-h-[30vh] w-full gap-3 lg:grid lg:grid-cols-2 ">
-                            {atividadesConcluidas.map((item) => (
-                                        <CardAtividadeAdquirida
-                                            key={item.id_atividade}
-                                            atividade={item.comportamento}
-                                            id={item.id_atividade}
-                                        />
-                            ))}
 
-{
-                                mensagemErroConcluidas && (
-                                    <p className="
+
+                    <div className="flex flex-col overflow-y-auto max-h-[30vh] w-full gap-3 lg:grid lg:grid-cols-2 ">
+                        {atividadesConcluidas.map((item) => (
+                            <CardAtividadeAdquirida
+                                key={item.id_atividade}
+                                atividade={item.comportamento}
+                                id={item.id_atividade}
+                            />
+                        ))}
+
+                        {
+                            mensagemErroConcluidas && (
+                                <p className="
                                     text-red-500
                                     instrument-sans
                                     text-md
@@ -159,16 +163,16 @@ function TelaAtividades(){
                                     mt-2
                                     self-center
                                   "
-                                  >
+                                >
                                     {mensagemErroConcluidas}
-                                  </p>
-                                )
-                            }
+                                </p>
+                            )
+                        }
                     </div>
-                    
-                
+
+
                 </div>
-    
+
                 <button className="
                     bg-[var(--bg-secondary-color)] text-white p-2 rounded-full 
                     instrument-sans font-bold 
@@ -177,18 +181,18 @@ function TelaAtividades(){
                     onClick={() => {
                         navigate('/atividades/adicionar')
                     }}
-                    >
-                        Adicionar atividade
+                >
+                    Adicionar atividade
                 </button>
-    
-                
+
+
             </div>
 
 
 
         </div>
-        
-        
+
+
     )
 }
 
