@@ -221,9 +221,7 @@ function TelaPerfilPaciente() {
     return paciente.grafico.map((hab) => {
       const estilo = estiloHabilidade(hab.nome);
 
-      const valorIdade = Math.round(hab.idade_meses / 12);
-
-      const idadeFormatada = Number(valorIdade.toFixed(1));
+      const idadeFormatada = Number((hab.idade_meses / 12).toFixed(1));
 
       return {
         id: hab.id,
@@ -347,9 +345,10 @@ function TelaPerfilPaciente() {
               </h2>
 
               {/*GRAFICO*/}
-              <div className="h-64 w-full mt-4">
+              <div className="h-64 w-full mt-4" style={{ minWidth: 0 }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
+                    key={dadosGrafico.length + JSON.stringify(dadosGrafico)}
                     data={dadosGrafico}
                     margin={{
                       top: 35,
