@@ -7,6 +7,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import api from "../services/api.js";
+import Logotipo from "../components/logotipo.jsx";
+import ContainerUserPhoto from "../components/photo-components/ContainerUserPhoto.jsx";
 
 function TelaFormulario() {
   const navigate = useNavigate();
@@ -15,6 +17,11 @@ function TelaFormulario() {
   const [carregando, setCarregando] = useState(true);
 
   const { id_paciente, id_usuario } = useParams();
+
+  const homeDataString = localStorage.getItem("home");
+  const homeDataObject = homeDataString ? JSON.parse(homeDataString) : null;
+  const fotoUsuarioLogado = homeDataObject?.items?.foto || null;
+  const idUsuarioLogado = homeDataObject?.items?.id || null;
 
   const token = localStorage.getItem("token");
 
@@ -42,8 +49,6 @@ function TelaFormulario() {
   const atualizaDados = async () => {
     try {
       const url = `/v1/espectra/formulario/${id_paciente}/${id_usuario}`;
-
-      console.log("Estado de respostas atual que será enviado:", respostas);
 
       const dadosAtualizados = {
         formulario: respostas,
@@ -80,13 +85,15 @@ function TelaFormulario() {
 
   return (
     <div className="min-h-screen bg-[#3277CF] flex flex-col lg:bg-white">
-      {/* TOPO: O Header fica fora da div de conteúdo principal */}
-      <Header
-        title="0 a 6 anos"
-        userImage={psicopedagogo} // Troque pela sua lógica de imagem
-        userName={"Larissa"}
-        logoSource={logo}
-      />
+      <div className="bg-[#3277CF] h-auto flex flex-row w-full pt-8 pb-16 px-6 items-center justify-between">
+        <Logotipo />
+        <div className="flex flex-row-reverse text-white items-center gap-2 font-bold instrument-sans">
+          <ContainerUserPhoto foto={fotoUsuarioLogado} id={id_usuario} />
+          <h1>Olá, {idUsuarioLogado}</h1>
+        </div>
+
+
+      </div>
 
       {/* CONTEÚDO BRANCO CHANFRADO */}
       <div className="flex-1 bg-white rounded-t-[20px] px-4 py-8 sm:px-6 md:px-10 lg:px-20 mt-[-30px] shadow-2xl lg:w-[65%] lg:self-center">

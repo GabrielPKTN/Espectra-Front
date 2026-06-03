@@ -425,7 +425,7 @@ function TelaPerfilPaciente() {
               onClick={editarFormulario}
               variantClick="basicClick"
               type="button"
-              className="w-full p-3"
+              className="w-full p-2"
             >
               Editar avaliação de desempenho
             </Button>
