@@ -137,11 +137,11 @@ function TelaAdicionarPaciente() {
       {/*div do input*/}
       <div
         className=" flex flex-col mt-12 items-center justify-center gap-12
-      lg:w-162.5 lg:mx-auto lg:gap-8 lg:mt-8"
+      lg:w-162.5 lg:mx-auto lg:gap-4 lg:mt-8"
       >
         <p
           className="text-center text-2xl inclusive-sans font-medium
-        lg:text-3xl"
+        lg:text-2xl"
         >
           Digite o CPF do paciente
         </p>
@@ -167,11 +167,11 @@ function TelaAdicionarPaciente() {
       {/*div que carregará o card cinza com informações do paciente.*/}
       {paciente && (
         <div
-          className="bg-gray-200 h-auto w-full mt-8 rounded-2xl shadow-lg/20 border border-[#C9C9C9]
-      md:mt-12 md:h-125
-      lg:w-175 lg:mx-auto lg:h-90 lg:mt-10"
+          className="bg-gray-200 h-auto pb-6 w-full mt-8 rounded-2xl shadow-lg/20 border border-[#C9C9C9]
+      md:mt-12 md:pb-10
+      lg:w-175 lg:mx-auto lg:mt-8"
         >
-          <div className="flex flex-col justify-center items-center gap-4 mb-4 lg:mx-6">
+          <div className="flex flex-col items-center gap-4 mb-4 lg:mx-6">
 
             <div className="flex mt-10 scale-150 md:mt-24 lg:mt-14">
               <ContainerUserPhoto foto={paciente.foto} id={paciente.id || paciente.id_paciente}/>
@@ -190,7 +190,7 @@ function TelaAdicionarPaciente() {
         md:text-2xl"
             >
               {paciente.nome} nasceu em {paciente.data_nascimento}, tem{" "}
-              {paciente.idade}, está na {paciente.serie_escolar} e possui
+              {paciente.idade} anos, cursa o {paciente.serie_escolar} e possui
               diagnóstico de{" "}
               {paciente.diagnostico
                 ?.map((diag) => diag.nome_completo)
