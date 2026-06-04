@@ -20,6 +20,11 @@ function TelaAdicionarPaciente() {
   const token = localStorage.getItem("token");
   const idUsuarioLogado = localStorage.getItem("id_usuario");
 
+  const homeDataString = localStorage.getItem("home");
+  const homeDataObject = homeDataString ? JSON.parse(homeDataString) : null;
+  const fotoUsuarioLogado = homeDataObject?.items?.foto || null;
+  const idUsuario = homeDataObject?.items?.id || null;
+
   async function buscarPacientePorCpf() {
     try {
       setLoading(true);
@@ -100,7 +105,7 @@ function TelaAdicionarPaciente() {
       );
 
       toast.success("Paciente adicionado com sucesso!");
-      
+
     } catch (error) {
       console.error(error);
       setErro("Erro ao adicionar paciente!");
@@ -126,7 +131,7 @@ function TelaAdicionarPaciente() {
       lg:size-12 lg:w-auto"
         />
 
-        <ContainerUserPhoto />
+        <ContainerUserPhoto foto={fotoUsuarioLogado} id={idUsuario} />
       </div>
 
       {/*div do input*/}
@@ -166,12 +171,12 @@ function TelaAdicionarPaciente() {
       md:mt-12 md:h-125
       lg:w-175 lg:mx-auto lg:h-90 lg:mt-10"
         >
-          <div className="flex flex-col justify-center items-center gap-4 mb-4">
-            <CircleUser
-              className="size-16 primary-color mt-5
-        md:mt-18 md:size-22
-        lg:mt-8 lg:size-20"
-            ></CircleUser>
+          <div className="flex flex-col justify-center items-center gap-4 mb-4 lg:mx-6">
+
+            <div className="flex mt-10 scale-150 md:mt-24 lg:mt-14">
+              <ContainerUserPhoto foto={paciente.foto} id={paciente.id || paciente.id_paciente}/>
+            </div>
+            
 
             <h1
               className="primary-color font-bold text-2xl instrument-sans
