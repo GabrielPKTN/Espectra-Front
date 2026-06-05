@@ -12,18 +12,37 @@ import ContainerUserPhoto from "../components/photo-components/ContainerUserPhot
 
 function TelaFormulario() {
   const navigate = useNavigate();
+
   const [comportamentos, setComportamentos] = useState([]);
   const [respostas, setRespostas] = useState([]);
   const [carregando, setCarregando] = useState(true);
+
+  const [nomeUsuario, setNomeUsuario] = useState("Usuário")
 
   const { id_paciente, id_usuario } = useParams();
 
   const homeDataString = localStorage.getItem("home");
   const homeDataObject = homeDataString ? JSON.parse(homeDataString) : null;
   const fotoUsuarioLogado = homeDataObject?.items?.foto || null;
-  const idUsuarioLogado = homeDataObject?.items?.id || null;
 
+  const idUsuarioLogado = localStorage.getItem("id_usuario")
   const token = localStorage.getItem("token");
+
+  const getDadosUsuarios = async () => {
+
+    if(!idUsuarioLogado) return
+
+    try {
+      const result = await api.get(`/v1/espectra/usuario/${idUsuarioLogado}`,{
+      headers: { "x-access-token": token },
+    })
+    console.log(result.data)
+
+      setNomeUsuario(result.data.items.nome)
+    } catch (error) {
+      console.error("Erro ao carregar dados do usuário", error);
+    }
+  }
 
   const requestData = async () => {
     try {
@@ -80,8 +99,10 @@ function TelaFormulario() {
       navigate("/login");
       return;
     }
+
     requestData();
-  }, [id_paciente, id_usuario]);
+    getDadosUsuarios();
+  }, [id_paciente, id_usuario, idUsuarioLogado]);
 
   return (
     <div className="min-h-screen bg-[#3277CF] flex flex-col lg:bg-white">
@@ -89,7 +110,7 @@ function TelaFormulario() {
         <Logotipo />
         <div className="flex flex-row-reverse text-white items-center gap-2 font-bold instrument-sans">
           <ContainerUserPhoto foto={fotoUsuarioLogado} id={id_usuario} />
-          <h1>Olá, {idUsuarioLogado}</h1>
+          <h1>Olá, {nomeUsuario}</h1>
         </div>
 
 
@@ -112,13 +133,15 @@ function TelaFormulario() {
 
           <div className="w-full flex flex-row items-center justify-center gap-4 mt-10">
             <Button
-              className="w-full sm:w-auto px-10 bg-blue-500 hover:bg-blue-600 text-white cursor-pointer"
+            variantClick="basicClick"
+              className="w-full sm:w-auto px-8 cursor-pointer"
               onClick={() => navigate(`/perfil-paciente/${id_paciente}`)}
             >
               Cancelar
             </Button>
             <Button
-              className="w-full sm:w-auto px-10 bg-blue-600 hover:bg-blue-700 text-white cursor-pointer"
+            variantClick="basicClick"
+              className="w-full sm:w-auto px-10 cursor-pointer"
               onClick={() => atualizaDados()}
             >
               Enviar
