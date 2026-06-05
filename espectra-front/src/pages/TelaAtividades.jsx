@@ -69,18 +69,18 @@ function TelaAtividades() {
 
 
     return (
-        <div className="flex md:gap-5">
+        <div className="flex md:gap-5 min-h-screen">
 
-            <CardUser />
+                <CardUser />
 
-            <div className="h-screen w-full flex flex-col px-4 md:w-[65%] md:py-8 gap-6 lg:gap-10">
+            <div className="h-screen w-full flex-1 flex flex-col px-4 py-4 md:w-[40%] md:py-8 gap-6 lg:gap-10">
 
-                <div>
+                <div className="flex flex-col gap-4">
                     <HeaderUsuario />
 
 
                     <h1 className="
-                        justify-self-center instrument-sans font-bold text-2xl
+                        justify-self-center text-center instrument-sans font-bold text-3xl
                         md:text-3xl
                         lg:text-5xl"
                         style={{ color: corHabilidade }}
@@ -115,7 +115,7 @@ function TelaAtividades() {
                                 <p className="
                                     text-red-500
                                     instrument-sans
-                                    text-md
+                                    text-md font-medium
                                     md:text-lg
                                     lg:text-xl
                                     px-4
@@ -156,7 +156,7 @@ function TelaAtividades() {
                                 <p className="
                                     text-red-500
                                     instrument-sans
-                                    text-md
+                                    text-md font-medium
                                     md:text-lg
                                     lg:text-xl
                                     px-4
@@ -174,8 +174,8 @@ function TelaAtividades() {
                 </div>
 
                 <button className="
-                    bg-[var(--bg-secondary-color)] text-white p-2 rounded-full 
-                    instrument-sans font-bold 
+                    bg-(--bg-secondary-color) text-white p-2 rounded-full 
+                    instrument-sans font-bold text-lg
                     md:hidden
                     "
                     onClick={() => {

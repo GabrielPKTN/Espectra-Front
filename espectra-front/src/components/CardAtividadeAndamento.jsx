@@ -11,7 +11,7 @@ import api from "../services/api"
 
 
 
-export default function CardAtividade({atividade, id, questao}) {
+export default function CardAtividade({ atividade, id, questao }) {
     const navigate = useNavigate()
 
     const [expandido, setExpandido] = useState(false);
@@ -19,11 +19,11 @@ export default function CardAtividade({atividade, id, questao}) {
 
     const token = localStorage.getItem("token")
 
-    const idPaciete = 1 //localStorage.getItem("id_paciente")
-    const idUsuario = 1 //localStorage.getItem("id_usuario")
-    
-    function navegar(path, idAtividade){
-        
+    const idPaciete = localStorage.getItem("id_paciente")
+    const idUsuario = localStorage.getItem("id_usuario")
+
+    function navegar(path, idAtividade) {
+
         localStorage.setItem("id_atividade", idAtividade)
 
         navigate(`${path}`)
@@ -34,7 +34,7 @@ export default function CardAtividade({atividade, id, questao}) {
             const response = await api.put(
                 `/v1/espectra/atividade/${idAtividade}`,
                 {},
-                { 
+                {
                     headers: {
                         'x-access-token': token
                     }
@@ -53,8 +53,8 @@ export default function CardAtividade({atividade, id, questao}) {
         try {
             const response = await api.delete(
                 `/v1/espectra/atividade/${idAtividade}`,
-             
-                { 
+
+                {
                     headers: {
                         'x-access-token': token
                     },
@@ -68,7 +68,7 @@ export default function CardAtividade({atividade, id, questao}) {
 
             const data = response.data
             window.location.reload()
-            
+
 
         } catch (error) {
             console.log(error)
@@ -81,12 +81,13 @@ export default function CardAtividade({atividade, id, questao}) {
             className="
                 flex flex-col
                 bg-[#F9F9F9]
-                px-5 py-3
+                px-4 py-2.5
                 rounded-xl
                 border
                 border-[#C6C6C6]
                 shadow-[0_4px_20px_rgba(0,0,0,0.08)]
                 w-full
+                min-w-0
                 lg:self-start
             "
         >
@@ -98,24 +99,26 @@ export default function CardAtividade({atividade, id, questao}) {
                     items-center
                     justify-between
                     cursor-pointer
+                    min-w-0
                 "
             >
 
                 <p
-                className={`
+                    className={`
                     instrument-sans
                     font-semibold
-                    md:text-xl
+                    text-base
+                    md:text-lg
                     md:font-medium
-                    lg:text-2xl
+                    lg:text-xl
                     transition-all duration-300
                     ease-in-out
+                    min-w-0
 
-                    ${
-                    expandido
-                        ? "whitespace-normal break-words"
-                        : "whitespace-nowrap overflow-hidden text-ellipsis"
-                    }
+                    ${expandido
+                            ? "whitespace-normal break-words"
+                            : "whitespace-nowrap overflow-hidden text-ellipsis"
+                        }
                 `}
                 > {atividade} </p>
 
@@ -131,78 +134,78 @@ export default function CardAtividade({atividade, id, questao}) {
             </div>
 
             {expandido && (
-                <div className="mt-5 flex flex-col gap-5">
+                <div className="mt-4 flex flex-col gap-2">
                     <button className="
-                        instrument-sans font-bold cursor-pointer bg-[var(--bg-secondary-color)] p-2 rounded-full text-white
-                        md:text-lg
-                        lg:text-xl"
+                        instrument-sans font-bold cursor-pointer bg-(--bg-secondary-color) p-2 rounded-full text-white
+                        md:text-base
+                        lg:text-lg"
                         onClick={() => navegar('/tentativa', id)}
 
-                        >
-                            Realizar Tentativa
+                    >
+                        Realizar Tentativa
                     </button>
 
                     <button className="
-                        instrument-sans font-bold cursor-pointer bg-[var(--bg-secondary-color)] p-2 rounded-full text-white
-                        md:text-lg
-                        lg:text-xl"
+                        instrument-sans font-bold cursor-pointer bg-(--bg-secondary-color) p-2 rounded-full text-white
+                        md:text-base
+                        lg:text-lg"
                         onClick={() => navigate('/tentativa/historico')}
 
-                        >
-                            Histórico de tentativas
+                    >
+                        Histórico de tentativas
                     </button>
 
                     <button className="
-                        instrument-sans font-bold cursor-pointer bg-[var(--bg-secondary-color)] p-2 rounded-full text-white
-                        md:text-lg
-                        lg:text-xl"
+                        instrument-sans font-bold cursor-pointer bg-(--bg-secondary-color) p-2 rounded-full text-white
+                        md:text-base
+                        lg:text-lg"
                         onClick={() => {
                             declararHailidade(id)
                             window.location.reload()
                         }}
 
-                        >
-                            Declarar Habilidade
+                    >
+                        Declarar Habilidade
                     </button>
 
                     {questao == null ? (
                         <div className="flex gap-8 mt-4 justify-center">
 
-                        <div className="
+                            <div className="
                             flex items-center justify-center gap-1 cursor-pointer"
-                            onClick={() => {
-                                setModal(true)
-                            }}
+                                onClick={() => {
+                                    setModal(true)
+                                }}
                             >
-                            <img src={trash} alt="Excluir" className="w-7 md:w-8"/>
-                            <span className="instrument-sans text-[#F94C4C] text-xs md:text-lg lg:text-xl">
-                                Excluir atividade
-                            </span>
-                        </div>
+                                <img src={trash} alt="Excluir" className="w-7 md:w-8" />
+                                <span className="instrument-sans text-[#F94C4C] text-xs md:text-lg lg:text-xl">
+                                    Excluir atividade
+                                </span>
+                            </div>
 
-                        <div className="
-                            flex items-center justify-center gap-1 cursor-pointer" 
-                            onClick={() => {
-                                navegar('/atividades/editar', id)
-                            }}
+                            <div className="
+                            flex items-center justify-center gap-1 cursor-pointer"
+                                onClick={() => {
+                                    navegar('/atividades/editar', id)
+                                }}
                             >
-                            <img src={pen} alt="Editar" className="w-7 md:w-8"/>
-                            <span className="instrument-sans text-[var(--bg-secondary-color)] text-xs md:text-lg lg:text-xl">
-                                Editar atividade
-                            </span>
-                        </div>
+                                <img src={pen} alt="Editar" className="w-7 md:w-8" />
+                                <span className="instrument-sans text-(--bg-secondary-color) text-xs md:text-lg lg:text-xl">
+                                    Editar atividade
+                                </span>
+                            </div>
 
-                    </div>
+                        </div>
                     ) : (
-                        <div className="flex gap-8 mt-4 justify-center"> 
+                        <div className="flex gap-8 mt-4 justify-center">
 
                             <div className="
                                 flex items-center justify-center gap-1 cursor-pointer"
                                 onClick={() => {
                                     setModal(true)
                                 }}
-                                >
-                                <img src={trash} alt="Excluir" className="w-7 md:w-8"/>
+                            >
+                                <img src={trash} alt="Excluir" className="w-7 md:w-8" />
                                 <span className="instrument-sans text-[#F94C4C] text-xs md:text-lg lg:text-xl">
                                     Excluir atividade
                                 </span>

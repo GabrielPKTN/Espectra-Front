@@ -18,12 +18,12 @@ export default function OptionPaneMeses({onChange}){
                 Nível de desenvolvimento em meses quando a atividade for concluida:
             </p>
 
-            <div className="flex w-full align-middle gap-1">
+            <div className="flex w-full align-middle gap-2">
                 <select 
                     name="" 
                     id="" 
                     className="
-                        shadow-[0_0_20px_rgba(0,0,0,0.25)] px-1 w-25 rounded-lg h-7 inclusive-sans text-sm 
+                        shadow-[0_0_20px_rgba(0,0,0,0.25)] px-1 w-25 rounded-lg h-8 inclusive-sans text-md 
                         md:text-lg md:w-40 md:h-8
                         lg:h-10 lg:text-xl 
                         "

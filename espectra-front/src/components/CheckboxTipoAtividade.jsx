@@ -2,7 +2,7 @@ export default function CheckboxAtividade({ opcaoSelecionada, setOpcaoSelecionad
   return (
     <div className="flex flex-col gap-8">
       <p className="instrument-sans font-semibold text-lg md:text-2xl">
-        A habilidade que vai ser desenvolvida é?...
+        A habilidade a ser desenvolvida é...?
       </p>
 
       <div className="flex flex-col gap-1">

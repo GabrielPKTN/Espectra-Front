@@ -1,6 +1,7 @@
-export default function OutlinedTitle({ children }) {
+export default function OutlinedTitle({ className, style, children }) {
   return (
-    <div className="relative inline-block">
+    // Usamos crases e ${className || ''} para injetar as classes externas com segurança
+    <div className={`relative inline-block ${className || ''}`}>
       <h1
         className="
           absolute
@@ -18,6 +19,7 @@ export default function OutlinedTitle({ children }) {
           md:text-6xl -translate-x-[45px]
           lg:m-0
         "
+        style={style}
       >
         {children}
       </h1>
@@ -27,12 +29,12 @@ export default function OutlinedTitle({ children }) {
           relative
           text-2xl
           font-bold
-          text-[#89C771]
           mt-10
           instrument-sans
           md:text-5xl
           lg:mt-1
         "
+        style={style}
       >
         {children}
       </h1>
