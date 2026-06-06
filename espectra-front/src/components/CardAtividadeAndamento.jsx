@@ -24,9 +24,9 @@ export default function CardAtividade({ atividade, id, questao }) {
 
     function navegar(path, idAtividade) {
 
-        localStorage.setItem("id_atividade", idAtividade)
-
-        navigate(`${path}`)
+        localStorage.setItem("id_atividade", idAtividade);
+        
+        navigate(`${path}/${idAtividade}`);
     }
 
     async function declararHailidade(idAtividade) {

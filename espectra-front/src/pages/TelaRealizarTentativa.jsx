@@ -15,7 +15,7 @@ function TelaRealizarTentativa() {
 
   const { id } = useParams();
 
-  const [atividade, setAtividade] = useState(atividadeMock);
+  const [atividade, setAtividade] = useState(null);
 
   const [opcaoSelecionada, setOpcaoSelecionada] = useState(null);
   const [opcaoSimNao, setOpcaoSimNao] = useState(null);
