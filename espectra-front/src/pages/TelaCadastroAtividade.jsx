@@ -223,8 +223,8 @@ function telaCadastroAtividade() {
 
                 <div className="flex flex-col mt-5 justify-items-center-safe w-full gap-3 md:gap-5 md:mt-5 lg:mt-0 md:flex-row-reverse lg:w-full lg:justify-center ">
                     <button className="
-                              bg-[var(--bg-secondary-color)] w-70 rounded-md instrument-sans self-center text-white p-1
-                              md:w-80 md:h-14 md:text-xl md:font-semibold md:rounded-2xl
+                              bg-(--bg-secondary-color) w-70 h-10 rounded-md instrument-sans font-semibold self-center text-white p-1
+                              md:w-66 md:h-12 md:text-xl md:font-semibold md:rounded-xl
                               "
                         onClick={salvarAtividade}
 
@@ -233,8 +233,8 @@ function telaCadastroAtividade() {
                     </button>
 
                     <button className="
-                              w-70 self-center text-[var(--bg-secondary-color)] shadow-[0_0_20px_rgba(0,0,0,0.25)] rounded-md p-1
-                              md:w-80 md:h-14 md:text-xl md:font-semibold md:rounded-2xl
+                              w-70 h-10 self-center text-(--bg-secondary-color) instrument-sans font-semibold shadow-[0_0_20px_rgba(0,0,0,0.25)] rounded-md p-1
+                              md:w-66 md:h-12 md:text-xl md:font-semibold md:rounded-xl
                               "
                         onClick={() => {
                             navigate('/atividades')
