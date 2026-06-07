@@ -10,6 +10,7 @@ import api from "../services/api"
 import { useEffect } from "react";
 import OptionPaneAtividades from "../components/OptionPaneAtividades"
 import Logotipo from "../components/logotipo";
+import SecondButton from "../components/SecondButton";
 
 function telaCadastroAtividade() {
     const navigate = useNavigate();
@@ -163,7 +164,7 @@ function telaCadastroAtividade() {
                                         md:mr-8
                                         md:text-xl
                                     "
-                                placeholder="Digite o comportamento..."
+                                placeholder="Descreva o comportamento..."
                                 onChange={(e) => {
                                     setComportamento(e.target.value)
 
@@ -221,27 +222,15 @@ function telaCadastroAtividade() {
                 )}
 
 
-                <div className="flex flex-col mt-5 justify-items-center-safe w-full gap-3 md:gap-5 md:mt-5 lg:mt-0 md:flex-row-reverse lg:w-full lg:justify-center ">
-                    <button className="
-                              bg-(--bg-secondary-color) hover:bg-(--bg-primary-color) cursor-pointer w-70 h-10 rounded-md instrument-sans font-semibold self-center text-white p-1
-                              md:w-66 md:h-12 md:text-xl md:font-semibold md:rounded-xl
-                              "
-                        onClick={salvarAtividade}
-
-                    >
+                <div className="flex flex-col mt-5 justify-center items-center w-full gap-3 md:gap-5 md:mt-5 lg:mt-0 md:flex-row-reverse lg:w-full lg:justify-center ">
+                    <SecondButton onClick={salvarAtividade} variantClick="firstButton">
                         Salvar alterações
-                    </button>
+                    </SecondButton>
+                    
 
-                    <button className="
-                              w-70 h-10 self-center hover:bg-gray-100 text-(--bg-secondary-color) cursor-pointer instrument-sans font-semibold shadow-[0_0_20px_rgba(0,0,0,0.25)] rounded-md p-1
-                              md:w-66 md:h-12 md:text-xl md:font-semibold md:rounded-xl
-                              "
-                        onClick={() => {
-                            navigate('/atividades')
-                        }}
-                    >
+                    <SecondButton onClick={()=> navigate("/atividades")} variantClick="secondButton">
                         Cancelar
-                    </button>
+                    </SecondButton>
                 </div>
 
             </div>

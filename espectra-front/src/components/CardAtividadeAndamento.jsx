@@ -1,21 +1,19 @@
 import { useState } from "react";
-
 import setaBaixo from "../assets/general_photos/setaBaixo.svg";
 import Button from "./Button";
 import trash from "../assets/general_photos/trash.svg";
 import pen from "../assets/general_photos/pen.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
-import ModalExclusao from "../pages/TelaCardExclusao"
 import api from "../services/api"
-
+import Swal from "sweetalert2";
+import { toast } from "react-hot-toast";
 
 
 export default function CardAtividade({ atividade, id, questao }) {
     const navigate = useNavigate()
 
     const [expandido, setExpandido] = useState(false);
-    const [modal, setModal] = useState(false)
 
     const token = localStorage.getItem("token")
 
@@ -25,7 +23,7 @@ export default function CardAtividade({ atividade, id, questao }) {
     function navegar(path, idAtividade) {
 
         localStorage.setItem("id_atividade", idAtividade);
-        
+
         navigate(`${path}/${idAtividade}`);
     }
 
@@ -50,6 +48,20 @@ export default function CardAtividade({ atividade, id, questao }) {
     }
 
     async function excluirAtividade(idAtividade, idPaciente, idUsuario) {
+
+        const confirmar = await Swal.fire({
+            title: 'Atenção!',
+            text: 'Tem certeza que deseja excluir esta atividade?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e31b1b',
+            cancelButtonColor: '#4285f4',
+            confirmButtonText: 'Excluir',
+            cancelButtonText: 'Cancelar',
+        });
+
+        if (!confirmar.isConfirmed) return;
+
         try {
             const response = await api.delete(
                 `/v1/espectra/atividade/${idAtividade}`,
@@ -66,12 +78,19 @@ export default function CardAtividade({ atividade, id, questao }) {
                 }
             )
 
-            const data = response.data
-            window.location.reload()
+            if (response.status === 200) {
+                toast.success("Atividade excluída com sucesso!")
+                window.location.reload()
+            }
 
 
         } catch (error) {
             console.log(error)
+
+            toast.error(
+                error.response?.data?.message ||
+                "Erro ao excluir atividade."
+            );
         }
     }
 
@@ -174,7 +193,7 @@ export default function CardAtividade({ atividade, id, questao }) {
                             <div className="
                             flex items-center justify-center gap-1 cursor-pointer"
                                 onClick={() => {
-                                    setModal(true)
+                                    excluirAtividade(id, idPaciete, idUsuario);
                                 }}
                             >
                                 <img src={trash} alt="Excluir" className="w-7 md:w-8" />
@@ -202,7 +221,7 @@ export default function CardAtividade({ atividade, id, questao }) {
                             <div className="
                                 flex items-center justify-center gap-1 cursor-pointer"
                                 onClick={() => {
-                                    setModal(true)
+                                    excluirAtividade(id, idPaciete, idUsuario)
                                 }}
                             >
                                 <img src={trash} alt="Excluir" className="w-7 md:w-8" />
@@ -218,15 +237,6 @@ export default function CardAtividade({ atividade, id, questao }) {
                 </div>
             )}
 
-            {modal && (
-                <ModalExclusao
-                    onCancel={() => setModal(false)}
-                    onConfirm={() => {
-                        excluirAtividade(id, idPaciete, idUsuario)
-                        setModal(false)
-                    }}
-                />
-            )}
 
         </div>
     )
