@@ -82,7 +82,7 @@ export default function CardAtividade({atividade, id}) {
 
                     <button className="
                         instrument-sans font-bold bg-(--bg-secondary-color) p-2 rounded-full text-white md:text-lg lg:text-xl"
-                        onClick={() => navegar('/tentativa/historico')}
+                        onClick={() => navegar(`/tentativa/historico/${id}`)}
 
                         >
                             Histórico de tentativas

@@ -8,7 +8,8 @@ import { ChevronLeft } from "lucide-react";
 import { CircleX } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import api from "../services/api";
+import Logotipo from "../components/logotipo";
 
 function HistoricoTentativa() {
   const navigate = useNavigate();
@@ -22,6 +23,8 @@ function HistoricoTentativa() {
   const [tentativaSelecionada, setTentativaSelecionada] = useState(null);
 
   const { idAtividade } = useParams();
+
+  const token = localStorage.getItem("token");
 
   function fechar() {
     setAbrirModal(false);
@@ -79,17 +82,13 @@ function HistoricoTentativa() {
       setLoading(true);
       setErro(null);
 
-      //const token = localStorage.getItem("token")
-      const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEsImlhdCI6MTc3ODk3NDc4NywiZXhwIjoxMDAwMDE3Nzg5NzQ3ODd9.UcaW9Ocvo6Q8wORRNzKPDSd1ROdN7bC3d-nCn6E482s";
-
       if (!token) {
         setErro("Token não encontrado!");
         return;
       }
 
-      const response = await axios.get(
-        `http://localhost:8080/v1/espectra/tentativa/${idAtividade}`,
+      const response = await api.get(
+        `/v1/espectra/tentativa/${idAtividade}`,
         {
           headers: { "x-access-token": token },
         },
@@ -106,12 +105,11 @@ function HistoricoTentativa() {
   }
 
   useEffect(() => {
-    buscarTentativas(id);
-  }, []);
-
-  if (idAtividade) {
-    buscarTentativas(idAtividade);
-  }
+    if(idAtividade){
+      buscarTentativas(idAtividade);
+    }
+    
+  }, [idAtividade]);
 
   return (
     <>
@@ -134,12 +132,7 @@ function HistoricoTentativa() {
             Histórico de tentativas
           </h1>
 
-          <img
-            src={logo}
-            alt="Logo Espectra"
-            className="hidden lg:block w-[80px]"
-            h-auto
-          />
+        <Logotipo />
         </div>
 
         {/* Div da seção principal da Tela */}
@@ -194,7 +187,10 @@ function HistoricoTentativa() {
                 Representação gráfica:
               </h2>
 
-              <GraficoTentativas data={dadosGrafico} />
+                {dadosGrafico.length > 0 && (
+                   <GraficoTentativas data={dadosGrafico} />
+                )}
+             
             </div>
           </div>
         </div>

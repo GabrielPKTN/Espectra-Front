@@ -279,6 +279,11 @@ function TelaCadastroFamiliar() {
             const grauSuporteValidada = validarGrauSuporte(idGrauSuporte)
             const idUsuario = localStorage.getItem("id_usuario")
 
+            const homeDataString = localStorage.getItem("home");
+            const homeDataObject = homeDataString ? JSON.parse(homeDataString) : null;
+            const fotoUsuario = homeDataObject?.items?.foto || null;
+
+
             const dataFormatada = dataFormatadaApi(dataNascimentoValidada);
             const formData = new FormData();
 
@@ -364,7 +369,7 @@ function TelaCadastroFamiliar() {
                                 <CircleUser
                                     id="preview-image"
                                     alt="Foto do psicopedagogo"
-                                    className=" w-auto h-32 bg-white text-(--bg-primary-color) rounded-full object-cover md:size-36"
+                                    className=" w-auto h-32 white text-(--bg-primary-color) rounded-full object-cover md:size-36"
                                 />
 
                                 <Plus

@@ -8,6 +8,12 @@ import { useNavigate } from "react-router-dom";
 import { CircleUser } from "lucide-react";
 
 export default function HeaderResponsavel({ nome, foto }) {
+
+    const homeDataString = localStorage.getItem("home");
+    const homeDataObject = homeDataString ? JSON.parse(homeDataString) : null;
+
+    const fotoUsuario = homeDataObject?.items?.foto || null;
+
     const navigate = useNavigate();
     const imagemUsuario = typeof foto === "string";
     const iconePadrao = foto;
@@ -39,7 +45,7 @@ export default function HeaderResponsavel({ nome, foto }) {
                 {imagemUsuario ? (
                     <img src={foto} alt="" className="border-2 border-(--bg-primary-color) rounded-full w-12 h-12 lg:w-16 lg:h-16 object-cover" />
                 ) : (
-                    <CircleUser className="w-12 h-12 lg:w-18" />
+                    <CircleUser className="text-white md:text-primary-color" size={50}/>
                 )}
 
 

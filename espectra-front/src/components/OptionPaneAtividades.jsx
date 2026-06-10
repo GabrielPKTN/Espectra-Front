@@ -16,7 +16,7 @@ export default function OptionPaneAtividades({ onChange }) {
     async function getAtividadesFalse() {
         try {
             const response = await api.get(
-                `v1/espectra/atividade/competencias/${idPaciente}/${idHabilidade}`, {
+                `/v1/espectra/atividade/competencias/${idPaciente}/${idHabilidade}`, {
                 headers: {
                     'x-access-token': token
                 }

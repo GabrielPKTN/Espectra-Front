@@ -168,7 +168,7 @@ export default function CardAtividade({ atividade, id, questao }) {
                         instrument-sans font-bold cursor-pointer bg-(--bg-secondary-color) p-2 rounded-full text-white
                         md:text-base
                         lg:text-lg"
-                        onClick={() => navigate('/tentativa/historico')}
+                        onClick={() => navigate(`/tentativa/historico/${id}`)}
 
                     >
                         Histórico de tentativas
