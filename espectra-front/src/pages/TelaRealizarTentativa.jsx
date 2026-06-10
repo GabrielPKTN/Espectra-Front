@@ -26,7 +26,7 @@ function TelaRealizarTentativa() {
   const resultado = opcaoSimNao === 1 ? 1 : 0;
 
   const selecaoTipoTentativa = (opcao) => {
-    setOpcaoSelecionada(opcaoSelecionada === opcao ? false : opcao);
+    setOpcaoSelecionada(opcaoSelecionada === opcao ? null : opcao)
   };
 
   const selecaoSimNao = (opcao) => {
