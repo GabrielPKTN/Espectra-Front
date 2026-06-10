@@ -24,6 +24,7 @@ function telaCadastroAtividade() {
 
     const [comportamento, setComportamento] = useState("")
     const [valorMeses, setValorMeses] = useState(0)
+
     const [valorAtividade, setValorAtividade] = useState({})
 
     const [erroComportamento, setErroComportamento] = useState("")
@@ -31,6 +32,7 @@ function telaCadastroAtividade() {
 
     const nomeHabilidade = localStorage.getItem("nome_habilidade")
     const corHabilidade = localStorage.getItem("cor_habilidade")
+
 
     async function cadastrarPersonalizada() {
         try {
@@ -67,6 +69,8 @@ function telaCadastroAtividade() {
     }
 
     async function cadastrarPortage(params) {
+        if (!valorAtividade) return;
+
         try {
             const response = await api.post(
                 `v1/espectra/atividade/portage/`,
@@ -85,12 +89,14 @@ function telaCadastroAtividade() {
 
             const data = response.data
 
-            if (data.status_code == 201)
+            if (data.status_code == 201) {
                 setMensagemSucesso("Atividade cadastrada com sucesso!")
+            }
+
 
             setTimeout(() => {
                 navigate("/atividades")
-            }, 2000)
+            }, 1000)
 
         } catch (error) {
             return false
@@ -100,19 +106,17 @@ function telaCadastroAtividade() {
 
     async function salvarAtividade() {
 
-        if (opcaoSelecionada === 'personalizada')
-
+        if (opcaoSelecionada === 'personalizada') {
             if (comportamento.trim() === "") {
                 setErroComportamento("O comportamento é obrigatório")
                 return
             }
 
-        setErroComportamento("")
-
-        await cadastrarPersonalizada()
-
-        if (opcaoSelecionada === 'portage')
+            setErroComportamento("")
+            await cadastrarPersonalizada()
+        } else if (opcaoSelecionada === 'portage') {
             await cadastrarPortage()
+        }
     }
 
     return (
@@ -226,9 +230,9 @@ function telaCadastroAtividade() {
                     <SecondButton onClick={salvarAtividade} variantClick="firstButton">
                         Salvar alterações
                     </SecondButton>
-                    
 
-                    <SecondButton onClick={()=> navigate("/atividades")} variantClick="secondButton">
+
+                    <SecondButton onClick={() => navigate("/atividades")} variantClick="secondButton">
                         Cancelar
                     </SecondButton>
                 </div>

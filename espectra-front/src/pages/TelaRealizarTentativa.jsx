@@ -26,7 +26,7 @@ function TelaRealizarTentativa() {
   const resultado = opcaoSimNao === 1 ? 1 : 0;
 
   const selecaoTipoTentativa = (opcao) => {
-    setOpcaoSelecionada(opcaoSelecionada === opcao ? null : opcao);
+    setOpcaoSelecionada(opcaoSelecionada === opcao ? false : opcao);
   };
 
   const selecaoSimNao = (opcao) => {
@@ -104,6 +104,8 @@ function TelaRealizarTentativa() {
       data_tentativa: dataFormatada,
     };
 
+    console.log(dadosTentativa)
+
     try {
       console.log(dadosTentativa)
 
@@ -179,13 +181,13 @@ function TelaRealizarTentativa() {
     <div className="lg:bg-[#dfedff] lg:overflow-hidden lg:w-screen lg:h-screen">
       {/*HEADER*/}
       <div className="flex flex-row justify-between m-4">
-          <BotaoVoltar
-            color="blueColor"
-            onClick={() => navigate(-1)}
-          />
+        <BotaoVoltar
+          color="blueColor"
+          onClick={() => navigate(-1)}
+        />
 
-        <ContainerUserPhoto 
-          foto={fotoUsuarioLogado} id={id_usuario}/>
+        <ContainerUserPhoto
+          foto={fotoUsuarioLogado} id={id_usuario} />
       </div>
 
       {/*MAIN*/}
