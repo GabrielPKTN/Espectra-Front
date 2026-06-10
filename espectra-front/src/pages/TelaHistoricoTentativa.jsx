@@ -188,7 +188,7 @@ function HistoricoTentativa() {
               </h2>
 
                 {dadosGrafico.length > 0 && (
-                   <GraficoTentativas data={dadosGrafico} />
+                   <GraficoTentativas data={dadosGrafico}/>
                 )}
              
             </div>
