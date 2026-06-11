@@ -10,6 +10,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import api from "../services/api";
 import Logotipo from "../components/logotipo";
+import ContainerUserPhoto from "../components/photo-components/ContainerUserPhoto";
+import BotaoVoltar from "../components/BotaoVoltar";
 
 function HistoricoTentativa() {
   const navigate = useNavigate();
@@ -19,19 +21,29 @@ function HistoricoTentativa() {
   const [loading, setLoading] = useState(false);
   const [erro, setErro] = useState(null);
 
+  const [nomeAtividade, setNomeAtividade] = useState("");
+
   const [tentativas, setTentativas] = useState([]);
   const [tentativaSelecionada, setTentativaSelecionada] = useState(null);
 
-  const { idAtividade } = useParams();
+  const { id_atividade } = useParams();
 
   const token = localStorage.getItem("token");
+
+  const homeDataString = localStorage.getItem("home");
+  const homeDataObject = homeDataString ? JSON.parse(homeDataString) : null;
+  const fotoUsuarioLogado = homeDataObject?.items?.foto || null;
+  const idUsuarioLogado = homeDataObject?.items?.id || null;
 
   function fechar() {
     setAbrirModal(false);
   }
 
   function formatarData(data) {
-    return new Date(data).toLocaleDateString("pt-BR");
+    if (!data) return "";
+    const [ano, mes, dia] = data.split("T")[0].split("-");
+
+    return new Date(Number(ano), Number(mes) - 1, Number(dia)).toLocaleDateString("pt-BR");
   }
 
   function corHabilidade(nomeHabilidade) {
@@ -60,12 +72,12 @@ function HistoricoTentativa() {
     let valor = 1;
     let color = "#FF2D2D";
 
-    if (tentativa.auxilio === "Parcial") {
+    if (tentativa.auxilio.includes("parcial")) {
       valor = 2;
       color = "#FAE938";
     }
 
-    if (tentativa.auxilio === "Independente") {
+    if (tentativa.auxilio.includes("Independente")) {
       valor = 3;
       color = "#A2E289";
     }
@@ -94,8 +106,16 @@ function HistoricoTentativa() {
         },
       );
 
-      console.log(response.data);
-      setTentativas(response.data.items || []);
+      const listaTentativas = response.data.items || [];
+      setTentativas(listaTentativas);
+
+      console.log(listaTentativas)
+
+      if (listaTentativas.length > 0) {
+        setNomeAtividade(listaTentativas[0].comportamento);
+      } else {
+        setNomeAtividade("Nenhuma tentativa registrada para esta atividade")
+      }
     } catch (error) {
       console.log(error);
       setErro("Erro ao buscar tentativa");
@@ -105,41 +125,34 @@ function HistoricoTentativa() {
   }
 
   useEffect(() => {
-    if(idAtividade){
-      buscarTentativas(idAtividade);
+    if (id_atividade) {
+      buscarTentativas(id_atividade);
     }
-    
-  }, [idAtividade]);
+
+  }, [id_atividade]);
 
   return (
     <>
+
       <div>
         {/* Div da seção do Header */}
-        <div className="flex justify-between items-center px-4 lg:px-10">
-          <ChevronLeft
-            onClick={() => navigate("/atividades/")}
-            className="mt-[18px] ml-[16px] w-8 h-8 text-black cursor-pointer transform-gpu transition-all duration-300 ease-in-out hover:scale-110"
-            color="#00459C"
-          />
+        <div className="flex justify-between items-center m-4 lg:m-6">
+          <BotaoVoltar color="blueColor" onClick={() => navigate("/atividades/")} />
 
-          <img
-            src={fotoPsicopedagogo}
-            alt="Foto do Psicopedagogo"
-            className="w-[50px] h-[50px] mt-[18px] mr-[20px] rounded-full md:hidden transform-gpu transition-all duration-300 ease-in-out hover:scale-110 border-[#4285F4] border-2"
-          />
+          <ContainerUserPhoto foto={fotoUsuarioLogado} id={idUsuarioLogado} />
+        </div>
 
-          <h1 className="hidden md:block text-[38px] text-[#00459C] text-center font-bold w-full mt-6">
+        <div>
+          <h1 className="hidden md:block text-[38px] text-[#00459C] instrument-sans text-center font-bold w-full mt-6">
             Histórico de tentativas
           </h1>
-
-        <Logotipo />
         </div>
 
         {/* Div da seção principal da Tela */}
         <div className="flex flex-col justify-center items-center gap-10 mt-6 px-4">
-          <div className="md:w-[90%] md:max-w-[700px] md:bg-[#DFEDFF] md:rounded-2xl md:py-4 md:px-6 mt-[14px] md:shadow-md">
-            <h1 className="text-black font-['Inclusive_Sans'] text-[24px] text-center">
-              {tentativas[0]?.comportamento || "Carregando atividade..."}
+          <div className="md:w-[90%] md:max-w-175 md:bg-[#DFEDFF] md:rounded-2xl md:py-4 md:px-6 mt-3.5 md:shadow-md">
+            <h1 className="text-black inclusive-sans text-[24px] text-center">
+              {loading ? "Carregando atividade..." : nomeAtividade}
             </h1>
           </div>
 
@@ -187,10 +200,10 @@ function HistoricoTentativa() {
                 Representação gráfica:
               </h2>
 
-                {dadosGrafico.length > 0 && (
-                   <GraficoTentativas data={dadosGrafico}/>
-                )}
-             
+              {dadosGrafico.length > 0 && (
+                <GraficoTentativas data={dadosGrafico} />
+              )}
+
             </div>
           </div>
         </div>

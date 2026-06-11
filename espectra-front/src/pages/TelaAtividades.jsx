@@ -71,7 +71,7 @@ function TelaAtividades() {
     return (
         <div className="flex md:gap-5 min-h-screen">
 
-                <CardUser />
+            <CardUser />
 
             <div className="h-screen w-full flex-1 flex flex-col px-4 py-4 md:w-[40%] md:py-8 gap-6 lg:gap-10">
 
