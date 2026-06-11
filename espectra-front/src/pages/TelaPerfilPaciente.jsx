@@ -322,7 +322,7 @@ function TelaPerfilPaciente() {
           >
             {paciente.nome} nasceu em {paciente.data_nascimento}, tem{" "}
             {paciente.idade} anos, está na {paciente.serie_escolar} e possui
-            diagnóstico de {listaDiagnosticos} com grau de suporte{" "}
+            diagnóstico de {listaDiagnosticos} com nível de suporte{" "}
             {paciente.grau_suporte}
           </p>
 

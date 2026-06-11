@@ -125,7 +125,7 @@ function TelaHome() {
 
                 <div className="absolute right-0 mt-2 w-56 bg-white border-2 border-gray-100 rounded-2xl shadow-xl py-2 z-20 animate-in fade-in slide-in-from-top-1 duration-200">
                   <p className="px-4 py-1 text-xs font-bold text-gray-400 uppercase tracking-wider font-inclusive-sans">
-                    Grau de Suporte
+                    Nível de Suporte
                   </p>
 
                   <hr className="my-1 border-gray-100" />
@@ -140,7 +140,7 @@ function TelaHome() {
                       : "text-gray-700 hover:bg-gray-50"
                       }`}
                   >
-                    Todos os graus
+                    Todos os níveis
                   </button>
 
                   <button
@@ -153,7 +153,7 @@ function TelaHome() {
                       : "text-gray-700 hover:bg-gray-50"
                       }`}
                   >
-                    Grau de Suporte 1
+                    Nível de Suporte 1
                   </button>
 
                   <button
@@ -166,7 +166,7 @@ function TelaHome() {
                       : "text-gray-700 hover:bg-gray-50"
                       }`}
                   >
-                    Grau de Suporte 2
+                    Nível de Suporte 2
                   </button>
 
                   <button
@@ -179,7 +179,7 @@ function TelaHome() {
                       : "text-gray-700 hover:bg-gray-50"
                       }`}
                   >
-                    Grau de Suporte 3
+                    Nível de Suporte 3
                   </button>
                 </div>
               </>

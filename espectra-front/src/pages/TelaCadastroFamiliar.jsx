@@ -603,7 +603,7 @@ function TelaCadastroFamiliar() {
                     </div>
 
                     <div>
-                        <span className="inclusive-sans text-xl font-semibold text-(--dark-blue)">Grau suporte</span>
+                        <span className="inclusive-sans text-xl font-semibold text-(--dark-blue)"> Nível de suporte</span>
                         <select
                             name=""
                             id=""
@@ -619,15 +619,15 @@ function TelaCadastroFamiliar() {
                             </option>
 
                             <option value="1">
-                                GRAU 1
+                                NÍVEL 1
                             </option>
 
                             <option value="2">
-                                GRAU 2
+                                NÍVEL 2
                             </option>
 
                             <option value="3">
-                                GRAU 3
+                                NÍVEL 3
                             </option>
                         </select>
                         {

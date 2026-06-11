@@ -50,7 +50,7 @@ function TelaAdicionarPaciente() {
         `http://localhost:8080/v1/espectra/paciente`,
         {
           params: {
-            cpf: cpf,
+            cpf: cpf.replace(/\D/g, ""),
           },
           headers: {
             "x-access-token": token,
@@ -112,6 +112,17 @@ function TelaAdicionarPaciente() {
     }
   }
 
+  const formatarCPF = (value) =>{
+    const apenasNumeros = value.replace(/\D/g, "");
+
+    const cpfLimitado = apenasNumeros.slice(0, 11);
+    
+    return cpfLimitado
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+  }
+
   return (
     // div que carrega tudo na tela
     <div className="m-4 flex flex-col">
@@ -148,7 +159,7 @@ function TelaAdicionarPaciente() {
         <InputHome
           value={cpf}
           placeholder="Digite o CPF do paciente..."
-          onChange={setCpf}
+          onChange={(valor) => setCpf(formatarCPF(valor))}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               buscarPacientePorCpf();
