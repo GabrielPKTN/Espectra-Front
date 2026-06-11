@@ -1,23 +1,23 @@
 function CardTentativa({
-    titulo, 
-    descricao,
-    resultado, 
-    data,
-    altura = "",
-    largura = "",
-    corTitulo = "",
-    corDescricao = "",
-    className = "",
-    fundo = "",
-    relative,
-    children,
-    rowButtons = false
+  titulo,
+  descricao,
+  resultado,
+  data,
+  altura = "",
+  largura = "",
+  corTitulo = "",
+  corDescricao = "",
+  className = "",
+  fundo = "",
+  relative,
+  children,
+  rowButtons = false
 }) {
 
-    const estiloResultado = resultado === "Êxito" ? "text-green-600 font-bold" : "text-red-600 font-bold"
-          
-    return (
-        <div
+  const estiloResultado = resultado === "Êxito" ? "text-green-600 font-bold" : "text-red-600 font-bold"
+
+  return (
+    <div
       className={`
         ${fundo}
         ${altura}
@@ -80,7 +80,7 @@ function CardTentativa({
         {children}
       </div>
     </div>
-    );
+  );
 }
 
 export default CardTentativa;

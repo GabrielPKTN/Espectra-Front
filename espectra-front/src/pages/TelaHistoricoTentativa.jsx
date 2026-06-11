@@ -12,6 +12,7 @@ import api from "../services/api";
 import Logotipo from "../components/logotipo";
 import ContainerUserPhoto from "../components/photo-components/ContainerUserPhoto";
 import BotaoVoltar from "../components/BotaoVoltar";
+import SecondButton from "../components/SecondButton";
 
 function HistoricoTentativa() {
   const navigate = useNavigate();
@@ -134,9 +135,9 @@ function HistoricoTentativa() {
   return (
     <>
 
-      <div>
+      <div className="flex flex-col h-screen w-screen">
         {/* Div da seção do Header */}
-        <div className="flex justify-between items-center m-4 lg:m-6">
+        <div className="flex justify-between items-center m-4 lg:m-6 lg:px-4">
           <BotaoVoltar color="blueColor" onClick={() => navigate("/atividades/")} />
 
           <ContainerUserPhoto foto={fotoUsuarioLogado} id={idUsuarioLogado} />
@@ -158,42 +159,44 @@ function HistoricoTentativa() {
 
           {/* Container das colunas */}
           <div className="flex flex-col lg:flex-row gap-6 w-full">
-            <h2 className="w-full text-left ml-[38px] text-black font-['Instrument_Sans'] text-[22px] font-bold md:hidden">
+            <h2 className="w-full text-left ml-9.5 text-black instrument-sans text-[22px] font-bold md:hidden">
               Tentativas:
             </h2>
 
             {/* Div dos Cards */}
-            <div className="flex flex-col w-full gap-4 -mt-4 md:bg-[#FFFFFF] md:w-[90%] md:w-[810px] md:p-6 md:rounded-2xl md:shadow-[0px_0px_12px_rgba(0,0,0,0.40)] md:mt-6 lg:w-1/2 lg:h-[500px]">
-              {/* Container -> Lado esquerdo */}
-              <div className="w-full lg:w-1/2">
-                {loading && <p>Carregando tentativas...</p>}
+            <div className="flex flex-col w-full gap-4 -mt-4 md:bg-[#FFFFFF] md:w-[90%] overflow-y-auto md:rounded-2xl md:p-6 md:shadow-[0px_0px_12px_rgba(0,0,0,0.40)] md:mt-6 lg:w-1/2 h-125">
 
-                {erro && <p>{erro}</p>}
+              {loading && <p>Carregando tentativas...</p>}
 
-                {tentativas.map((tentativa) => (
-                  <CardTentativa
-                    key={tentativa.id_tentativa}
-                    titulo={`Atividade realizada com auxílio ${tentativa.auxilio}`}
-                    descricao="Resultado: "
-                    resultado={tentativa.resultado ? "Êxito" : "Falha"}
-                    data={formatarData(tentativa?.data_tentativa)}
-                    fundo="bg-[#F9F9F9]"
-                    className="mt-4 lg:w-[575px]"
+              {!loading && tentativas.length === 0 && (
+                <p className="text-center text-gray-400 instrument-sans italic">Nenhuma atividade registrada</p>
+              )}
+
+              {tentativas.map((tentativa) => (
+                <CardTentativa
+                  key={tentativa.id_tentativa}
+                  titulo={`Atividade realizada com auxílio ${tentativa.auxilio}`}
+                  descricao="Resultado: "
+                  resultado={tentativa.resultado ? "Êxito" : "Falha"}
+                  data={formatarData(tentativa?.data_tentativa)}
+                  fundo="bg-[#F9F9F9]"
+                  className="w-full mb-2"
+                >
+                  <SecondButton
+                    onClick={() => {
+                      setTentativaSelecionada(tentativa);
+                      setAbrirModal(true);
+                    }}
+                    variantClick="firstButton"
+                    className="lg:w-45 rounded-full"
                   >
-                    <Button
-                      className="w-[142px] h-[31px] rounded-2x1 transform-gpu transition-all duration-300 ease-in-out hover:scale-110"
-                      variantClick="basicClick"
-                      onClick={() => {
-                        setTentativaSelecionada(tentativa);
-                        setAbrirModal(true);
-                      }}
-                    >
-                      Ver detalhes
-                    </Button>
-                  </CardTentativa>
-                ))}
-              </div>
+                    Ver detalhes
+                  </SecondButton>
+
+                </CardTentativa>
+              ))}
             </div>
+
             {/* Container -> Lado direito */}
             <div className="w-full lg:w-1/2">
               <h2 className="w-full text-left ml-[38px] mt-[18px] text-black font-['Instrument_Sans'] text-[22px] font-bold">
