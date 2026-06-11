@@ -135,7 +135,7 @@ function HistoricoTentativa() {
   return (
     <>
 
-      <div className="flex flex-col h-screen w-screen">
+      <div className="flex flex-col overflow-x-hidden min-h-screen w-full">
         {/* Div da seção do Header */}
         <div className="flex justify-between items-center m-4 lg:m-6 lg:px-4">
           <BotaoVoltar color="blueColor" onClick={() => navigate("/atividades/")} />
@@ -188,7 +188,7 @@ function HistoricoTentativa() {
                       setAbrirModal(true);
                     }}
                     variantClick="firstButton"
-                    className="lg:w-45 rounded-full"
+                    className="lg:w-45 rounded-full cursor-pointer"
                   >
                     Ver detalhes
                   </SecondButton>
@@ -218,33 +218,21 @@ function HistoricoTentativa() {
             className="w-[374px] h-[680px] border-[#C9C9C9] border-3 p-5 lg:w-[1200px]"
             fundo="bg-[#F9F9F9]"
           >
-            {/* Div do cabeçalho */}
             <div className="absolute top-[8px] right-[8px]">
               <CircleX
-                className="h-[26px] w-[26px] cursor-pointer transform-gpu transition-all duration-300 ease-in-out hover:scale-110"
+                className="size-7 cursor-pointer transform-gpu transition-all duration-300 ease-in-out hover:scale-110"
                 color="#EA1212"
                 onClick={fechar}
               />
             </div>
 
             {/* Div da seção principal */}
-            <div className="relative w-full flex flex-col items-center mt-4">
-              <h1
-                className="absolute text-[40px] font-black text-transparent stroke-text"
-                style={{
-                  WebkitTextStrokeColor: corHabilidade(
-                    tentativaSelecionada?.habilidade?.nome_habilidade,
-                  ),
-                }}
-              >
-                {tentativaSelecionada?.habilidade?.nome_habilidade}
-              </h1>
+            <div className="w-full flex flex-col items-center mt-4">
 
               <h1
-                className="relative translate-x-[8px] translate-y-[6px] text-[40px] font-black"
+                className="instrument-sans text-[40px] font-bold text-center"
                 style={{
-                  color: corHabilidade(
-                    tentativaSelecionada?.habilidade?.nome_habilidade,
+                  color: corHabilidade(tentativaSelecionada?.habilidade?.nome_habilidade,
                   ),
                 }}
               >
@@ -252,24 +240,28 @@ function HistoricoTentativa() {
               </h1>
 
               <div className="mt-4">
-                <div className="mt-1 w-[121px] h-[39px] bg-[#D8EAD1] rounded-2xl flex justify-center items-center shadow-md lg:w-[181px] ">
+                <div className="mt-1 w-30.25 h-10 rounded-2xl flex justify-center items-center shadow-md lg:w-[181px]"
+                  style={{
+                    background: corHabilidade(tentativaSelecionada?.habilidade?.nome_habilidade,
+                    ),
+                  }}>
                   <p className="text-center font-bold lg:text-[24px]">
                     {formatarData(tentativaSelecionada?.data_tentativa)}
                   </p>
                 </div>
               </div>
 
-              <h1 className="w-full text-center mt-6 font-['Instrument_Sans'] font-semibold text-[20px] lg:text-[30px]">
+              <h1 className="w-full text-center mt-6 instrument-sans font-semibold text-[20px] lg:text-[30px]">
                 {tentativaSelecionada?.comportamento}
               </h1>
 
-              <div className="mt-4">
-                <p className="text-center font-['Instrument_Sans'] text-[20px] lg:text-[32px]">
+              <div className="mt-4 flex items-center gap-4">
+                <p className="text-center instrument-sans text-[20px] font-semibold lg:text-[32px]">
                   Resultado:
                 </p>
 
                 <p
-                  className={`text-center font-['Instrument_Sans'] font-bold text-[20px] lg:text-[28px]`}
+                  className={`text-center instrument-sans font-semibold text-[20px] lg:text-[28px]`}
                   style={{
                     color: tentativaSelecionada?.resultado
                       ? "#00B521"
@@ -280,17 +272,17 @@ function HistoricoTentativa() {
                 </p>
               </div>
 
-              <p className="mt-4 text-center font-['Instrument_Sans'] text-[20px] italic lg:text-[24px]">
+              <p className="mt-4 text-center instrument-sans text-[20px] italic lg:text-[24px]">
                 Atividade realizada com auxílio {tentativaSelecionada?.auxilio}
               </p>
 
               <div className="mt-6 w-full">
-                <p className="font-['Instrument_Sans'] font-bold text-[20px] lg:text-[28px] lg:w-full lg:text-left">
+                <p className="instrument-sans font-bold text-[20px] lg:text-[28px] lg:w-full lg:text-left">
                   Observações:
                 </p>
 
-                <div className="bg-[#E9E9E9] w-[325px] h-[173px] rounded-2xl mt-2 lg:w-[1155px]">
-                  <p className="font-['Inclusive_Sans'] ml-4 mt-3 text-[16px]">
+                <div className="bg-[#E9E9E9] w-full h-41 rounded-2xl mt-2 flex lg:w-full">
+                  <p className="inclusive-sans ml-4 mt-3 text-[16px] lg:text-xl">
                     {tentativaSelecionada?.observacao || "Sem observações"}
                   </p>
                 </div>
