@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react";
 import api from "../services/api";
 import toast from "react-hot-toast";
+import { User } from "lucide-react";
 
 export default function CardUser() {
 
@@ -16,6 +17,8 @@ export default function CardUser() {
     const homeDataObject = homeDataString ? JSON.parse(homeDataString) : null;
     const fotoUsuarioLogado = homeDataObject?.items?.foto || null;
     const idUsuarioLogado = homeDataObject?.items?.id || null;
+
+    const idPacienteAtividade = localStorage.getItem("id_paciente")
 
     const [nomeUsuario, setNomeUsuario] = useState("Usuário")
 
@@ -37,15 +40,15 @@ export default function CardUser() {
     }
 
     useEffect(() => {
-    if (!token) {
-      console.error("Token não encontrado no localStorage.");
-      toast.error("A sessão expirou. Faça login novamente!");
-      navigate("/login");
-      return;
-    }
+        if (!token) {
+            console.error("Token não encontrado no localStorage.");
+            toast.error("A sessão expirou. Faça login novamente!");
+            navigate("/login");
+            return;
+        }
 
-    getDadosUsuarios();
-  }, [idUsuarioLogado]);
+        getDadosUsuarios();
+    }, [idUsuarioLogado]);
 
 
     return (
@@ -96,6 +99,16 @@ export default function CardUser() {
                     <span className="instrument-sans font-bold text-(--bg-primary-color) text-lg lg:text-2xl">Adicionar atividade</span>
 
                 </div>
+
+                {idPacienteAtividade && (
+                    <div className="flex gap-3 cursor-pointer items-center"
+                        onClick={() => {
+                            navigate(`/perfil-paciente/${idPacienteAtividade}`)
+                        }}>
+                        <User strokeWidth={3} className="md:size-6 lg:size-6 text-(--bg-primary-color)] text-(--bg-primary-color)" />
+                        <span className="instrument-sans font-bold text-(--bg-primary-color) text-lg lg:text-2xl">Perfil do Paciente</span>
+                    </div>
+                )}
             </div>
 
 
