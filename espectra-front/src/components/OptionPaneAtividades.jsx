@@ -46,7 +46,7 @@ export default function OptionPaneAtividades({ onChange }) {
                 instrument-sans font-semibold text-lg md:text-2xl
                 "
             >
-                Escolha uma das habilidades ainda não desenvolvidas:
+                Escolha um dos comportamentos ainda não desenvolvidos:
             </p>
 
             <div className="flex w-full align-middle gap-1">

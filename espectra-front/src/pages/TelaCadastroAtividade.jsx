@@ -144,7 +144,7 @@ function telaCadastroAtividade() {
 
                     {opcaoSelecionada === 'personalizada' && (
                         <div className="flex flex-col w-full gap-3">
-                            <p className="instrument-sans font-semibold text-lg md:text-2xl">Escreva a proposta de habilidade a ser desenvolvida:</p>
+                            <p className="instrument-sans font-semibold text-lg md:text-2xl">Escreva a proposta de atividade a ser desenvolvida:</p>
                             <textarea
                                 type="text"
                                 className="
