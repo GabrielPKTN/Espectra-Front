@@ -1,19 +1,19 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import TelaInicial from "../pages/TelaInicial";
-import TelaCadastro from "../pages/TelaCadastro";
-import TelaLogin from "../pages/TelaLogin";
-import TelaHome from "../pages/TelaHome";
-import TelaPerfilPaciente from "../pages/TelaPerfilPaciente";
-import TelaFormulario from "../pages/TelaFormulario";
-import TelaEditarAtividade from "../pages/TelaEditarAtividade";
-import TelaCadastroAtividade from "../pages/TelaCadastroAtividade";
-import TelaAtividades from "../pages/TelaAtividades";
-import TelaAdicionarPaciente from "../pages/TelaAdicionarPaciente";
-import TelaRealizarTentativa from "../pages/TelaRealizarTentativa";
-import HistoricoTentativa from "../pages/TelaHistoricoTentativa";
-import TelaCadastroFamiliar from "../pages/TelaCadastroFamiliar";
-import PerfilUsuario from "../pages/TelaPerfil";
-import AtualizarPerfilUsuario from "../pages/AtualizarPerfilUsuario"
+import TelaInicial from "../pages/TelaInicial.jsx";
+import TelaCadastro from "../pages/TelaCadastro.jsx";
+import TelaLogin from "../pages/TelaLogin.jsx";
+import TelaHome from "../pages/TelaHome.jsx";
+import TelaPerfilPaciente from "../pages/TelaPerfilPaciente.jsx";
+import TelaFormulario from "../pages/TelaFormulario.jsx";
+import TelaEditarAtividade from "../pages/TelaEditarAtividade.jsx";
+import TelaCadastroAtividade from "../pages/TelaCadastroAtividade.jsx";
+import TelaAtividades from "../pages/TelaAtividades.jsx";
+import TelaAdicionarPaciente from "../pages/TelaAdicionarPaciente.jsx";
+import TelaRealizarTentativa from "../pages/TelaRealizarTentativa.jsx";
+import HistoricoTentativa from "../pages/TelaHistoricoTentativa.jsx";
+import TelaCadastroFamiliar from "../pages/TelaCadastroFamiliar.jsx";
+import PerfilUsuario from "../pages/TelaPerfil.jsx";
+import AtualizarPerfilUsuario from "../pages/AtualizarPerfilUsuario.jsx"
 
 function Rotas() {
   return (
