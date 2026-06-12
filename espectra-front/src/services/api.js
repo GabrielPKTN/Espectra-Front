@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const api = axios.create({
   // Substitua pela URL da sua API local ou em produção
-  baseURL: 'http://localhost:8080', 
+  baseURL: 'https://espectra-back.onrender.com', 
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json'
