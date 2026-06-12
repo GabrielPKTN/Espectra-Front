@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
-import ContainerPacientePhoto from "./ContainerPacientePhoto"
-import LabelInfoCard from "./LabelInfoCard"
+import ContainerPacientePhoto from "./ContainerPacientePhoto.jsx"
+import LabelInfoCard from "./LabelInfoCard.jsx"
 import { useNavigate } from "react-router-dom"
 
 function CardPaciente(props) {

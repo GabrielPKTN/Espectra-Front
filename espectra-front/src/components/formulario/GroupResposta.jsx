@@ -1,5 +1,5 @@
 import { useState } from "react";
-import OptionResposta from "../OptionResposta";
+import OptionResposta from "../OptionResposta.jsx";
 
 function GroupResposta({ idPortage, respondida, idFormPortage, setRespostas, respostas }) {
 

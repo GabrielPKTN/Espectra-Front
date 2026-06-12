@@ -1,8 +1,8 @@
-import Logotipo from "../components/logotipo.jsx";
-import InputPerfil from "../components/InputPerfil";
-import InputSenha from "../components/InputSenha";
-import Button from "../components/Button";
-import Card from "../components/Card";
+import Logotipo from "../components/Logotipo.jsx";
+import InputPerfil from "../components/InputPerfil.jsx";
+import InputSenha from "../components/InputSenha.jsx";
+import Button from "../components/Button.jsx";
+import Card from "../components/Card.jsx";
 import BotaoVoltar from "../components/BotaoVoltar.jsx";
 import { CircleUser } from "lucide-react";
 import { CircleX } from "lucide-react";

@@ -1,5 +1,5 @@
 import InputHome from "../components/input/InputHome.jsx";
-import ContainerHeader from "../components/ContainerHeader";
+import ContainerHeader from "../components/ContainerHeader.jsx";
 import ContainerPacientes from "../components/ContainerPacientes.jsx";
 import Button from "../components/Button.jsx";
 import api from "../services/api.js";

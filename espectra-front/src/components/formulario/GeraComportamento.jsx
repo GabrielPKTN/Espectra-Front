@@ -1,5 +1,5 @@
-import CardQuestionFormulario from "./CardQuestionFormulario";
-import GroupResposta from "./GroupResposta";
+import CardQuestionFormulario from "./CardQuestionFormulario.jsx";
+import GroupResposta from "./GroupResposta.jsx";
 
 function GeraComportamento({ array, corNumeracao, setRespostas, respostas }) {
 

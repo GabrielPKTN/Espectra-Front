@@ -1,12 +1,12 @@
 import logotipo from "../assets/logotipos/logotipo.svg";
-import InputDefault from "../components/InputDefault";
+import InputDefault from "../components/InputDefault.jsx";
 import { useState } from "react";
-import Button from "../components/Button";
+import Button from "../components/Button.jsx";
 import authentication from "../assets/general_photos/authentication.png";
 import axios from "axios"
 import { jsx } from "react/jsx-runtime";
 import { data, useNavigate } from "react-router-dom";
-import api from "../services/api"
+import api from "../services/api.js"
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 

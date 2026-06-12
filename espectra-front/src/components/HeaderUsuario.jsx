@@ -1,5 +1,5 @@
-import ContainerUserPhoto from "../components/photo-components/ContainerUserPhoto";
-import BotaoVoltar from "../components/BotaoVoltar"
+import ContainerUserPhoto from "../components/photo-components/ContainerUserPhoto.jsx";
+import BotaoVoltar from "../components/BotaoVoltar.jsx"
 import { useNavigate } from "react-router-dom";
 
 export default function HeaderUsuario(){

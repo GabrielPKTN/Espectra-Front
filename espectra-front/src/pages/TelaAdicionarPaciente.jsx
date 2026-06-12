@@ -1,12 +1,12 @@
 import { ChevronLeft } from "lucide-react";
 import logotipo from "../assets/logotipos/logo.png";
-import InputHome from "../components/input/InputHome";
-import Button from "../components/Button";
+import InputHome from "../components/input/InputHome.jsx";
+import Button from "../components/Button.jsx";
 import { useNavigate } from "react-router-dom";
 import { CircleUser } from "lucide-react";
 import { useState } from "react";
 import axios from "axios";
-import ContainerUserPhoto from "../components/photo-components/ContainerUserPhoto";
+import ContainerUserPhoto from "../components/photo-components/ContainerUserPhoto.jsx";
 import toast from "react-hot-toast";
 import api from "../services/api.js"
 

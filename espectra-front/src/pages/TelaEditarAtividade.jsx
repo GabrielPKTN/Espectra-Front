@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import Button from "../components/Button";
+import Button from "../components/Button.jsx";
 import interrogacao from "../assets/general_photos/interrogacao.svg";
-import OutlinedTitle from "../components/OutlinedTitle";
+import OutlinedTitle from "../components/OutlinedTitle.jsx";
 import logotipoAzul from "../assets/logotipos/logotipo-azul.svg";
-import ModalMeses from "../pages/ModalValorMeses";
+import ModalMeses from "../pages/ModalValorMeses.jsx";
 import { useState } from "react";
 import { useEffect } from "react";
-import OptionPaneMeses from "../components/OptionPaneMeses";
-import api from "../services/api";
+import OptionPaneMeses from "../components/OptionPaneMeses.jsx";
+import api from "../services/api.js";
 
 function telaEditarAtividade() {
     const navigate = useNavigate();

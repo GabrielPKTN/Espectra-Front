@@ -1,11 +1,11 @@
-import CardAtividade from "../components/CardAtividadeAndamento"
-import CardAtividadeAdquirida from "../components/CardAtividadeAdquirida"
-import HeaderUsuario from "../components/HeaderUsuario"
-import CardUser from "../components/CardUser";
+import CardAtividade from "../components/CardAtividadeAndamento.jsx"
+import CardAtividadeAdquirida from "../components/CardAtividadeAdquirida.jsx"
+import HeaderUsuario from "../components/HeaderUsuario.jsx"
+import CardUser from "../components/CardUser.jsx";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
 import { useEffect, useState } from "react";
-import api from "../services/api"
+import api from "../services/api.js"
 
 function TelaAtividades() {
 

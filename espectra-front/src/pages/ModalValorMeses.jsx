@@ -1,5 +1,5 @@
-import Card from "../components/Card";
-import Button from "../components/Button";
+import Card from "../components/Card.jsx";
+import Button from "../components/Button.jsx";
 import fechar from "../assets/general_photos/icons8-close-48.png";
 import light from "../assets/general_photos/Light.svg"
 

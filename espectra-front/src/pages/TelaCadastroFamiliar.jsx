@@ -1,4 +1,4 @@
-import InputDefault from "../components/InputDefault"
+import InputDefault from "../components/InputDefault.jsx"
 import antonioPhoto from "../assets/general_photos/antonio_photo.png"
 import Button from "../components/Button.jsx"
 import HeaderResponsavel from "../components/HeaderResponsavel.jsx"

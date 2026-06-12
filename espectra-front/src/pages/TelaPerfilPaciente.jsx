@@ -1,6 +1,6 @@
 import { CircleUser } from "lucide-react";
 import { ChevronLeft } from "lucide-react";
-import LegendaHabilidade from "../components/LegendaHabilidade";
+import LegendaHabilidade from "../components/LegendaHabilidade.jsx";
 import {
   BarChart,
   Bar,

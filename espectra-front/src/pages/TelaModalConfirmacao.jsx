@@ -1,6 +1,6 @@
 import logo from "../assets/logotipos/logo.png";
-import Button from "../components/Button";
-import Card from "../components/Card";
+import Button from "../components/Button.jsx";
+import Card from "../components/Card.jsx";
 import { useNavigate } from "react-router-dom";
 
 function TelaModalConfirmacao() {

@@ -1,12 +1,12 @@
-import SecondButton from "../components/SecondButton";
+import SecondButton from "../components/SecondButton.jsx";
 import { useEffect, useState } from "react";
-import api from "../services/api";
+import api from "../services/api.js";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
-import NavItem from "../components/NavItem";
-import BotaoVoltar from "../components/BotaoVoltar";
-import ContainerUserPhoto from "../components/photo-components/ContainerUserPhoto";
+import NavItem from "../components/NavItem.jsx";
+import BotaoVoltar from "../components/BotaoVoltar.jsx";
+import ContainerUserPhoto from "../components/photo-components/ContainerUserPhoto.jsx";
 
 function TelaRealizarTentativa() {
   const navigate = useNavigate();

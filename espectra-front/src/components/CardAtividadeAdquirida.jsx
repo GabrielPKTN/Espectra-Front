@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import setaBaixo from "../assets/general_photos/setaBaixo.svg";
-import Button from "./Button";
+import Button from "./Button.jsx";
 import trash from "../assets/general_photos/trash.svg";
 import pen from "../assets/general_photos/pen.svg";
 import { useNavigate } from "react-router-dom";

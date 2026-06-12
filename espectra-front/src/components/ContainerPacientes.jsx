@@ -1,4 +1,4 @@
-import CardPaciente from "./card-paciente/CardPaciente"
+import CardPaciente from "./card-paciente/CardPaciente.jsx"
 
 function ContainerPacientes(props) {
 

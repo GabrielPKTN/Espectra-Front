@@ -1,6 +1,6 @@
 import IconApp from "../assets/logotipos/logo.png"
-import ContainerUserPhoto from "./photo-components/ContainerUserPhoto"
-import Logotipo from "./logotipo"
+import ContainerUserPhoto from "./photo-components/ContainerUserPhoto.jsx"
+import Logotipo from "./Logotipo.jsx"
 
 function ContainerHeader(props) {
 

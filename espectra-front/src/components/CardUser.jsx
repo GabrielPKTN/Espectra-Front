@@ -1,9 +1,9 @@
-import ContainerUserPhoto from "../components/photo-components/ContainerUserPhoto";
+import ContainerUserPhoto from "../components/photo-components/ContainerUserPhoto.jsx";
 import home from "../assets/general_photos/home.svg"
 import add from "../assets/general_photos/add.svg"
 import { useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react";
-import api from "../services/api";
+import api from "../services/api.js";
 import toast from "react-hot-toast";
 import { User } from "lucide-react";
 

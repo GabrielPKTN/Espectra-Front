@@ -1,11 +1,11 @@
 import { useState } from "react";
 import setaBaixo from "../assets/general_photos/setaBaixo.svg";
-import Button from "./Button";
+import Button from "./Button.jsx";
 import trash from "../assets/general_photos/trash.svg";
 import pen from "../assets/general_photos/pen.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
-import api from "../services/api"
+import api from "../services/api.js"
 import Swal from "sweetalert2";
 import { toast } from "react-hot-toast";
 

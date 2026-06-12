@@ -1,8 +1,8 @@
 import interrogacao from "../assets/general_photos/interrogacao.svg";
-import ModalMeses from "../pages/ModalValorMeses";
+import ModalMeses from "../pages/ModalValorMeses.jsx";
 import { useState } from "react";
 import { useEffect } from "react";
-import api from "../services/api";
+import api from "../services/api.jsx";
 
 export default function OptionPaneAtividades({ onChange }) {
 

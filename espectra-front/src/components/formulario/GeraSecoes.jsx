@@ -1,5 +1,5 @@
-import CardTextFormulario from "./CardTextFormulario";
-import GeraComportamento from "./GeraComportamento";
+import CardTextFormulario from "./CardTextFormulario.jsx";
+import GeraComportamento from "./GeraComportamento.jsx";
 
 function GeraSecoes(
 

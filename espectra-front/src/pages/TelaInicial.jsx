@@ -1,8 +1,8 @@
 import logo from "../assets/logotipos/logo.png";
 import photo_main from "../assets/general_photos/photo_main_xl.svg";
-import NavItem from "../components/NavItem";
+import NavItem from "../components/NavItem.jsx";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import Button from "../components/Button";
+import Button from "../components/Button.jsx";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 function TelaInicial() {
