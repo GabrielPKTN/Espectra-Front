@@ -1,15 +1,15 @@
 import { useNavigate } from "react-router-dom";
-import Button from "../components/Button";
+import Button from "../components/Button.jsx";
 import interrogacao from "../assets/general_photos/interrogacao.svg";
-import OutlinedTitle from "../components/OutlinedTitle";
+import OutlinedTitle from "../components/OutlinedTitle.jsx";
 import { useState } from "react";
-import CheckboxAtividade from "../components/CheckboxTipoAtividade";
-import OptionPaneMeses from "../components/OptionPaneMeses";
-import HeaderUsuario from "../components/HeaderUsuario";
+import CheckboxAtividade from "../components/CheckboxTipoAtividade.jsx";
+import OptionPaneMeses from "../components/OptionPaneMeses.jsx";
+import HeaderUsuario from "../components/HeaderUsuario.jsx";
 import api from "../services/api"
 import { useEffect } from "react";
-import OptionPaneAtividades from "../components/OptionPaneAtividades"
-import Logotipo from "../components/logotipo";
+import OptionPaneAtividades from "../components/OptionPaneAtividades.jsx"
+import Logotipo from "../components/Logotipo.jsx";
 import SecondButton from "../components/SecondButton";
 
 function telaCadastroAtividade() {

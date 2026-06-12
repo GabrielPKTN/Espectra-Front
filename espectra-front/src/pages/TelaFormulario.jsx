@@ -1,13 +1,13 @@
 import logo from "../assets/logotipos/logo.png";
 import psicopedagogo from "../assets/general_photos/psicopedagogo.png";
-import Button from "../components/Button";
-import Header from "../components/formulario/HeaderFormulario"; // Importe o Header criado
+import Button from "../components/Button.jsx";
+import Header from "../components/formulario/HeaderFormulario.jsx"; // Importe o Header criado
 import GeraSecoes from "../components/formulario/GeraSecoes.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import api from "../services/api.js";
-import Logotipo from "../components/logotipo.jsx";
+import Logotipo from "../components/Logotipo.jsx";
 import ContainerUserPhoto from "../components/photo-components/ContainerUserPhoto.jsx";
 
 function TelaFormulario() {

@@ -1,7 +1,7 @@
-import Logotipo from "../components/logotipo.jsx";
+import Logotipo from "../components/Logotipo.jsx";
 import BotaoVoltar from "../components/BotaoVoltar.jsx";
-import InputDefault from "../components/InputDefault";
-import Button from "../components/Button";
+import InputDefault from "../components/InputDefault.jsx";
+import Button from "../components/Button.jsx";
 import { ChevronLeft, CircleUser } from "lucide-react"; // nao usaremos mais. Componentizado => lembrar de remover
 import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";

@@ -1,11 +1,11 @@
 import logotipo from "../assets/logotipos/logotipo.svg";
 import button_unselected from "../assets/general_photos/button_unselected.svg";
 import button_selected from "../assets/general_photos/button_select.svg";
-import InputDefault from "../components/InputDefault";
+import InputDefault from "../components/InputDefault.jsx";
 import { useState } from "react";
 import { LockKeyhole } from "lucide-react";
 import { LockKeyholeOpen } from "lucide-react";
-import Button from "../components/Button";
+import Button from "../components/Button.jsx";
 import access_control from "../assets/general_photos/access_control.png";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";

@@ -1,9 +1,9 @@
 
 import logo from "../assets/logotipos/logo.png"
 import backArrow from "../assets/general_photos/backArrow.svg"
-import ContainerUserPhoto from "./photo-components/ContainerUserPhoto";
-import Logotipo from "./logotipo";
-import BotaoVoltar from "./BotaoVoltar"
+import ContainerUserPhoto from "./photo-components/ContainerUserPhoto.jsx";
+import Logotipo from "./Logotipo.jsx";
+import BotaoVoltar from "./BotaoVoltar.jsx"
 import { useNavigate } from "react-router-dom";
 import { CircleUser } from "lucide-react";
 
