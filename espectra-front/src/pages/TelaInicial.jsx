@@ -5,7 +5,6 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../components/Button";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
-
 function TelaInicial() {
 
   const navigate = useNavigate();
@@ -97,18 +96,7 @@ function TelaInicial() {
           "
         
         
-        >{/*
-          <img
-            src={photo_main}
-            alt="imagem-prof"
-            className="object-contain w-80 h-fit
-            md:w-96 md:h-auto
-            lg:h-auto lg:w-150
-            xl:object-cover xl:w-full xl:h-full xl:pt-9
-            "
-          />
-          */}
-
+        >
           <DotLottieReact src="/animations/puzzle.lottie" autoplay  className=" w-150 md:w-200 lg:w-250 "/>
         </div>
       </div>

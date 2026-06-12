@@ -94,21 +94,6 @@ function TelaCadastroFamiliar() {
                 }
             });
 
-
-        // if (idUsuario && token) {
-        //     try {
-        //         api.get(`/v1/espectra/usuario/${idUsuario}`, {
-        //             headers: { "x-access-token": token }
-        //         }).then(response => {
-        //             setUsuario({
-        //                 nome: response.data.items?.nome || "Usuário",
-        //                 foto: response.data.items?.foto
-        //             })
-        //         })
-        //     } catch (error) {
-        //         console.error("Erro ao processar dados do usuário", error)
-        //     }
-        // }
     }, [])
 
     function validarNome(nome) {

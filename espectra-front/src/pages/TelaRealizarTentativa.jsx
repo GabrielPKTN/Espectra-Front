@@ -92,7 +92,7 @@ function TelaRealizarTentativa() {
       toast.error("Preencha todos os campos antes de salvar");
       return;
     }
-
+    
     const dataFormatada = new Date().toISOString().split("T")[0];
 
     const dadosTentativa = {
@@ -109,7 +109,7 @@ function TelaRealizarTentativa() {
     try {
       console.log(dadosTentativa)
 
-      const response = await api.post("v1/espectra/tentativa", dadosTentativa, {
+      const response = await api.post("/v1/espectra/tentativa", dadosTentativa, {
         headers: {
           "Content-Type": "application/json",
           "x-access-token": token

@@ -37,7 +37,7 @@ function telaCadastroAtividade() {
     async function cadastrarPersonalizada() {
         try {
             const response = await api.post(
-                `v1/espectra/atividade/personalizada/`,
+                `/v1/espectra/atividade/personalizada/`,
 
                 {
                     id_usuario: idUsuario,
@@ -73,7 +73,7 @@ function telaCadastroAtividade() {
 
         try {
             const response = await api.post(
-                `v1/espectra/atividade/portage/`,
+                `/v1/espectra/atividade/portage/`,
 
                 {
                     id_usuario: idUsuario,

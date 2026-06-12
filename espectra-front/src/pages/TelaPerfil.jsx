@@ -82,7 +82,7 @@ function PerfilUsuario() {
                     'Content-Type': 'application/json',
                     'x-access-token': token
                 },
-                // O corpo da requisição DELETE deve ir explicitamente na propriedade 'data'
+
                 data: {
                     "id": idUsuario,
                     "senha": senha

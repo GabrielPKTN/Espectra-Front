@@ -8,6 +8,7 @@ import { useState } from "react";
 import axios from "axios";
 import ContainerUserPhoto from "../components/photo-components/ContainerUserPhoto";
 import toast from "react-hot-toast";
+import api from "../services/api.js"
 
 function TelaAdicionarPaciente() {
   const [cpf, setCpf] = useState("");
@@ -46,8 +47,8 @@ function TelaAdicionarPaciente() {
         return;
       }
 
-      const response = await axios.get(
-        `http://localhost:8080/v1/espectra/paciente`,
+      const response = await api.get(
+        `/v1/espectra/paciente`,
         {
           params: {
             cpf: cpf.replace(/\D/g, ""),
@@ -91,8 +92,8 @@ function TelaAdicionarPaciente() {
     }
 
     try {
-      await axios.post(
-        `http://localhost:8080/v1/espectra/paciente/${paciente.id}/${idUsuarioLogado}`,
+      await api.post(
+        `/v1/espectra/paciente/${paciente.id}/${idUsuarioLogado}`,
         {
           id_paciente: paciente.id,
           id_usuario: Number(idUsuarioLogado),

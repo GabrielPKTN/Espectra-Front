@@ -36,7 +36,7 @@ function telaEditarAtividade() {
     async function editarAtividade() {
         try {
             const response = await api.put(
-                `v1/espectra/atividade/personalizada/${idAtividade}`,
+                `/v1/espectra/atividade/personalizada/${idAtividade}`,
                 {
                     id_usuario: idUsuario,
                     comportamento: comportamento,

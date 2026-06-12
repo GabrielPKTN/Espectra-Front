@@ -38,7 +38,7 @@ function AtualizarPerfilUsuario() {
 
         try {
 
-            const url = `/v1/espectra/usuario/${id_usuario}`
+            await api.get(`/v1/espectra/usuario/${id_usuario}`)
 
             const configHeader = {
 

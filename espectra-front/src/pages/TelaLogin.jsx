@@ -50,13 +50,11 @@ function TelaLogin() {
   }
 
   return (
-    //div que gurda tudo na tela.
     <div
       className="flex flex-col bg-primary-color w-full min-h-screen items-center
         md:overflow-hidden
         lg:grid lg:grid-cols-2 lg:overflow-hidden"
     >
-      {/* div da imagem */}
       <div
         className="flex justify-center items-center p-12
         lg:h-full lg:flex lg:flex-col"
@@ -67,14 +65,7 @@ function TelaLogin() {
           className="w-auto h-32 lg:h-28
                 "
         />
-        {/* 
-        <img
-          src={authentication}
-          alt="photo login"
-          className="hidden 
-                lg:block lg:w-auto lg:h-128"
-        />
-        */}
+
         <DotLottieReact src="/animations/Cadastro.lottie" autoplay loop className="hidden lg:block lg:w-150 lg::w-200 lg:w-250 "/>
         
 
@@ -92,8 +83,6 @@ function TelaLogin() {
           Login
         </h1>
 
-        {/* div que carrega todas as informações de login */}
-        {/* A unica validação que haverá na tela de login será se o usuário foi encontrado ou nao. Para evitar invasoes. */}
         <div
           className="flex flex-col w-full p-3
             md:px-48 md:mt-8
