@@ -29,6 +29,7 @@ export default function CardAtividade({ atividade, id, questao }) {
 
     async function declararHailidade(idAtividade) {
         try {
+            
             const response = await api.put(
                 `/v1/espectra/atividade/${idAtividade}`,
                 {},
@@ -180,7 +181,9 @@ export default function CardAtividade({ atividade, id, questao }) {
                         lg:text-lg"
                         onClick={() => {
                             declararHailidade(id)
-                            window.location.reload()
+                            setTimeout(() => {
+                            location.reload();
+                            }, 500);
                         }}
 
                     >
